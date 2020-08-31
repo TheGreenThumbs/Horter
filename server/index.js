@@ -7,6 +7,7 @@ const { app } = require("./app");
 const PORT = process.env.PORT || 8080;
 
 // If mode is development drop database when the app starts
+// This is for testing
 const eraseDatabaseOnSync = process.env.RESET_DB === "true";
 
 // Sync the Database and drop all the tables if RESET_DB is true
