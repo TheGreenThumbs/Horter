@@ -5,12 +5,14 @@ require('dotenv').config();
 const path = require('path');
 
 const bodyParser = require('body-parser');
+const { apiSearch } = require('./routes/apiSearch');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, '../client/build')))
+app.use('/api/search', apiSearch)
 
 app.get('/', (req, res) => {
   //  res.send('Hello World');
