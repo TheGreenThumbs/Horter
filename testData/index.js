@@ -7,6 +7,7 @@ const { Garden } = models;
  */
 const fillDatabaseWithDummyData = () =>
   new Promise((resolve, reject) => {
+    let gardenToAddTo;
     associations();
     Garden.create({
       name: "Max Garden",
@@ -19,6 +20,21 @@ const fillDatabaseWithDummyData = () =>
         "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/index-small-garden-ideas-1524680753.jpg",
       zone: 5,
     })
+      .then((garden) => {
+        gardenToAddTo = garden;
+        return gardenToAddTo.createPlantInGarden({
+          position_x: 1,
+          position_y: 1,
+          radius: 1,
+        });
+      })
+      .then(() =>
+        gardenToAddTo.createPlantInGarden({
+          position_x: 1,
+          position_y: 1,
+          radius: 1,
+        })
+      )
       .then(() =>
         Garden.create({
           name: "Jaz Garden",
