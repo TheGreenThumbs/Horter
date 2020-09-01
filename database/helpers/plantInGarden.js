@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const { Garden, PlantInGarden } = models;
+const { PlantInGarden } = models;
 
 /**
  * Add a plant to a garden by garden Id, will throw an error
@@ -11,10 +11,7 @@ const { Garden, PlantInGarden } = models;
  */
 const addPlantToGarden = (id, info) =>
   new Promise((resolve, reject) => {
-    Garden.findOne({ where: { id }, rejectOnEmpty: true })
-      .then((garden) => {
-        return garden.createPlantInGarden({ ...info });
-      })
+    PlantInGarden.create({ ...info, gardenId: id })
       .then((plant) => {
         resolve(plant);
       })
@@ -91,7 +88,7 @@ const removePlantInGarden = (id) =>
       });
   });
 
-models.exports = {
+module.exports = {
   addPlantToGarden,
   updatePlantInGarden,
   removePlantInGarden,

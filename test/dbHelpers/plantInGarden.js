@@ -1,7 +1,7 @@
 const chai = require("chai");
 const {
   gardenHelpers,
-  // plantInGardenHelpers,
+  plantInGardenHelpers,
 } = require("../../database/helpers");
 const { sequelize } = require("../../database");
 const fillDatabaseWithDummyData = require("../../testData");
@@ -18,40 +18,37 @@ describe("Plant In Garden Database Helpers", () => {
   context("Getting a Garden's Plants", () => {
     it("should return a garden with plants", (done) => {
       gardenHelpers.findGardenById(1).then((response) => {
-        console.log(response);
         expect(response).to.be.an("object");
-        expect(response).to.have.property("name");
+        expect(response).to.have.property("plants");
         done();
       });
     });
   });
 
-  // context("Adding a Garden", () => {
-  //   it("should add a garden", (done) => {
-  //     const newGarden = {
-  //       name: "new",
-  //       width: 1,
-  //       length: 1,
-  //       lat: 23.3422,
-  //       lng: -23.3523,
-  //       photo: "url",
-  //       zone: 3,
-  //     };
-  //     gardenHelpers.createGarden(newGarden).then((response) => {
-  //       expect(response).to.be.an("object");
-  //       Object.keys(newGarden).forEach((key) => {
-  //         expect(response[key]).to.equal(newGarden[key]);
-  //       });
-  //       done();
-  //     });
-  //   });
-  //   it("should not add a garden without all the info", (done) => {
-  //     gardenHelpers.createGarden({ name: "hello" }).catch((err) => {
-  //       expect(err).to.exist;
-  //       done();
-  //     });
-  //   });
-  // });
+  context("Adding a Plant to a Garden", () => {
+    it("should add a plant to a garden", (done) => {
+      const newPlant = {
+        position_x: 1,
+        position_y: 1,
+        radius: 1,
+      };
+      plantInGardenHelpers.addPlantToGarden(1, newPlant).then((response) => {
+        expect(response).to.be.an("object");
+        Object.keys(newPlant).forEach((key) => {
+          expect(response[key]).to.equal(newPlant[key]);
+        });
+        done();
+      });
+    });
+    it("should not add a plant to a garden that doesn't exist", (done) => {
+      plantInGardenHelpers
+        .addPlantToGarden(-1, { name: "hello" })
+        .catch((err) => {
+          expect(err).to.exist;
+          done();
+        });
+    });
+  });
 
   // context("Updating a Garden", () => {
   //   it("should update a garden", (done) => {
