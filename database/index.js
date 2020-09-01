@@ -1,7 +1,8 @@
 const Sequelize = require("sequelize");
 const factories = require("./models");
+require("dotenv").config();
 
-const { gardenFactory, plantInGardenFactory } = factories;
+const { gardenFactory, plantFactory, plantInGardenFactory } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
 const dbName = process.env.DB_NAME || "horter";
@@ -18,6 +19,7 @@ const sequelize = new Sequelize(dbName, dbUser, dbPass, {
 // Setup all the models with their factory functions
 const models = {
   Garden: gardenFactory(sequelize),
+  Plant: plantFactory(sequelize),
   PlantInGarden: plantInGardenFactory(sequelize),
 };
 

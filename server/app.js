@@ -1,24 +1,25 @@
-const express = require('express');
+const express = require("express");
 
-require('dotenv').config();
+require("dotenv").config();
 
-const path = require('path');
+const path = require("path");
 
-const bodyParser = require('body-parser');
-const { apiSearch } = require('./routes/apiSearch');
+const bodyParser = require("body-parser");
+const { apiSearch } = require("./routes/apiSearch");
+const { gardenInfo } = require("./routes/gardenInfo");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', express.static(path.join(__dirname, '../client/build')))
-app.use('/api/search', apiSearch)
+app.use("/", express.static(path.join(__dirname, "../client/build")));
+app.use("/api/search", apiSearch);
+app.use("/garden", gardenInfo);
 
-app.get('/', (req, res) => {
-  //  res.send('Hello World');
-   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 module.exports = {
-  app
-}
+  app,
+};
