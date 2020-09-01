@@ -3,6 +3,7 @@ const { Router } = require("express");
 const {
   findGardenById,
   updateGardenInfo,
+  removeGarden,
 } = require("../../database/helpers/garden");
 
 const gardenInfo = Router();
@@ -35,7 +36,6 @@ gardenInfo.put("/userupdate", (req, res) => {
   const { id, info } = req.body;
   updateGardenInfo(id, info)
     .then((garden) => {
-      console.log(garden);
       res.status(200);
       res.send(garden);
     })
@@ -44,9 +44,12 @@ gardenInfo.put("/userupdate", (req, res) => {
 
 // DELETE/gardId/ remove garden
 gardenInfo.delete("/deletegarden", (req, res) => {
-  // const { id } = req.body
-  console.log(req.body);
-  res.sendStatus(204);
+  const { id } = req.body;
+  removeGarden(id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((err) => console.log(err));
 });
 
 module.exports = {
