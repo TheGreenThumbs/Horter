@@ -25,6 +25,16 @@ describe("Plant In Garden Database Helpers", () => {
     });
   });
 
+  // This helper doesn't work yet
+  xcontext("Getting all of a User's Plants in Gardens", () => {
+    it("should return all the unique plants a user has planted", (done) => {
+      plantInGardenHelpers.getAllPlantsInGarden(1).then((response) => {
+        expect(response).to.be.an("object");
+        done();
+      });
+    });
+  });
+
   context("Adding a Plant to a Garden", () => {
     it("should add a plant to a garden", (done) => {
       const newPlant = {
@@ -50,43 +60,40 @@ describe("Plant In Garden Database Helpers", () => {
     });
   });
 
-  // context("Updating a Garden", () => {
-  //   it("should update a garden", (done) => {
-  //     gardenHelpers.findGardenById(1).then((gardenInfo) => {
-  //       const updatedGarden = { width: 1, length: 1 };
-  //       gardenHelpers.updateGardenInfo(1, updatedGarden).then((response) => {
-  //         expect(response).to.be.an("object");
-  //         Object.keys(updatedGarden).forEach((key) => {
-  //           expect(response[key]).to.equal(updatedGarden[key]);
-  //         });
-  //         expect(response.name).to.equal(gardenInfo.name);
-  //         done();
-  //       });
-  //     });
-  //   });
+  context("Updating a Plant in a Garden", () => {
+    it("should update a plant", (done) => {
+      plantInGardenHelpers
+        .updatePlantInGarden(1, { radius: 15 })
+        .then((plant) => {
+          expect(plant.radius).to.equal(15);
+          done();
+        });
+    });
 
-  //   it("should not update a garden with a bad id", (done) => {
-  //     gardenHelpers.updateGardenInfo(-100, { name: "hello" }).catch((err) => {
-  //       expect(err).to.exist;
-  //       done();
-  //     });
-  //   });
-  // });
+    it("should not update a plant with a bad id", (done) => {
+      plantInGardenHelpers
+        .updatePlantInGarden(-100, { name: "hello" })
+        .catch((err) => {
+          expect(err).to.exist;
+          done();
+        });
+    });
+  });
 
-  // context("Deleting a Garden", () => {
-  //   it("should delete a garden", (done) => {
-  //     gardenHelpers.removeGarden(1).then((response) => {
-  //       expect(response).to.be.an("object");
-  //       expect(response.deleted).to.be.true;
-  //       done();
-  //     });
-  //   });
+  context("Deleting a Plant", () => {
+    it("should delete a Plant from a garden", (done) => {
+      plantInGardenHelpers.removePlantInGarden(1).then((response) => {
+        expect(response).to.be.an("object");
+        expect(response.deleted).to.be.true;
+        done();
+      });
+    });
 
-  //   it("should not delete a garden with a bad id", (done) => {
-  //     gardenHelpers.removeGarden(-100).catch((err) => {
-  //       expect(err).to.exist;
-  //       done();
-  //     });
-  //   });
-  // });
+    it("should not delete a plant with a bad id", (done) => {
+      plantInGardenHelpers.removePlantInGarden(-100).catch((err) => {
+        expect(err).to.exist;
+        done();
+      });
+    });
+  });
 });
