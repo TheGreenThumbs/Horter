@@ -5,11 +5,12 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint"
+      "pre-commit": "pretty-quick --staged && npm run lint",
+      "pre-push": "npm test"
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive --exit",
     "lint": "eslint --fix --ignore-path .eslintignore .",
     "build": "webpack-dev-server --mode development",
     "prestart-dev": "webpack --mode development",
