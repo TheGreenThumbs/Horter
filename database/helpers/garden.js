@@ -76,29 +76,9 @@ const removeGarden = (id) =>
       });
   });
 
-/**
- * Removes a plant in a garden currently errors if no plant found
- *  and returns {deleted: true} if it is deleted
- *  currently doesn't work, should probably move this
- * @param {Integer} id id of plant in garden to be deleted
- * @returns {Object} Error if no plant found or {deleted: true}
- */
-const removePlantInGarden = (id) =>
-  new Promise((resolve, reject) => {
-    PlantInGarden.destroy({ where: { id } }) // eslint-disable-line
-      .then((rows) => {
-        if (rows <= 0) throw new Error("Plant doesn't exist");
-        resolve({ deleted: true });
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-
 module.exports = {
   createGarden,
   findGardenById,
   updateGardenInfo,
   removeGarden,
-  removePlantInGarden,
 };
