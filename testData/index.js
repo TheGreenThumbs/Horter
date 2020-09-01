@@ -1,16 +1,14 @@
-const { models, associations } = require("../database");
+const { models } = require("../database");
 
-const { Garden } = models;
+const { Garden, PlantInGarden } = models;
 
 /**
  * Fills the database with dummy data
  */
 const fillDatabaseWithDummyData = () =>
   new Promise((resolve, reject) => {
-    associations();
     Garden.create({
       name: "Max Garden",
-      id_use: 1,
       width: 15,
       length: 15,
       lat: -90,
@@ -22,7 +20,6 @@ const fillDatabaseWithDummyData = () =>
       .then(() =>
         Garden.create({
           name: "Jaz Garden",
-          id_use: 2,
           width: 15,
           length: 15,
           lat: -90,
@@ -34,7 +31,6 @@ const fillDatabaseWithDummyData = () =>
       .then(() =>
         Garden.create({
           name: "Lorie Garden",
-          id_use: 3,
           width: 15,
           length: 15,
           lat: -90,
@@ -47,7 +43,6 @@ const fillDatabaseWithDummyData = () =>
       .then(() =>
         Garden.create({
           name: "Daniel Garden",
-          id_use: 4,
           width: 15,
           length: 15,
           lat: -90,
@@ -55,6 +50,30 @@ const fillDatabaseWithDummyData = () =>
           photo:
             "https://www.bhgre.com/bhgrelife/wp-content/uploads/2016/06/SmallGardens_featuredimage.png",
           zone: 5,
+        })
+      )
+      .then(() =>
+        PlantInGarden.create({
+          position_x: 1,
+          position_y: 1,
+          radius: 1,
+          gardenId: 1,
+        })
+      )
+      .then(() =>
+        PlantInGarden.create({
+          position_x: 1,
+          position_y: 1,
+          radius: 1,
+          gardenId: 1,
+        })
+      )
+      .then(() =>
+        PlantInGarden.create({
+          position_x: 1,
+          position_y: 1,
+          radius: 1,
+          gardenId: 2,
         })
       )
       .then(() => resolve("success"))
