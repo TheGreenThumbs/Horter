@@ -24,8 +24,8 @@ const models = {
 // A function that sets up all the model associations, so we can drop the database
 //  while testing and then just call this function to reset all the associations
 const associations = () => {
-  models.Garden.hasMany(models.PlantInGarden);
-  models.PlantInGarden.hasOne(models.Garden);
+  models.Garden.hasMany(models.PlantInGarden, { as: "plants" });
+  models.PlantInGarden.belongsTo(models.Garden);
 };
 associations();
 

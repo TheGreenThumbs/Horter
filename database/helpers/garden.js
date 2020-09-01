@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const { Garden, PlantInGarden } = models;
+const { Garden } = models;
 
 /**
  * Create a garden, will need to be modified to be owned by a user
@@ -28,7 +28,7 @@ const findGardenById = (id) =>
     Garden.findOne({
       where: { id },
       rejectOnEmpty: true,
-      include: PlantInGarden,
+      include: "plants",
     })
       .then((garden) => {
         resolve(garden);
