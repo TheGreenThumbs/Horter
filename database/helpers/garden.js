@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const { Garden } = models;
+const { Garden, PlantInGarden } = models;
 
 /**
  * Create a garden, will need to be modified to be owned by a user
@@ -25,30 +25,13 @@ const createGarden = (info) =>
  */
 const findGardenById = (id) =>
   new Promise((resolve, reject) => {
-    Garden.findOne({ where: { id }, rejectOnEmpty: true })
+    Garden.findOne({
+      where: { id },
+      rejectOnEmpty: true,
+      include: PlantInGarden,
+    })
       .then((garden) => {
         resolve(garden);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-
-/**
- * Add a plant to a garden, doesn't work until plants table exists
- *  will throw an error if the garden isn't found
- * @param {Integer} id garden id to add the plant to
- * @param {Object} info information about the new plant
- * @returns {Plant} Plant Info or an Error if garden isn't found
- */
-const addPlantToGarden = (id, info) =>
-  new Promise((resolve, reject) => {
-    findGardenById(id)
-      .then((garden) => {
-        return garden.createPlantInGarden({ ...info });
-      })
-      .then((plant) => {
-        resolve(plant);
       })
       .catch((err) => {
         reject(err);
@@ -68,25 +51,6 @@ const updateGardenInfo = (id, info) =>
       .then(([rows, gardens]) => {
         if (rows <= 0) throw new Error("Garden doesn't exist");
         resolve(gardens[0]);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-
-/**
- * Update the info for a plant in a garden, throws an error if not found
- *  Currently doesn't work, should probably move this
- * @param {Integer} id id of a plant in a garden
- * @param {Object} info the information about the plant to update
- * @returns {Plant} The updated plant
- */
-const updatePlantInGarden = (id, info) =>
-  new Promise((resolve, reject) => {
-    PlantInGarden.update({ ...info }, { where: { id }, returning: true }) // eslint-disable-line
-      .then(({ rows, plant }) => {
-        if (rows <= 0) throw new Error("Plant doesn't exist");
-        resolve(plant);
       })
       .catch((err) => {
         reject(err);
@@ -134,9 +98,7 @@ const removePlantInGarden = (id) =>
 module.exports = {
   createGarden,
   findGardenById,
-  addPlantToGarden,
   updateGardenInfo,
-  updatePlantInGarden,
   removeGarden,
   removePlantInGarden,
 };
