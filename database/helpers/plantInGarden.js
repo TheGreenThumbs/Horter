@@ -24,6 +24,38 @@ const addPlantToGarden = (id, info) =>
   });
 
 /**
+ * Finds all the plants a user has in their garden only returns unique plants
+ * @param {Integer} id id of user to find plants in garden by
+ * @returns {Array} Plants in Gardens belonging to user
+ */
+// TODO: Make this work once plants table exists
+const getAllPlantsInGarden = (id) =>
+  new Promise((resolve, reject) => {
+    // eslint-disable-line
+    User.findOne({ where: { id } }) // eslint-disable-line
+      .then((user) => {
+        return user.getPlantInGarden({});
+      })
+      .then((plants) => {
+        const unique = [];
+        const uniquePlants = plants.filter((plant) => {
+          if (!unique.includes(plant.plantId)) {
+            unique.push(plant.plantId);
+            return true;
+          }
+          return false;
+        });
+        return Promise.all(uniquePlants.map((plant) => plant.getPlant()));
+      })
+      .then((plantData) => {
+        resolve(plantData);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+
+/**
  * Update the info for a plant in a garden, throws an error if not found
  * @param {Integer} id id of a plant in a garden
  * @param {Object} info the information about the plant to update
@@ -63,4 +95,5 @@ models.exports = {
   addPlantToGarden,
   updatePlantInGarden,
   removePlantInGarden,
+  getAllPlantsInGarden,
 };
