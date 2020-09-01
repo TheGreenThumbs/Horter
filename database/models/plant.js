@@ -6,10 +6,11 @@ const { DataTypes } = require("sequelize");
  * @returns a garden table object
  */
 const plantFactory = (sequelize) => {
-  sequelize.define("plant", {
+  return sequelize.define("plant", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
+      primaryKey: true,
     },
     id_trefle: {
       type: DataTypes.INTEGER,
@@ -74,6 +75,4 @@ const plantFactory = (sequelize) => {
   });
 };
 
-module.exports = {
-  plantFactory,
-};
+module.exports = plantFactory;
