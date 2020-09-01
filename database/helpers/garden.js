@@ -65,9 +65,9 @@ const addPlantToGarden = (id, info) =>
 const updateGardenInfo = (id, info) =>
   new Promise((resolve, reject) => {
     Garden.update({ ...info }, { where: { id }, returning: true })
-      .then(({ rows, garden }) => {
+      .then(([rows, gardens]) => {
         if (rows <= 0) throw new Error("Garden doesn't exist");
-        resolve(garden);
+        resolve(gardens[0]);
       })
       .catch((err) => {
         reject(err);

@@ -54,4 +54,44 @@ describe("Garden Database Helpers", () => {
       });
     });
   });
+
+  context("Updating a Garden", () => {
+    it("should update a garden", (done) => {
+      gardenHelpers.findGardenById(1).then((gardenInfo) => {
+        const updatedGarden = { width: 1, length: 1 };
+        gardenHelpers.updateGardenInfo(1, updatedGarden).then((response) => {
+          expect(response).to.be.an("object");
+          Object.keys(updatedGarden).forEach((key) => {
+            expect(response[key]).to.equal(updatedGarden[key]);
+          });
+          expect(response.name).to.equal(gardenInfo.name);
+          done();
+        });
+      });
+    });
+
+    it("should not update a garden with a bad id", (done) => {
+      gardenHelpers.updateGardenInfo(-100, { name: "hello" }).catch((err) => {
+        expect(err).to.exist;
+        done();
+      });
+    });
+  });
+
+  context("Deleting a Garden", () => {
+    it("should delete a garden", (done) => {
+      gardenHelpers.removeGarden(1).then((response) => {
+        expect(response).to.be.an("object");
+        expect(response.deleted).to.be.true;
+        done();
+      });
+    });
+
+    it("should not delete a garden with a bad id", (done) => {
+      gardenHelpers.removeGarden(-100).catch((err) => {
+        expect(err).to.exist;
+        done();
+      });
+    });
+  });
 });
