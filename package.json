@@ -5,7 +5,8 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint"
+      "pre-commit": "pretty-quick --staged && npm run lint",
+      "pre-push": "npm test"
     }
   },
   "scripts": {
