@@ -1,6 +1,7 @@
 <template>
   <div>
     <navigation></navigation>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
   name: "App",
   router,
   components: {
-     navigation: Navigation
+    navigation: Navigation,
   },
 };
 </script>
