@@ -39,6 +39,7 @@ module.exports = {
       showErrors: true,
       cache: true,
       template: join(__dirname, "/client/src/index.html"),
+      favicon: join(__dirname, "/client/src/assets/horterFavicon.png"),
     }),
     new VueLoaderPlugin(),
   ],
