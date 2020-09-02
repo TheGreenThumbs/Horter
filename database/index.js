@@ -28,6 +28,8 @@ const models = {
 const associations = () => {
   models.Garden.hasMany(models.PlantInGarden, { as: "plants" });
   models.PlantInGarden.belongsTo(models.Garden);
+  models.Plant.hasMany(models.PlantInGarden, { as: "plants" });
+  models.PlantInGarden.belongsTo(models.Plant);
 };
 associations();
 
