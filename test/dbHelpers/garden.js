@@ -8,7 +8,9 @@ const { expect } = chai;
 describe("Garden Database Helpers", () => {
   before("Reset the DB", (done) => {
     sequelize.sync({ force: true }).then(() => {
-      fillDatabaseWithDummyData().then(() => done());
+      fillDatabaseWithDummyData()
+        .then(() => done())
+        .catch((err) => done(err));
     });
   });
 
