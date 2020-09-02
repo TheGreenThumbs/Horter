@@ -90,16 +90,16 @@ export default {
     },
     collisionCheck: function (curr, other) {
       for (
-        let i = curr.left;
-        i < curr.left + curr.width;
-        i += this.gardenScale
+        let i = curr.left; // Start with the left of the current one
+        i <= curr.left + curr.width; // Keep checking until you hit the end
+        i += this.gardenScale // Increment check by gardenScale
       ) {
         console.log("checks", i);
         if (
           this.inRange(
             i,
-            this.plantScale(other.position_x),
-            this.plantScale(other.position_x + other.radius)
+            this.plantScale(other.position_x + 1),
+            this.plantScale(other.position_x + other.radius - 1)
           )
         ) {
           console.log("collide");
