@@ -70,5 +70,22 @@ export default {
       });
     },
   },
+  mounted() {
+    this.$nextTick(function () {
+      axios({
+        method: "GET",
+        url: "/garden/one",
+        params: {
+          id: 1,
+        },
+      })
+        .then(({ data }) => {
+          this.plantList = data.plants;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+  },
 };
 </script>
