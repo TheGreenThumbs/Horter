@@ -19,6 +19,7 @@ import router from "../router";
 import GardenLayout from "./GardenLayout.vue";
 export default {
   name: "App",
+  router,
   components: {
     "garden-layout": GardenLayout,
   },
