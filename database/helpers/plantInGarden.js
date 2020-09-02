@@ -9,9 +9,11 @@ const { PlantInGarden } = models;
  * @param {Object} info information about the new plant
  * @returns {Plant} Plant Info or an Error if garden isn't found
  */
-const addPlantToGarden = (id, info) =>
+
+// also add another parameter for plant id.
+const addPlantToGarden = (id, info, plantId) =>
   new Promise((resolve, reject) => {
-    PlantInGarden.create({ ...info, gardenId: id })
+    PlantInGarden.create({ ...info, gardenId: id, plantId })
       .then((plant) => {
         resolve(plant);
       })
@@ -25,7 +27,7 @@ const addPlantToGarden = (id, info) =>
  * @param {Integer} id id of user to find plants in garden by
  * @returns {Array} Plants in Gardens belonging to user
  */
-// TODO: Make this work once plants table exists
+// TODO: Make this work once plants and Users table exists
 const getAllPlantsInGarden = (id) =>
   new Promise((resolve, reject) => {
     // eslint-disable-line

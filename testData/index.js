@@ -82,6 +82,7 @@ const fillDatabaseWithDummyData = () =>
           position_y: 1,
           radius: 1,
           gardenId: 1,
+          plantId: 1,
         })
       )
       .then(() =>
@@ -90,6 +91,7 @@ const fillDatabaseWithDummyData = () =>
           position_y: 1,
           radius: 1,
           gardenId: 1,
+          plantId: 1,
         })
       )
       .then(() =>
@@ -98,6 +100,7 @@ const fillDatabaseWithDummyData = () =>
           position_y: 1,
           radius: 1,
           gardenId: 2,
+          plantId: 1,
         })
       )
       .then(() => resolve("success"))
