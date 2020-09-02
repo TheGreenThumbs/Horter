@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const plantInGarden = require("./plantInGarden");
+// const plantInGarden = require("./plantInGarden");
 
 const { Garden } = models;
 
