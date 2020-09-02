@@ -1,12 +1,25 @@
 <template>
-  <div class="divclass">
-    <ul v-for="(m, index) in messages" v-bind:key="index">
-      <div>
-        <li>{{ m[0] }}: {{ m[1] }}</li>
+  <section>
+    <b-sidebar
+      type="is-light"
+      :fullheight="fullheight"
+      :fullwidth="fullwidth"
+      :overlay="overlay"
+      :left="left"
+      v-model="open"
+    >
+      <div class="divclass">
+        <ul v-for="(m, index) in messages" v-bind:key="index">
+          <div>
+            <li>{{ m[0] }}: {{ m[1] }}</li>
+          </div>
+        </ul>
+        <message v-on:submit:message="submitMessage" />
       </div>
-    </ul>
-    <message v-on:submit:message="submitMessage" />
-  </div>
+    </b-sidebar>
+    <!-- Next line is Hamburger menu button -->
+    <b-button @click="open = true"><b-icon icon="menu"></b-icon></b-button>
+  </section>
 </template>
 
 <script>
@@ -20,6 +33,12 @@ export default {
   data: function () {
     return {
       messages: [["ChatBot", "Hey there! How can I help?"]],
+      open: false,
+      overlay: true,
+      fullheight: true,
+      fullwidth: false,
+      left: false,
+      rounded: true,
     };
   },
   methods: {

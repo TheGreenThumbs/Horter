@@ -1,7 +1,9 @@
 <template>
   <div>
     <navigation></navigation>
-    <chatbot></chatbot>
+    <div>
+      <chatbot></chatbot>
+    </div>
   </div>
 </template>
 
