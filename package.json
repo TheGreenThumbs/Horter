@@ -14,7 +14,8 @@
     "lint": "eslint --fix --ignore-path .eslintignore .",
     "build": "webpack-dev-server --mode development",
     "prestart-dev": "webpack --mode development",
-    "start-dev": "nodemon server/index.js"
+    "start-dev": "nodemon server/index.js",
+    "build-watch": "webpack --watch --mode development"
   },
   "repository": {
     "type": "git",

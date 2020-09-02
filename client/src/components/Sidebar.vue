@@ -49,7 +49,9 @@
                   >
                     <b-icon icon="dots-vertical" slot="trigger"></b-icon>
                     <b-dropdown-item aria-role="listitem"
-                      >Garden1</b-dropdown-item
+                      ><router-link to="/garden"
+                        >Garden1</router-link
+                      ></b-dropdown-item
                     >
                     <b-dropdown-item aria-role="listitem"
                       >Garden2</b-dropdown-item
