@@ -1,5 +1,7 @@
 const { models } = require("../index");
 
+const plantInGarden = require("./plantInGarden");
+
 const { Garden } = models;
 
 /**
@@ -23,12 +25,24 @@ const createGarden = (info) =>
  * @param {Integer} id garden id to locate garden by
  * @returns {Garden} Garden Info or an Error if none found
  */
+
+// find a way to also include all of the plant data, not just plantInGarden data
 const findGardenById = (id) =>
   new Promise((resolve, reject) => {
     Garden.findOne({
       where: { id },
       rejectOnEmpty: true,
-      include: "plants",
+      include: [
+        {
+          model: models.PlantInGarden,
+          as: "plants",
+          include: [
+            {
+              model: models.Plant,
+            },
+          ],
+        },
+      ],
     })
       .then((garden) => {
         resolve(garden);
