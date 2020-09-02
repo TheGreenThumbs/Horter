@@ -6,6 +6,10 @@ const {
   removeGarden,
 } = require("../../database/helpers/garden");
 
+const { createPlant } = require("../../database/helpers/plant");
+
+const { addPlantToGarden } = require("../../database/helpers/plantInGarden");
+
 const gardenInfo = Router();
 /**
  * This route accepts a garden id from the client and sends the info for that garden from the DB
@@ -15,16 +19,37 @@ const gardenInfo = Router();
 gardenInfo.get("/one", (req, res) => {
   const { id } = req.query;
   findGardenById(id).then((garden) => {
+    console.log(garden);
     res.send(garden);
   });
 });
 
-//  POST/gardId/plantId add a plant to garden
-// waiting until PLANT table is complete
+/**
+ * This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates
+ * @param {object} req.body.plant
+ * @param {number} req.body.gardenId
+ * @returns no return yet specified
+ */
 
-// gardenInfo.post("/addplant", (req, res) => {
-
-// });
+gardenInfo.post("/addplant", (req, res) => {
+  const { plant, gardenId } = req.body;
+  createPlant(plant).then((data) => {
+    const plantId = data.dataValues.id;
+    addPlantToGarden(
+      gardenId,
+      {
+        position_x: 1,
+        position_y: 1,
+        radius: 1,
+      },
+      plantId
+    )
+      .then(() => {
+        res.send("plant created");
+      })
+      .catch((err) => console.log(err));
+  });
+});
 
 /**
  * This route handles requests to update user information for a garden
@@ -42,7 +67,6 @@ gardenInfo.put("/userupdate", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// DELETE/gardId/ remove garden
 gardenInfo.delete("/deletegarden", (req, res) => {
   const { id } = req.body;
   removeGarden(id)
