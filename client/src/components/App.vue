@@ -1,7 +1,11 @@
 <template>
   <div>
     Hello
-    <garden-layout :gardenSize="gardenSize" :plants="plantList"></garden-layout>
+    <garden-layout
+      :selected.sync="selected"
+      :gardenSize="gardenSize"
+      :plants="plantList"
+    ></garden-layout>
   </div>
 </template>
 <script>
@@ -14,9 +18,9 @@ export default {
     return {
       gardenSize: { width: 10, height: 10 },
       plantList: [
-        { position_x: 1, position_y: 2, radius: 1 },
-        { position_x: 4, position_y: 4, radius: 1 },
-        { position_x: 1, position_y: 5, radius: 2 },
+        { position_x: 1, position_y: 2, radius: 2, id: 1 },
+        { position_x: 4, position_y: 4, radius: 2, id: 2 },
+        { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
       selected: -1,
     };
