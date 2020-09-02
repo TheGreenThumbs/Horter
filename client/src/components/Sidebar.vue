@@ -21,9 +21,9 @@
           <b-menu-list label="Horter"></b-menu-list>
           <b-menu-list label="Menu">
             <b-menu-item icon="home" label="Home"></b-menu-item>
-            <b-menu-item icon="list" label="Plant List"></b-menu-item>
+            <b-menu-item icon="sprout" label="Plant List"></b-menu-item>
             <b-menu-item
-              icon="list-alt"
+              icon="sprout-outline"
               label="Wish List"
               disabled
             ></b-menu-item>
