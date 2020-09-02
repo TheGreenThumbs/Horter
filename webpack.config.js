@@ -25,7 +25,7 @@ module.exports = {
               sassOptions: {
                 indentedSyntax: true,
               },
-              additionalData: '@import "/client/helpers/variables.sass"',
+              additionalData: '@import "/client/src/helpers/variables.sass"',
             },
           },
         ],
