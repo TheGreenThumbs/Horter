@@ -1,11 +1,7 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/garden">Garden Main</router-link>
-    </nav>
-    <h1>{{ msg }}</h1>
-    <router-view></router-view>
     <navigation></navigation>
+    <router-view></router-view>
   </div>
 </template>
 

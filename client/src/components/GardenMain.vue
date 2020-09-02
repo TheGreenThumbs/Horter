@@ -12,6 +12,13 @@
       :plants="plantList"
       v-on:plant-moved="plantMoved"
     ></garden-layout>
+    <h2>PLANT NAME</h2>
+    <p>
+      Florem ipsum sneezeweed peruvian lily dune helleborine plumed thistle.
+      Scabious st john’s wort holy grass false beard.
+    </p>
+    <button>Add Plant</button>
+    <button>Edit Garden</button>
   </div>
 </template>
 
