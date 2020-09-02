@@ -43,8 +43,8 @@ export default {
       validator: (list) =>
         list.every(
           (plant) =>
-            !!plant.position_x &&
-            !!plant.position_y &&
+            typeof plant.position_x === "number" &&
+            typeof plant.position_y === "number" &&
             !!plant.radius &&
             !!plant.id
         ),
@@ -75,6 +75,11 @@ export default {
     plantMoved: function (loc) {
       console.log(loc);
       console.log(this.selected);
+      const plantInfo = {
+        position_y: loc.top / this.gardenScale,
+        position_x: loc.left / this.gardenScale,
+      };
+      this.$emit("plant-moved", plantInfo);
       let i = 0;
       while (i < this.plants.length) {
         if (this.plants[i].id !== this.selected) {
@@ -83,9 +88,25 @@ export default {
         i++;
       }
     },
-    collisionCheck: (curr, other) => {
-      // if()
+    collisionCheck: function (curr, other) {
+      for (
+        let i = curr.left;
+        i < curr.left + curr.width;
+        i += this.gardenScale
+      ) {
+        console.log("checks", i);
+        if (
+          this.inRange(
+            i,
+            this.plantScale(other.position_x),
+            this.plantScale(other.position_x + other.radius)
+          )
+        ) {
+          console.log("collide");
+        }
+      }
     },
+    inRange: (x, start, end) => (x - start) * (x - end) <= 0,
   },
   components: {
     VueDragResize,

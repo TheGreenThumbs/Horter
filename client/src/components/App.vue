@@ -5,6 +5,7 @@
       :selected.sync="selected"
       :gardenSize="gardenSize"
       :plants="plantList"
+      v-on:plant-moved="plantMoved"
     ></garden-layout>
   </div>
 </template>
@@ -24,6 +25,16 @@ export default {
       ],
       selected: -1,
     };
+  },
+  methods: {
+    plantMoved: function (info) {
+      this.plantList.forEach((plant, i) => {
+        if (plant.id === this.selected) {
+          console.log({ ...plant, ...info });
+          this.$set(this.plantList, i, { ...plant, ...info });
+        }
+      });
+    },
   },
 };
 </script>
