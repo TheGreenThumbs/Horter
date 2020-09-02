@@ -52,7 +52,7 @@ const fillDatabaseWithDummyData = () =>
           zone: 5,
         })
       )
-      .then(() => {
+      .then(() =>
         Plant.create({
           id_trefle: 190734,
           slug: "vaccinium-angustifolium",
@@ -74,8 +74,8 @@ const fillDatabaseWithDummyData = () =>
           soil_salinity: null,
           soil_texture: null,
           soil_humidity: null,
-        });
-      })
+        })
+      )
       .then(() =>
         PlantInGarden.create({
           position_x: 1,
