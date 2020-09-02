@@ -1,6 +1,10 @@
 <template>
   <div>
-    Hello
+    <nav>
+      <router-link to="/garden">Garden Main</router-link>
+    </nav>
+    <h1>{{ msg }}</h1>
+    <router-view></router-view>
     <garden-layout
       :selected.sync="selected"
       :gardenSize="gardenSize"
@@ -9,9 +13,12 @@
     ></garden-layout>
   </div>
 </template>
+
 <script>
+import router from "../router";
 import GardenLayout from "./GardenLayout.vue";
 export default {
+  name: "App",
   components: {
     "garden-layout": GardenLayout,
   },
@@ -24,6 +31,7 @@ export default {
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
       selected: -1,
+      msg: "Welcome to Horter",
     };
   },
   methods: {
