@@ -8,6 +8,7 @@ Vue.use(Buefy, {
   defaultIconPack: "mdi",
 });
 
+
 new Vue({
   render: (create) => create(App),
 }).$mount("#app");
