@@ -3,6 +3,7 @@
     <VueDragResize
       v-for="plant in plants"
       :key="plant.id"
+      :ref="plant.id"
       class="plant"
       :isResizable="false"
       :parentLimitation="true"
@@ -91,11 +92,19 @@ export default {
         i++;
       }
       console.log("COLLIDED:", collide);
-      const plantInfo = {
-        position_y: loc.top / this.gardenScale,
-        position_x: loc.left / this.gardenScale,
-      };
-      this.$emit("plant-moved", plantInfo);
+      if (!collide) {
+        const plantInfo = {
+          position_y: loc.top / this.gardenScale,
+          position_x: loc.left / this.gardenScale,
+        };
+        console.log("plant info", plantInfo);
+        this.$emit("plant-moved", plantInfo);
+      } else {
+        const plantInfo = this.plants.filter((i) => i.id === this.selected)[0];
+        console.log(this.plantScale(plantInfo.position_y));
+        document.querySelector(".active").style.top = 0;
+        document.querySelector(".active").style.left = 0;
+      }
     },
   },
   components: {

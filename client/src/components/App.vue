@@ -20,17 +20,17 @@ export default {
       gardenSize: { width: 10, height: 10 },
       plantList: [
         { position_x: 1, position_y: 2, radius: 2, id: 1 },
-        { position_x: 4, position_y: 4, radius: 2, id: 2 },
+        { position_x: 5, position_y: 4, radius: 2, id: 2 },
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
       selected: -1,
     };
   },
   methods: {
-    plantMoved: function (info) {
+    plantMoved: function (info, collide) {
       this.plantList.forEach((plant, i) => {
         if (plant.id === this.selected) {
-          console.log({ ...plant, ...info });
+          const newPlant = { ...plant, ...info };
           this.$set(this.plantList, i, { ...plant, ...info });
         }
       });

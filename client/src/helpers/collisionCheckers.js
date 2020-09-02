@@ -15,6 +15,7 @@ export const collisionCheckHorizontal = (curr, other, scale) => {
       )
     ) {
       // There has been a collision Horizantally
+      console.log("collided");
       return true;
     }
   }
