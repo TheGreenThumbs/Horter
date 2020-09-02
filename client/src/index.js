@@ -1,9 +1,13 @@
 import Vue from "vue";
 import Buefy from "buefy";
-import App from "./components/App.vue";
 import "buefy/dist/buefy.css";
+import App from "./components/App.vue";
 
-Vue.use(Buefy);
+// Make Buefy and Material Design Icons available to app
+Vue.use(Buefy, {
+  defaultIconPack: "mdi",
+});
+
 
 new Vue({
   render: (create) => create(App),
