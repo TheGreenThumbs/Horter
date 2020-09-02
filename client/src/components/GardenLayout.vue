@@ -24,8 +24,10 @@
 
 <script>
 import VueDragResize from "vue-drag-resize";
-
-// Change this to change everything's size
+import {
+  collisionCheckHorizontal,
+  collisionCheckVertical,
+} from "../helpers/collisionCheckers";
 
 export default {
   name: "gardenLayout",
@@ -75,38 +77,26 @@ export default {
     plantMoved: function (loc) {
       console.log(loc);
       console.log(this.selected);
+      let i = 0;
+      let collide = false;
+      while (i < this.plants.length) {
+        if (this.plants[i].id !== this.selected) {
+          if (
+            collisionCheckHorizontal(loc, this.plants[i], this.gardenScale) &&
+            collisionCheckVertical(loc, this.plants[i], this.gardenScale)
+          ) {
+            collide = true;
+          }
+        }
+        i++;
+      }
+      console.log("COLLIDED:", collide);
       const plantInfo = {
         position_y: loc.top / this.gardenScale,
         position_x: loc.left / this.gardenScale,
       };
       this.$emit("plant-moved", plantInfo);
-      let i = 0;
-      while (i < this.plants.length) {
-        if (this.plants[i].id !== this.selected) {
-          this.collisionCheck(loc, this.plants[i]);
-        }
-        i++;
-      }
     },
-    collisionCheck: function (curr, other) {
-      for (
-        let i = curr.left; // Start with the left of the current one
-        i <= curr.left + curr.width; // Keep checking until you hit the end
-        i += this.gardenScale // Increment check by gardenScale
-      ) {
-        console.log("checks", i);
-        if (
-          this.inRange(
-            i,
-            this.plantScale(other.position_x + 1),
-            this.plantScale(other.position_x + other.radius - 1)
-          )
-        ) {
-          console.log("collide");
-        }
-      }
-    },
-    inRange: (x, start, end) => (x - start) * (x - end) <= 0,
   },
   components: {
     VueDragResize,

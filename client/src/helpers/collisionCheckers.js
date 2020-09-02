@@ -1,4 +1,4 @@
-export const inRange = (x, start, end) => (x - start) * (x - end) <= 0;
+const inRange = (x, start, end) => (x - start) * (x - end) <= 0;
 
 export const collisionCheckHorizontal = (curr, other, scale) => {
   for (
