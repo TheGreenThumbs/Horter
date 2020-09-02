@@ -1,14 +1,17 @@
 <template>
-  <hamburger></hamburger>
+  <div>
+    <!-- Render hamburger menu button and sidebar menu -->
+    <sidebar></sidebar>
+  </div>
 </template>
 
 <script>
-import Hamburger from "./Hamburger.vue";
+import Sidebar from "./Sidebar.vue";
 
 export default {
   name: "navigation",
   components: {
-    hamburger: Hamburger,
+    sidebar: Sidebar,
   },
 };
 </script>
