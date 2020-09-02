@@ -8,7 +8,11 @@ const {
 
 const { createPlant } = require("../../database/helpers/plant");
 
-const { addPlantToGarden } = require("../../database/helpers/plantInGarden");
+const {
+  addPlantToGarden,
+  updatePlantInGarden,
+  removePlantInGarden,
+} = require("../../database/helpers/plantInGarden");
 
 const gardenInfo = Router();
 /**
@@ -67,6 +71,27 @@ gardenInfo.put("/userupdate", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+/**
+ * this route accepts a plantInGarden id from the req body and deletes that enrty in the plantInGarden table
+ * @param {number} req.body.id
+ */
+gardenInfo.delete("/deleteplant", (req, res) => {
+  const { id } = req.body;
+  removePlantInGarden(id)
+    .then(() => {
+      console.log("removed!");
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+/**
+ * This route accepts an id of a garden to delete, then deletes the garden
+ * @param {number} req.body.id
+ */
 gardenInfo.delete("/deletegarden", (req, res) => {
   const { id } = req.body;
   removeGarden(id)
@@ -74,6 +99,25 @@ gardenInfo.delete("/deletegarden", (req, res) => {
       res.sendStatus(204);
     })
     .catch((err) => console.log(err));
+});
+
+/**
+ * This route updates data about the plant in the garden, namely its coordinates or radius
+ * @param {number} id of the plant_in_garden to be updated
+ * @param {object} info the specific items to be updated in the DB entry
+ */
+
+gardenInfo.put("/locationdata", (req, res) => {
+  const { id, info } = req.body;
+  updatePlantInGarden(id, info)
+    .then(() => {
+      console.log("updated plant in garden");
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = {
