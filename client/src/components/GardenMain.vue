@@ -1,5 +1,11 @@
 <template>
   <div>
+    <h1>GARDEN NAME</h1>
+    <p>
+      Florem ipsum sneezeweed peruvian lily dune helleborine plumed thistle.
+      Scabious st john’s wort holy grass false beard. Bloom glory lily drumstick
+      gentian buttercup cosmos foxtail lily
+    </p>
     <garden-layout
       :selected.sync="selected"
       :gardenSize="gardenSize"
@@ -11,6 +17,7 @@
 
 <script>
 import GardenLayout from "./GardenLayout.vue";
+import axios from "axios";
 
 export default {
   name: "GardenMain",
