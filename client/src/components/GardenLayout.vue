@@ -13,6 +13,10 @@
       :stickSize="0"
       :style="plantBorderRadius(plant.radius)"
       @clicked="selectPlant(plant.id)"
+      @dragstop="plantMoved"
+      :snapToGrid="true"
+      :gridX="gardenScale"
+      :gridY="gardenScale"
     >
     </VueDragResize>
   </div>
@@ -22,10 +26,12 @@
 import VueDragResize from "vue-drag-resize";
 
 // Change this to change everything's size
-const gardenScale = 20;
 
 export default {
   name: "gardenLayout",
+  data() {
+    return { gardenScale: 20 };
+  },
   props: {
     gardenSize: {
       validator: (info) => {
@@ -51,8 +57,8 @@ export default {
   },
   computed: {
     gardenStyles: function () {
-      const height = this.gardenSize.height * gardenScale;
-      const width = this.gardenSize.width * gardenScale;
+      const height = this.plantScale(this.gardenSize.height);
+      const width = this.plantScale(this.gardenSize.width);
       return { height: `${height}px`, width: `${width}px` };
     },
   },
@@ -60,9 +66,25 @@ export default {
     plantBorderRadius: function (radius) {
       return { "border-radius": `${this.plantScale(radius) / 2}px` };
     },
-    plantScale: (num) => num * gardenScale,
+    plantScale: function (num) {
+      return num * this.gardenScale;
+    },
     selectPlant: function (id) {
       this.$emit("update:selected", id);
+    },
+    plantMoved: function (loc) {
+      console.log(loc);
+      console.log(this.selected);
+      let i = 0;
+      while (i < this.plants.length) {
+        if (this.plants[i].id !== this.selected) {
+          this.collisionCheck(loc, this.plants[i]);
+        }
+        i++;
+      }
+    },
+    collisionCheck: (curr, other) => {
+      // if()
     },
   },
   components: {
