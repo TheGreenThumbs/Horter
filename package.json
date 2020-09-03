@@ -12,7 +12,8 @@
   "scripts": {
     "test": "mocha --recursive --exit",
     "lint": "eslint --fix --ignore-path .eslintignore .",
-    "build": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "build-dev": "webpack-dev-server --mode development",
     "prestart-dev": "webpack --mode development",
     "start-dev": "nodemon server/index.js"
   },
@@ -33,6 +34,7 @@
     "buefy": "^0.9.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "eslint-plugin-mocha": "^8.0.0",
     "express": "^4.17.1",
