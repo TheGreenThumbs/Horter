@@ -15,19 +15,42 @@
         :plants="plantList"
         v-on:plant-moved="plantMoved"
       ></garden-layout>
-      <article class="media">
+      <article v-if="selected > 0" class="media">
         <figure class="media-left">
           <p class="image is-64x64">
-            <img src="https://bulma.io/images/placeholders/128x128.png" />
+            <img :src="selectedPlant.photo_url" />
           </p>
         </figure>
         <div class="media-content">
           <div class="content">
-            <p>
-              <strong>PLANT NAME</strong><br />
-              Florem ipsum sneezeweed peruvian lily dune helleborine plumed
-              thistle. Scabious st john’s wort holy grass false beard.
-            </p>
+            <strong>{{ selectedPlant.common_name }}</strong>
+            <div class="columns is-mobile is-8">
+              <div class="column is-one-quarter">PH</div>
+              <div class="column">
+                {{ selectedPlant.ph_min }} - {{ selectedPlant.ph_max }}
+              </div>
+            </div>
+            <div class="columns is-mobile is-8">
+              <div class="column is-one-quarter">Light</div>
+              <div class="column">
+                <b-progress :value="30" type="is-warning"></b-progress>
+              </div>
+            </div>
+            <div class="columns is-mobile is-8">
+              <div class="column is-one-quarter">Rainfall</div>
+              <div class="column">
+                {{ Math.floor(selectedPlant.precipitation_min / 25.4) }}" -
+                {{ Math.floor(selectedPlant.precipitation_max / 25.4) }}"
+              </div>
+            </div>
+            <div v-if="selectedPlant.temp_min" class="columns is-mobile is-8">
+              <div class="column">Temperature Minimum</div>
+              <div class="column">{{ selectedPlant.temp_min }}°F</div>
+            </div>
+            <div v-if="selectedPlant.temp_max" class="columns is-mobile is-8">
+              <div class="column is-one-quarter">Temp Max</div>
+              <div class="column">{{ selectedPlant.temp_max }}°F</div>
+            </div>
           </div>
         </div>
       </article>
@@ -59,6 +82,11 @@ export default {
       selected: -1,
       msg: "Garden Main Page",
     };
+  },
+  computed: {
+    selectedPlant: function () {
+      return this.plantList.filter((i) => i.id === this.selected)[0].plant;
+    },
   },
   methods: {
     plantMoved: function (info, collide) {
