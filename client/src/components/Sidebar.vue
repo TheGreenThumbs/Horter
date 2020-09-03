@@ -25,7 +25,7 @@
             <b-menu-item
               icon="sprout-outline"
               label="Wish List"
-              disabled
+              @click="$router.push('wish')"
             ></b-menu-item>
             <b-menu-item
               icon="information-outline"
@@ -56,7 +56,7 @@
                     <b-dropdown-item aria-role="listitem"
                       >Garden2</b-dropdown-item
                     >
-                    <b-dropdown-item aria-role="listitem"
+                    <b-dropdown-item aria-role="listitem" disabled
                       >Garden3</b-dropdown-item
                     >
                   </b-dropdown>
