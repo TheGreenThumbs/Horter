@@ -6,7 +6,6 @@ export const collisionCheckHorizontal = (curr, other, scale) => {
     i <= curr.left + curr.width; // Keep checking until you hit the end
     i += scale // Increment check by gardenScale
   ) {
-    console.log("checks", i);
     if (
       inRange(
         i,
@@ -15,7 +14,6 @@ export const collisionCheckHorizontal = (curr, other, scale) => {
       )
     ) {
       // There has been a collision Horizantally
-      console.log("collided");
       return true;
     }
   }
@@ -28,7 +26,6 @@ export const collisionCheckVertical = (curr, other, scale) => {
     i <= curr.top + curr.height; // Keep checking until you hit the end
     i += scale // Increment check by gardenScale
   ) {
-    console.log("checks", i);
     if (
       inRange(
         i,
