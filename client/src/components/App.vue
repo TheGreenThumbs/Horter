@@ -4,6 +4,7 @@
     <div class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -18,6 +19,13 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
+  },
+  created() {
+    this.$log.debug("test", 123);
+    this.$log.info("test", 456);
+    this.$log.warn("test");
+    this.$log.error("test");
+    this.$log.fatal("test");
   },
 };
 </script>

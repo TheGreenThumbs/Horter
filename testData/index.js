@@ -80,16 +80,16 @@ const fillDatabaseWithDummyData = () =>
         PlantInGarden.create({
           position_x: 1,
           position_y: 1,
-          radius: 1,
+          radius: 3,
           gardenId: 1,
           plantId: 1,
         })
       )
       .then(() =>
         PlantInGarden.create({
-          position_x: 1,
-          position_y: 1,
-          radius: 1,
+          position_x: 5,
+          position_y: 5,
+          radius: 2,
           gardenId: 1,
           plantId: 1,
         })

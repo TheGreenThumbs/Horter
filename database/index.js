@@ -7,7 +7,7 @@ const { gardenFactory, plantFactory, plantInGardenFactory } = factories;
 const dbHost = process.env.DB_HOST || "localhost";
 const dbName = process.env.DB_NAME || "horter";
 const dbUser = process.env.DB_USER || "postgres";
-const dbPass = process.env.DB_PASS || "postgres";
+const dbPass = process.env.DB_PASS || "";
 
 // The Database connection, if you want to see SQL queries turn logging to true
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
