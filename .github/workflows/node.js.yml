@@ -18,7 +18,7 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD:
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: horter
 
     strategy:
@@ -34,3 +34,5 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
+        env:
+          DB_PASS: postgres
