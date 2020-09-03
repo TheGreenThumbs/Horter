@@ -1,4 +1,4 @@
-<!-- Creates/Renders hamburger menu button and sidebar menu -->
+<!-- Renders hamburger menu button and left sidebar menu -->
 
 <template>
   <section>
@@ -21,7 +21,11 @@
           <b-menu-list label="Horter"></b-menu-list>
           <b-menu-list label="Menu">
             <b-menu-item icon="home" label="Home"></b-menu-item>
-            <b-menu-item icon="sprout" label="Plant List"></b-menu-item>
+            <b-menu-item
+              icon="sprout"
+              label="Plant List"
+              disabled
+            ></b-menu-item>
             <b-menu-item
               icon="sprout-outline"
               label="Wish List"
@@ -30,40 +34,16 @@
             <b-menu-item
               icon="information-outline"
               label="New Plant"
+              disabled
             ></b-menu-item>
-            <b-menu-item icon="nature">
+            <b-menu-item icon="account">
               <template slot="label" slot-scope="props">
-                Gardens
+                Friends
                 <b-icon
                   class="is-pulled-right"
                   :icon="props.expanded ? 'menu-down' : 'menu-up'"
                 ></b-icon>
               </template>
-              <b-menu-item icon="nature">
-                <template slot="label">
-                  Gardens
-                  <b-dropdown
-                    aria-role="list"
-                    class="is-pulled-right"
-                    position="is-bottom-left"
-                  >
-                    <b-icon icon="dots-vertical" slot="trigger"></b-icon>
-                    <b-dropdown-item aria-role="listitem"
-                      ><router-link to="/garden"
-                        >Garden1</router-link
-                      ></b-dropdown-item
-                    >
-                    <b-dropdown-item aria-role="listitem"
-                      >Garden2</b-dropdown-item
-                    >
-                    <b-dropdown-item aria-role="listitem" disabled
-                      >Garden3</b-dropdown-item
-                    >
-                  </b-dropdown>
-                </template>
-              </b-menu-item>
-            </b-menu-item>
-            <b-menu-item icon="account" label="Friends">
               <b-menu-item label="Friend1"></b-menu-item>
               <b-menu-item label="Friend2"></b-menu-item>
             </b-menu-item>

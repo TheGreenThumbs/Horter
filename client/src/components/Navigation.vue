@@ -1,17 +1,27 @@
 <template>
-  <div>
-    <!-- Render hamburger menu button and sidebar menu -->
-    <sidebar></sidebar>
-  </div>
+  <section>
+    <sidebar class="left-sidebar"></sidebar>
+    <rightbar class="right-sidebar"></rightbar>
+  </section>
 </template>
 
 <script>
 import Sidebar from "./Sidebar.vue";
+import Rightbar from "./Rightbar.vue";
 
 export default {
   name: "navigation",
   components: {
     sidebar: Sidebar,
+    rightbar: Rightbar,
   },
 };
 </script>
+
+<style>
+.right-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>

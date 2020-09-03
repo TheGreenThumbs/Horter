@@ -26,7 +26,6 @@ export default {
     },
     clearIconClick() {
       this.search = "";
-      alert("Email cleared!");
     },
   },
 };
