@@ -8,7 +8,7 @@ const fillDatabaseWithDummyData = require("../../testData");
 
 const { expect } = chai;
 
-xdescribe("Plant In Garden Database Helpers", () => {
+describe("Plant In Garden Database Helpers", () => {
   before("Reset the DB", (done) => {
     sequelize.sync({ force: true }).then(() => {
       fillDatabaseWithDummyData()

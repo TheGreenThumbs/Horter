@@ -5,7 +5,7 @@ const fillDatabaseWithDummyData = require("../../testData");
 
 const { expect } = chai;
 
-xdescribe("Garden Database Helpers", () => {
+describe("Garden Database Helpers", () => {
   before("Reset the DB", (done) => {
     sequelize.sync({ force: true }).then(() => {
       fillDatabaseWithDummyData()
