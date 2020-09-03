@@ -45,6 +45,7 @@
     "sequelize": "^6.3.4",
     "vue": "^2.6.12",
     "vue-drag-resize": "^1.4.2",
+    "vue-quick-chat": "^1.2.5",
     "vue-router": "^3.4.3",
     "vuejs-logger": "^1.5.4",
     "winston": "^3.3.3"
