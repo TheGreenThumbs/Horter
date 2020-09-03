@@ -21,6 +21,7 @@ export default {
         customClass: "custom-class custom-class-2",
         trapFocus: false,
         "full-screen": false,
+        width: 400,
       });
     },
   },

@@ -42,6 +42,7 @@
     "sequelize": "^6.3.4",
     "vue": "^2.6.12",
     "vue-drag-resize": "^1.4.2",
+    "vue-quick-chat": "^1.2.5",
     "vue-router": "^3.4.3"
   },
   "devDependencies": {

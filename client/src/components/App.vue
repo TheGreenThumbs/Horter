@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation></navigation>
-    <div class="modal">
+    <div class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
   </div>
