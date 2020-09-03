@@ -2,19 +2,20 @@
   <div class="divclass">
     <h2 class="header">My Chat With Chatbot</h2>
     <br />
-    <ul v-for="(m, index) in messages" v-bind:key="index">
-      <div class="message">
-        <li v-if="m[0] === 'ChatBot'" class="message-chatbot">
-          {{ m[0] }}: {{ m[1] }}
-        </li>
-        <li v-else class="message-user">{{ m[0] }}: {{ m[1] }}</li>
+    <div v-for="(m, index) in messages" v-bind:key="index">
+      <div v-if="m[0] === 'ChatBot'" class="message-chatbot">
+        <div class="content-chatbot">{{ m[0] }}: {{ m[1] }}</div>
+      </div>
+      <div v-else class="message-user">
+        <div class="content-user">{{ m[0] }}: {{ m[1] }}</div>
       </div>
       <br />
-    </ul>
+    </div>
     <br />
     <message v-on:submit:message="submitMessage" />
   </div>
 </template>
+
 <script>
 import Message from "./Message.vue";
 export default {
@@ -45,16 +46,24 @@ export default {
   background-color: green;
   border-radius: 10px;
 }
-.message {
-  color: grey;
-}
 .message-chatbot {
-  color: black;
-  text-align: right;
+  background-color: rgb(197, 195, 195);
+  width: 60%;
   padding-right: 30px;
+  border-radius: 10px;
+}
+.content-chatbot {
+  color: black;
 }
 .message-user {
-  color: black;
-  padding-left: 30px;
+  background-color: rgb(81, 68, 255);
+  width: 60%;
+  padding-left: 50px;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+}
+.content-user {
+  color: white;
 }
 </style>
