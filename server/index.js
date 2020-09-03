@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { sequelize } = require("../database");
 const fillDatabaseWithDummyData = require("../testData");
+const logger = require("../winston");
 
 const { app } = require("./app");
 
@@ -18,6 +19,6 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(() => {
   }
 
   app.listen(PORT, () => {
-    console.log(`Server running at: http://localhost:${PORT}/`);
+    logger.info("Server running at: http://localhost:%s", PORT);
   });
 });
