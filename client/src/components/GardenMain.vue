@@ -24,16 +24,37 @@
         <div class="media-content">
           <div class="content">
             <strong>{{ selectedPlant.common_name }}</strong>
+            <div v-if="selectedPlant.duration" class="columns is-mobile is-8">
+              <div class="column is-one-third">Duration</div>
+              <div class="column">
+                {{ selectedPlant.duration }}
+              </div>
+            </div>
             <div class="columns is-mobile is-8">
+              <div class="column is-one-third">Edible</div>
+              <div class="column">
+                {{ selectedPlant.edible ? "Yes" : "No" }}
+              </div>
+            </div>
+            <div class="columns is-mobile is-8">
+              <div class="column is-one-third">Vegetable</div>
+              <div class="column">
+                {{ selectedPlant.vegetable ? "Yes" : "No" }}
+              </div>
+            </div>
+            <div v-if="selectedPlant.ph_min" class="columns is-mobile is-8">
               <div class="column is-one-quarter">PH</div>
               <div class="column">
                 {{ selectedPlant.ph_min }} - {{ selectedPlant.ph_max }}
               </div>
             </div>
-            <div class="columns is-mobile is-8">
+            <div v-if="selectedPlant.light" class="columns is-mobile is-8">
               <div class="column is-one-quarter">Light</div>
               <div class="column">
-                <b-progress :value="30" type="is-warning"></b-progress>
+                <b-progress
+                  :value="selectedPlant.light * 10"
+                  type="is-warning"
+                ></b-progress>
               </div>
             </div>
             <div class="columns is-mobile is-8">
@@ -50,6 +71,54 @@
             <div v-if="selectedPlant.temp_max" class="columns is-mobile is-8">
               <div class="column is-one-quarter">Temp Max</div>
               <div class="column">{{ selectedPlant.temp_max }}°F</div>
+            </div>
+            <div
+              v-if="selectedPlant.soil_nutriments"
+              class="columns is-mobile is-8"
+            >
+              <div class="column is-one-quarter">Nutriments</div>
+              <div class="column">
+                <b-progress
+                  :value="selectedPlant.soil_nutriments * 10"
+                  type="is-success"
+                ></b-progress>
+              </div>
+            </div>
+            <div
+              v-if="selectedPlant.soil_salinity"
+              class="columns is-mobile is-8"
+            >
+              <div class="column is-one-quarter">Salinity</div>
+              <div class="column">
+                <b-progress
+                  :value="selectedPlant.soil_salinity * 10"
+                  type="is-success"
+                ></b-progress>
+              </div>
+            </div>
+            <div
+              v-if="selectedPlant.soil_humidity"
+              class="columns is-mobile is-8"
+            >
+              <div class="column is-one-quarter">Humidity</div>
+              <div class="column">
+                <b-progress
+                  :value="selectedPlant.soil_humidity * 10"
+                  type="is-success"
+                ></b-progress>
+              </div>
+            </div>
+            <div
+              v-if="selectedPlant.soil_texture"
+              class="columns is-mobile is-8"
+            >
+              <div class="column is-one-quarter">Texture</div>
+              <div class="column">
+                <b-progress
+                  :value="selectedPlant.soil_texture * 10"
+                  type="is-success"
+                ></b-progress>
+              </div>
             </div>
           </div>
         </div>
