@@ -1,15 +1,15 @@
 <template>
   <div>
     <navigation></navigation>
-    <div>
-      <chatbot></chatbot>
+    <div class="modal">
+      <chatbotmodal></chatbotmodal>
     </div>
   </div>
 </template>
 
 <script>
 import Navigation from "./Navigation.vue";
-import Chatbot from "./Chatbot.vue";
+import ChatbotModal from "./ChatbotModal.vue";
 import router from "../router";
 
 export default {
@@ -17,7 +17,7 @@ export default {
   router,
   components: {
     navigation: Navigation,
-    chatbot: Chatbot,
+    chatbotmodal: ChatbotModal,
   },
 };
 </script>
