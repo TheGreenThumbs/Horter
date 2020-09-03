@@ -45,7 +45,9 @@
     "sequelize": "^6.3.4",
     "vue": "^2.6.12",
     "vue-drag-resize": "^1.4.2",
-    "vue-router": "^3.4.3"
+    "vue-router": "^3.4.3",
+    "vuejs-logger": "^1.5.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
