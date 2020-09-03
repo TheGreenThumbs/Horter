@@ -33,7 +33,15 @@ import {
 export default {
   name: "gardenLayout",
   data() {
-    return { gardenScale: 20 };
+    return {
+      gardenScale: 20,
+      moveStart: {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0,
+      },
+    };
   },
   props: {
     gardenSize: {
@@ -73,13 +81,14 @@ export default {
       return num * this.gardenScale;
     },
     selectPlant: function (id) {
+      this.moveStart = this.$refs[id][0].rect;
       this.$emit("update:selected", id);
     },
+    // On drag stop
     plantMoved: function (loc) {
-      console.log(loc);
-      console.log(this.selected);
       let i = 0;
       let collide = false;
+      this.$log.info("LOC", loc);
       while (i < this.plants.length) {
         if (this.plants[i].id !== this.selected) {
           if (
@@ -91,19 +100,23 @@ export default {
         }
         i++;
       }
-      console.log("COLLIDED:", collide);
-      if (!collide) {
-        const plantInfo = {
-          position_y: loc.top / this.gardenScale,
-          position_x: loc.left / this.gardenScale,
-        };
-        console.log("plant info", plantInfo);
-        this.$emit("plant-moved", plantInfo);
-      } else {
-        const plantInfo = this.plants.filter((i) => i.id === this.selected)[0];
-        console.log(this.plantScale(plantInfo.position_y));
-        document.querySelector(".active").style.top = 0;
-        document.querySelector(".active").style.left = 0;
+      // No Collision
+      const plantInfo = {
+        position_y: loc.top / this.gardenScale,
+        position_x: loc.left / this.gardenScale,
+      };
+      this.$log.info("NO COLLISION");
+      this.$log.info("Plant Info", plantInfo);
+
+      this.$emit("plant-moved", plantInfo);
+      if (collide) {
+        // Collision
+        this.$log.info("COLLISION DETECTED");
+        this.$buefy.toast.open({
+          duration: 1000,
+          message: "Two plants are overlapping, please move them",
+          type: "is-danger",
+        });
       }
     },
   },
