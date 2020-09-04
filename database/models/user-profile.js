@@ -6,10 +6,6 @@ const { DataTypes } = require("sequelize");
  */
 const userFactory = (sequelize) => {
   return sequelize.define("user", {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -33,13 +29,13 @@ const userFactory = (sequelize) => {
       type: DataTypes.STRING,
     },
     lat: {
-        type: DataTypes.REAL,
-        allowNull: false,
+      type: DataTypes.REAL,
+      allowNull: false,
     },
     lng: {
-        type: DataTypes.REAL,
-        allowNull: false,
-    }
+      type: DataTypes.REAL,
+      allowNull: false,
+    },
   });
 };
 
