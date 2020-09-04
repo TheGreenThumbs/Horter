@@ -9,16 +9,25 @@ const PORT = process.env.PORT || 8080;
 
 // If mode is development drop database when the app starts
 // This is for testing
-const eraseDatabaseOnSync = process.env.RESET_DB === "true";
+const eraseDatabaseOnSync = process.env.NODE_ENV === "development";
 
 // Sync the Database and drop all the tables if RESET_DB is true
-sequelize.sync({ force: eraseDatabaseOnSync }).then(() => {
-  // If we reset the db fill it with dummy data
-  if (eraseDatabaseOnSync) {
-    fillDatabaseWithDummyData();
-  }
+sequelize
+  .sync({ force: eraseDatabaseOnSync })
+  .then(() => {
+    // If we reset the db fill it with dummy data
+    if (eraseDatabaseOnSync) {
+      fillDatabaseWithDummyData();
+    }
 
-  app.listen(PORT, () => {
-    logger.info("Server running at: http://localhost:%s", PORT);
+    app
+      .listen(PORT, () => {
+        logger.info("Server running at: http://localhost:%s", PORT);
+      })
+      .catch((err) => {
+        logger.error(err);
+      });
+  })
+  .catch((err) => {
+    logger.error(err);
   });
-});
