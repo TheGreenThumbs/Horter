@@ -9,12 +9,22 @@ const dbName = process.env.DB_NAME || "horter";
 const dbUser = process.env.DB_USER || "postgres";
 const dbPass = process.env.DB_PASS || "";
 
+const dbOptions =
+  process.env.NODE_ENV === "development"
+    ? {
+        logging: false,
+        host: dbHost,
+        dialect: "postgres",
+      }
+    : {
+        logging: false,
+        host: dbHost,
+        dialect: "postgres",
+        port: process.env.DB_PORT,
+      };
+
 // The Database connection, if you want to see SQL queries turn logging to true
-const sequelize = new Sequelize(dbName, dbUser, dbPass, {
-  logging: false,
-  host: dbHost,
-  dialect: "postgres",
-});
+const sequelize = new Sequelize(dbName, dbUser, dbPass, dbOptions);
 
 // Setup all the models with their factory functions
 const models = {
