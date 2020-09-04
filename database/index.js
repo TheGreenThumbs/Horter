@@ -7,6 +7,7 @@ const {
   plantFactory,
   plantInGardenFactory,
   wishListFactory,
+  userFactory
 } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
@@ -36,6 +37,7 @@ const models = {
   Garden: gardenFactory(sequelize),
   Plant: plantFactory(sequelize),
   PlantInGarden: plantInGardenFactory(sequelize),
+  User: userFactory(sequelize),
   WishList: wishListFactory(sequelize),
 };
 
@@ -48,6 +50,10 @@ const associations = () => {
   models.PlantInGarden.belongsTo(models.Plant);
   models.Plant.hasMany(models.WishList);
   models.WishList.belongsTo(models.Plant, { as: "plant" });
+  models.User.hasMany(models.WishList);
+  models.WishList.belongsTo(models.User);
+  models.Garden.belongsTo(models.User);
+  models.User.hasMany(models.Garden);
 };
 associations();
 
