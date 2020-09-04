@@ -18,6 +18,7 @@
 
 <script>
 import Message from "./Message.vue";
+import axios from "axios";
 export default {
   name: "chatbot",
   components: {
@@ -31,7 +32,13 @@ export default {
   methods: {
     submitMessage(message) {
       // this should ideally contact the chatbot on submit with the message, then print the response
-      this.messages.push(["User", message], ["ChatBot", "no prob!"]);
+      this.messages.push(["User", message]);
+      axios
+        .get("/chatbot")
+        .then((data) => {
+          this.messages.push(["ChatBot", data.data]);
+        })
+        .catch((err) => {});
     },
   },
 };
