@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const factories = require("./models");
 require("dotenv").config();
 
-const { gardenFactory, plantFactory, plantInGardenFactory } = factories;
+const { gardenFactory, plantFactory, plantInGardenFactory, userFactory } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
 const dbName = process.env.DB_NAME || "horter";
@@ -31,6 +31,7 @@ const models = {
   Garden: gardenFactory(sequelize),
   Plant: plantFactory(sequelize),
   PlantInGarden: plantInGardenFactory(sequelize),
+  User: userFactory(sequelize),
 };
 
 // A function that sets up all the model associations, so we can drop the database
