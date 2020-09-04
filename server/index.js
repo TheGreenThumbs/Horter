@@ -20,13 +20,9 @@ sequelize
       fillDatabaseWithDummyData();
     }
 
-    app
-      .listen(PORT, () => {
-        logger.info("Server running at: http://localhost:%s", PORT);
-      })
-      .catch((err) => {
-        logger.error(err);
-      });
+    app.listen(PORT, () => {
+      logger.info("Server running at: http://localhost:%s", PORT);
+    });
   })
   .catch((err) => {
     logger.error(err);
