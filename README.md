@@ -1,5 +1,29 @@
 # Horter
 
+# Elevator Pitch
+
+Horter is an application which helps users create gardens, update and maintain information about them,
+and learn more about how to add to them and keep them growing strong. It features a helpful ChatBot which can
+troubleshoot gardener questions, as well as an Augmented Reality garden planning display which will help users
+envision what their garden will look like ‘off-the-page’.
+
+
+# Core Concepts
+
+The application is composed of several core features. App.vue is the main template. The routes are rendered on App.vue and
+function inside of its template.
+At any given page in the app it is possible to access a menu, which can be located as a hamburger menu in the top-left of the page.
+The code for the menu is found in the files ‘Sidebar.vue’ and ‘Navigation.vue’. This menu allows for navigation to different parts
+of the app.
+
+In addition to the omnipresent menu, it is also possible to enlist the help of the chatbot at any page in the app.
+
+Like the main menu, it can be found as a button and when clicked, will render a modal which contains the dialog between user and chatbot.
+This is where the user will query the bot for pertinent information about their garden or the plants within. The relevent files for this chatbot
+are found in the Message.vue, Chatbot.vue and ChatbotModal.vue files.
+The main view of the garden is comprised of GardenLayout.vue and GardenMain.vue. This is the ‘centerpiece’ of the app where the user can view
+in-depth information about one of their gardens.
+
 ## Getting Started
 
 To run Locally
