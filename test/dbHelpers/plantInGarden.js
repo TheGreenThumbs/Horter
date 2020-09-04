@@ -42,9 +42,9 @@ describe("Plant In Garden Database Helpers", () => {
       const newPlant = {
         position_x: 1,
         position_y: 1,
-        radius: 1,
+        radius: 3,
       };
-      plantInGardenHelpers.addPlantToGarden(1, newPlant).then((response) => {
+      plantInGardenHelpers.addPlantToGarden(1, newPlant, 1).then((response) => {
         expect(response).to.be.an("object");
         Object.keys(newPlant).forEach((key) => {
           expect(response[key]).to.equal(newPlant[key]);
