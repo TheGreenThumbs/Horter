@@ -16,6 +16,7 @@
     "test": "mocha --recursive --exit",
     "lint": "eslint --fix --ignore-path .eslintignore .",
     "start": "node server/index.js",
+    "build": "webpack --mode production",
     "build-dev": "webpack-dev-server --mode development",
     "prestart-dev": "webpack --mode development",
     "start-dev": "nodemon server/index.js",
