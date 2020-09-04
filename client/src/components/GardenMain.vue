@@ -126,19 +126,21 @@
     </div>
     <div class="card-footer">
       <button class="card-footer-item">Add Plant</button>
-      <button class="card-footer-item">Edit Garden</button>
+      <editmodal></editmodal>
     </div>
   </div>
 </template>
 
 <script>
 import GardenLayout from "./GardenLayout.vue";
+import EditModal from "./EditModal.vue";
 import axios from "axios";
 
 export default {
   name: "GardenMain",
   components: {
     "garden-layout": GardenLayout,
+    editmodal: EditModal,
   },
   data() {
     return {
