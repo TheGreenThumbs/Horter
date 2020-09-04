@@ -1,0 +1,53 @@
+<!-- Renders ellipsis menu button and right sidebar menu -->
+
+<template>
+  <section>
+    <b-sidebar
+      type="is-light"
+      :fullheight="fullheight"
+      :fullwidth="fullwidth"
+      :overlay="overlay"
+      :right="right"
+      v-model="open"
+    >
+      <div class="p-1">
+        <b-menu>
+          <b-menu-list label="Garden Menu">
+            <b-menu-item
+              label="Garden1"
+              @click="$router.push('garden')"
+            ></b-menu-item>
+            <b-menu-item label="Garden2" disabled></b-menu-item>
+            <b-menu-item label="Garden3" disabled></b-menu-item>
+          </b-menu-list>
+        </b-menu>
+      </div>
+    </b-sidebar>
+    <!-- Next line is Vertical Ellipsis menu button -->
+    <b-button @click="open = true"
+      ><b-icon icon="dots-vertical"></b-icon
+    ></b-button>
+  </section>
+</template>
+
+<script>
+export default {
+  name: "rightbar",
+  data() {
+    return {
+      open: false,
+      overlay: true,
+      fullheight: true,
+      fullwidth: false,
+      right: true,
+      rounded: true,
+    };
+  },
+};
+</script>
+
+<style>
+.p-1 {
+  padding: 1em;
+}
+</style>

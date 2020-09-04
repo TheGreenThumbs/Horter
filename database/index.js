@@ -2,7 +2,13 @@ const Sequelize = require("sequelize");
 const factories = require("./models");
 require("dotenv").config();
 
-const { gardenFactory, plantFactory, plantInGardenFactory, userFactory } = factories;
+const {
+  gardenFactory,
+  plantFactory,
+  plantInGardenFactory,
+  wishListFactory,
+  userFactory
+} = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
 const dbName = process.env.DB_NAME || "horter";
@@ -32,6 +38,7 @@ const models = {
   Plant: plantFactory(sequelize),
   PlantInGarden: plantInGardenFactory(sequelize),
   User: userFactory(sequelize),
+  WishList: wishListFactory(sequelize),
 };
 
 // A function that sets up all the model associations, so we can drop the database
@@ -41,6 +48,12 @@ const associations = () => {
   models.PlantInGarden.belongsTo(models.Garden);
   models.Plant.hasMany(models.PlantInGarden, { as: "plants" });
   models.PlantInGarden.belongsTo(models.Plant);
+  models.Plant.hasMany(models.WishList);
+  models.WishList.belongsTo(models.Plant, { as: "plant" });
+  models.User.hasMany(models.WishList);
+  models.WishList.belongsTo(models.User);
+  models.Garden.belongsTo(models.User);
+  models.User.hasMany(models.Garden);
 };
 associations();
 
