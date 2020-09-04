@@ -18,7 +18,11 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(() => {
     fillDatabaseWithDummyData();
   }
 
-  app.listen(PORT, () => {
-    logger.info("Server running at: http://localhost:%s", PORT);
-  });
+  app
+    .listen(PORT, () => {
+      logger.info("Server running at: http://localhost:%s", PORT);
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 });
