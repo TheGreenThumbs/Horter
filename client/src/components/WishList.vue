@@ -143,7 +143,6 @@ export default {
       loaded: false,
       keyword: "",
       results: [],
-      rounded: true,
     };
   },
 };

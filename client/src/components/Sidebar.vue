@@ -2,6 +2,7 @@
 
 <template>
   <section>
+    <!-- Left sidebar menu begins -->
     <b-sidebar
       type="is-light"
       :fullheight="fullheight"
@@ -54,8 +55,10 @@
         </b-menu>
       </div>
     </b-sidebar>
-    <!-- Next line is Hamburger menu button -->
+    <!-- Left sidebar menu ends -->
+    <!-- Hamburger menu button begins -->
     <b-button @click="open = true"><b-icon icon="menu"></b-icon></b-button>
+    <!-- Hamburger menu button ends -->
   </section>
 </template>
 
