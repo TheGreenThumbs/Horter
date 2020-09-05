@@ -4,7 +4,6 @@ const { Router } = require("express");
 
 // const logger = require("../../winston");
 const { userHelpers } = require("../../database/helpers");
-// const logger = require("../../winston");
 
 const authRouter = Router();
 
