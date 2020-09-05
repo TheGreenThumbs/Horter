@@ -140,7 +140,7 @@
     </div>
     <div class="card-footer">
       <button class="card-footer-item">Add Plant</button>
-      <editmodal></editmodal>
+      <editmodal v-bind:id="gardenId"></editmodal>
     </div>
   </div>
 </template>
