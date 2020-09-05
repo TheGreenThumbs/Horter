@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">{{ gardenName }}</p>
+      <p class="card-header-title">{{ name }}</p>
     </div>
     <div class="columns">
       <div class="column is-3">
@@ -140,7 +140,14 @@
     </div>
     <div class="card-footer">
       <button class="card-footer-item">Add Plant</button>
-      <editmodal v-bind:id="gardenId"></editmodal>
+      <editmodal
+        :id="gardenId"
+        :name="name"
+        :lat="location.lat"
+        :lng="location.lng"
+        :width="gardenSize.width"
+        :height="gardenSize.length"
+      ></editmodal>
     </div>
   </div>
 </template>
@@ -159,7 +166,7 @@ export default {
   data() {
     return {
       gardenSize: { width: 10, height: 10 },
-      gardenName: "",
+      name: "",
       location: { lat: 30, lng: 30 },
       gardenId: 0,
       plantList: [
@@ -202,7 +209,7 @@ export default {
           this.gardenSize.width = data.width;
           this.location.lat = data.lat;
           this.location.lng = data.lng;
-          this.gardenName = data.name;
+          this.name = data.name;
         })
         .catch((err) => {
           console.error(err);
