@@ -23,8 +23,21 @@
       <div v-if="loaded">
         <p v-for="plant in results" :key="plant.common_name">
           {{ plant.common_name }}
+          <b-button
+            size="is-small"
+            icon-left="plus-circle"
+            @click="wishButtonClick(plant.id, plant.slug)"
+          >
+            Add to Wishlist
+          </b-button>
+          <b-button
+            size="is-small"
+            icon-left="plus-circle"
+            @click="gardenButtonClick(plant.id, plant.slug)"
+          >
+            Add to Garden
+          </b-button>
         </p>
-        <br />
       </div>
       <div v-else>
         <wishListSkeleton></wishListSkeleton>
@@ -61,7 +74,10 @@ export default {
           },
         })
         .then((res) => {
+          // Need to clean data
+          // . . . so build data scrubber helper function
           this.results = res.data;
+          console.log(this.results);
         })
         .catch((err) => {
           console.error(err);
@@ -71,6 +87,40 @@ export default {
     },
     clearIconClick() {
       this.search = "";
+    },
+    wishButtonClick(treflePlantId, treflePlantSlug) {
+      axios
+        .post("/wishlist", {
+          body: {
+            plantId: treflePlantId,
+            slug: treflePlantSlug,
+            userId: this.userId,
+          },
+        })
+        .then((res) => {
+          this.results = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      this.keyword = "";
+    },
+    gardenButtonClick(treflePlantId, treflePlantSlug) {
+      axios
+        .post("/garden/addPlant", {
+          body: {
+            plantId: treflePlantId,
+            slug: treflePlantSlug,
+            gardenId: this.gardenId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      this.keyword = "";
     },
   },
   data() {
