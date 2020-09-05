@@ -1,7 +1,21 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">GARDEN NAME</p>
+      <p class="card-header-title">{{ name }}</p>
+    </div>
+    <div class="columns">
+      <div class="column is-3">
+        <div class="lat">Latitude: {{ location.lat }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="lng">Longitude: {{ location.lng }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="width">Width: {{ gardenSize.width }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="height">Height: {{ gardenSize.height }}</div>
+      </div>
     </div>
     <div class="card-content">
       <p>
@@ -125,26 +139,37 @@
       </article>
     </div>
     <div class="card-footer">
-      <button class="card-footer-item" @click="$router.push('wish')">
-        Add Plant
-      </button>
-      <button class="card-footer-item">Edit Garden</button>
+      <button class="card-footer-item">Add Plant</button>
+      <editmodal
+        :id="gardenId"
+        :name="name"
+        :lat="location.lat"
+        :lng="location.lng"
+        :width="gardenSize.width"
+        :height="gardenSize.height"
+        :updateMain="updateMain"
+      ></editmodal>
     </div>
   </div>
 </template>
 
 <script>
 import GardenLayout from "./GardenLayout.vue";
+import EditModal from "./EditModal.vue";
 import axios from "axios";
 
 export default {
   name: "GardenMain",
   components: {
     "garden-layout": GardenLayout,
+    editmodal: EditModal,
   },
   data() {
     return {
       gardenSize: { width: 10, height: 10 },
+      name: "",
+      location: { lat: 30, lng: 30 },
+      gardenId: 0,
       plantList: [
         { position_x: 1, position_y: 2, radius: 2, id: 1 },
         { position_x: 5, position_y: 4, radius: 2, id: 2 },
@@ -168,6 +193,12 @@ export default {
         }
       });
     },
+    updateMain: function (garden) {
+      const { id, lat, lng, width, length, name } = garden.data;
+      this.gardenSize = { width, height: length };
+      this.name = name;
+      this.location = { lat, lng };
+    },
   },
   mounted() {
     this.$nextTick(function () {
@@ -180,6 +211,12 @@ export default {
       })
         .then(({ data }) => {
           this.plantList = data.plants;
+          this.gardenId = data.id;
+          this.gardenSize.length = data.length;
+          this.gardenSize.width = data.width;
+          this.location.lat = data.lat;
+          this.location.lng = data.lng;
+          this.name = data.name;
         })
         .catch((err) => {
           console.error(err);

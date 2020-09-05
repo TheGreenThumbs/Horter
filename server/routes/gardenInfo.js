@@ -1,6 +1,6 @@
 const { Router } = require("express");
-
 const logger = require("../../winston");
+
 const {
   findGardenById,
   updateGardenInfo,
@@ -89,8 +89,9 @@ gardenInfo.get("/plants", (req, res) => {
  *                          they will be updated to
  * @returns
  */
-gardenInfo.put("/userupdate", (req, res) => {
+gardenInfo.put("/gardenupdate", (req, res) => {
   const { id, info } = req.body;
+  logger.info(id, info);
   updateGardenInfo(id, info)
     .then((garden) => {
       res.status(200);
