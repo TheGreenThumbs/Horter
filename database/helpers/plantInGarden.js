@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const { PlantInGarden } = models;
+const { PlantInGarden, Garden, Plant } = models;
 
 /**
  * Add a plant to a garden by garden Id, will throw an error
@@ -30,10 +30,9 @@ const addPlantToGarden = (id, info, plantId) =>
 // TODO: Make this work once plants and Users table exists
 const getAllPlantsInGarden = (id) =>
   new Promise((resolve, reject) => {
-    // eslint-disable-line
-    User.findOne({ where: { id } }) // eslint-disable-line
-      .then((user) => {
-        return user.getPlantInGarden({});
+    Garden.findAll({ where: { userId: id } })
+      .then((gardens) => {
+        return Promise.all(gardens.map((i) => i.getPlants({ include: Plant })));
       })
       .then((plants) => {
         const unique = [];
@@ -44,10 +43,7 @@ const getAllPlantsInGarden = (id) =>
           }
           return false;
         });
-        return Promise.all(uniquePlants.map((plant) => plant.getPlant()));
-      })
-      .then((plantData) => {
-        resolve(plantData);
+        resolve(uniquePlants[0].map((i) => i.plant));
       })
       .catch((err) => {
         reject(err);

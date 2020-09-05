@@ -28,10 +28,11 @@ describe("Plant In Garden Database Helpers", () => {
   });
 
   // This helper doesn't work yet
-  xcontext("Getting all of a User's Plants in Gardens", () => {
+  context("Getting all of a User's Plants in Gardens", () => {
     it("should return all the unique plants a user has planted", (done) => {
       plantInGardenHelpers.getAllPlantsInGarden(1).then((response) => {
-        expect(response).to.be.an("object");
+        expect(response).to.be.an("array");
+        expect(response[0]).to.have.property("common_name");
         done();
       });
     });
