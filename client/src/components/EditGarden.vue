@@ -7,19 +7,19 @@
       </div>
       <div class="columns">
         <label class="column">Latitude</label>
-        <input v-model="latitude" />
+        <input v-model="latt" />
       </div>
       <div class="columns">
         <label class="column">Longitude</label>
-        <input v-model="longitude" />
+        <input v-model="long" />
       </div>
       <div class="columns">
         <label class="column">Width</label>
-        <input v-model="width" />
+        <input v-model="wid" />
       </div>
       <div class="columns">
         <label class="column">Height</label>
-        <input v-model="height" />
+        <input v-model="hei" />
       </div>
       <button>Update</button>
     </form>
@@ -31,21 +31,41 @@ export default {
   name: "EditGarden",
   data() {
     return {
-      gardenName: null,
-      latitude: null,
-      longitude: null,
-      width: null,
-      height: null,
+      gardenName: this.name,
+      latt: this.lat,
+      long: this.lng,
+      wid: this.width,
+      hei: this.height,
     };
+  },
+  props: {
+    id: {
+      type: Number,
+    },
+    name: {
+      type: String,
+    },
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
+    },
   },
   methods: {
     handleSubmit() {
       this.$emit("edit:garden", {
         name: this.gardenName,
-        lat: this.latitude,
-        lng: this.longitude,
-        width: this.width,
-        height: this.height,
+        lat: this.latt,
+        lng: this.long,
+        width: this.wid,
+        height: this.hei,
       });
     },
   },
