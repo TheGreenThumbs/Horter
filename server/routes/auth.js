@@ -63,6 +63,14 @@ authRouter.get(
   }
 );
 
+authRouter.get("/", (req, res) => {
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(200).json({});
+  }
+});
+
 authRouter.get("/logout", (req, res) => {
   req.logOut();
   req.session.destroy();
