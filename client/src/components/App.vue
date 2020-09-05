@@ -4,18 +4,15 @@
     <div class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
-    <div class="garden-main">
-      <gardenmain></gardenmain>
-    </div>
-    <router-view></router-view>
+    <router-view :user="user"></router-view>
   </div>
 </template>
 
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
-import GardenMain from "./GardenMain.vue";
 import router from "../router";
+import axios from "axios";
 
 export default {
   name: "App",
@@ -23,7 +20,11 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
-    gardenmain: GardenMain,
+  },
+  data() {
+    return {
+      user: {},
+    };
   },
   created() {
     this.$log.debug("test", 123);
@@ -31,6 +32,16 @@ export default {
     this.$log.warn("test");
     this.$log.error("test");
     this.$log.fatal("test");
+    axios({
+      method: "get",
+      url: "/auth",
+    })
+      .then(({ data }) => {
+        this.user = data;
+      })
+      .catch((err) => {
+        $log.error(err);
+      });
   },
 };
 </script>
