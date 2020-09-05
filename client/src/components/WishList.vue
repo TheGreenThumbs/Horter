@@ -106,11 +106,9 @@ export default {
     wishButtonClick(treflePlantId, treflePlantSlug) {
       axios
         .post("/wishlist", {
-          body: {
-            plantId: treflePlantId,
-            slug: treflePlantSlug,
-            userId: this.userId,
-          },
+          plantId: treflePlantId,
+          slug: treflePlantSlug,
+          userId: this.userId,
         })
         .then((res) => {
           this.$log.info(res);
@@ -122,12 +120,10 @@ export default {
     },
     gardenButtonClick(treflePlantId, treflePlantSlug) {
       axios
-        .post("/garden/addPlant", {
-          body: {
-            plantId: treflePlantId,
-            slug: treflePlantSlug,
-            gardenId: this.gardenId,
-          },
+        .post("/garden/addplant", {
+          plantId: treflePlantId,
+          slug: treflePlantSlug,
+          gardenId: this.gardenId,
         })
         .then((res) => {
           this.$log.info(res);
