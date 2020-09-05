@@ -20,7 +20,12 @@
       </b-field>
       <!-- Search field ends -->
       <!-- Search results begins -->
-      <div v-if="loaded"></div>
+      <div v-if="loaded">
+        <p v-for="plant in results" :key="plant.common_name">
+          {{ plant.common_name }}
+        </p>
+        <br />
+      </div>
       <div v-else>
         <wishListSkeleton></wishListSkeleton>
       </div>
@@ -48,6 +53,7 @@ export default {
   },
   methods: {
     searchIconClick() {
+      this.loaded = false;
       axios
         .get("/api/search", {
           params: {
@@ -55,12 +61,13 @@ export default {
           },
         })
         .then((res) => {
-          results = res.data;
+          this.results = res.data;
         })
         .catch((err) => {
           console.error(err);
         });
       this.keyword = "";
+      this.loaded = true;
     },
     clearIconClick() {
       this.search = "";
