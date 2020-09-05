@@ -65,7 +65,7 @@ export default {
         lat: this.latt,
         lng: this.long,
         width: this.wid,
-        height: this.hei,
+        length: this.hei,
       });
     },
   },

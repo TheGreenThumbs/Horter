@@ -146,7 +146,8 @@
         :lat="location.lat"
         :lng="location.lng"
         :width="gardenSize.width"
-        :height="gardenSize.length"
+        :height="gardenSize.height"
+        :updateMain="updateMain"
       ></editmodal>
     </div>
   </div>
@@ -191,6 +192,12 @@ export default {
           this.$set(this.plantList, i, { ...plant, ...info });
         }
       });
+    },
+    updateMain: function (garden) {
+      const { id, lat, lng, width, length, name } = garden.data;
+      this.gardenSize = { width, height: length };
+      this.name = name;
+      this.location = { lat, lng };
     },
   },
   mounted() {

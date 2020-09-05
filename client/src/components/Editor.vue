@@ -40,13 +40,23 @@ export default {
     height: {
       type: Number,
     },
+    updateMain: {
+      type: Function,
+    },
   },
   methods: {
     submitEdit(info) {
-      axios.put("/garden/gardenupdate", {
-        id: this.id,
-        info: info,
-      });
+      axios
+        .put("/garden/gardenupdate", {
+          id: this.id,
+          info: info,
+        })
+        .then((garden) => {
+          // sync or emit back to main
+          // just replace the ones we want to overwrite
+          this.$emit("close");
+          this.updateMain(garden);
+        });
     },
   },
 };

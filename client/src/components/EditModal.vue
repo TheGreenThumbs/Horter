@@ -27,6 +27,9 @@ export default {
     height: {
       type: Number,
     },
+    updateMain: {
+      type: Function,
+    },
   },
   methods: {
     cardModal() {
@@ -40,10 +43,11 @@ export default {
           lng: this.lng,
           width: this.width,
           height: this.height,
+          updateMain: this.updateMain,
         },
         hasModalCard: false,
         customClass: "custom-class custom-class-2",
-        trapFocus: false,
+        trapFocus: true,
         width: 400,
       });
     },
