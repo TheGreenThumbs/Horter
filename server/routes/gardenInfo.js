@@ -63,14 +63,8 @@ gardenInfo.post("/addplant", (req, res) => {
  */
 gardenInfo.put("/gardenupdate", (req, res) => {
   const { id, info } = req.body;
-  const updatedInfo = {};
-  // for(const key in info){
-  //   if(info[key]){
-  //     updatedInfo[key] = info[key];
-  //   }
-  // }
-  logger.info(updatedInfo, info);
-  updateGardenInfo(id, updatedInfo)
+  logger.info(id, info);
+  updateGardenInfo(id, info)
     .then((garden) => {
       res.status(200);
       res.send(garden);
