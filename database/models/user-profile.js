@@ -6,11 +6,6 @@ const { DataTypes } = require("sequelize");
  */
 const userFactory = (sequelize) => {
   return sequelize.define("user", {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,

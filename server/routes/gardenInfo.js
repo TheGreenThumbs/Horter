@@ -51,7 +51,7 @@ gardenInfo.post("/addplant", (req, res) => {
       .then(() => {
         res.send("plant created");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => logger.error(err));
   });
 });
 
@@ -75,7 +75,7 @@ gardenInfo.put("/gardenupdate", (req, res) => {
       res.status(200);
       res.send(garden);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => logger.error(err));
 });
 
 /**
@@ -86,11 +86,10 @@ gardenInfo.delete("/deleteplant", (req, res) => {
   const { id } = req.body;
   removePlantInGarden(id)
     .then(() => {
-      console.log("removed!");
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(500);
     });
 });
@@ -105,7 +104,7 @@ gardenInfo.delete("/deletegarden", (req, res) => {
     .then(() => {
       res.sendStatus(204);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => logger.error(err));
 });
 
 /**
@@ -118,11 +117,10 @@ gardenInfo.put("/locationdata", (req, res) => {
   const { id, info } = req.body;
   updatePlantInGarden(id, info)
     .then(() => {
-      console.log("updated plant in garden");
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(500);
     });
 });
