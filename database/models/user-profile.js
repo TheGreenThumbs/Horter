@@ -9,6 +9,7 @@ const userFactory = (sequelize) => {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
     },
     username: {
       type: DataTypes.STRING,
@@ -33,13 +34,13 @@ const userFactory = (sequelize) => {
       type: DataTypes.STRING,
     },
     lat: {
-        type: DataTypes.REAL,
-        allowNull: false,
+      type: DataTypes.REAL,
+      allowNull: false,
     },
     lng: {
-        type: DataTypes.REAL,
-        allowNull: false,
-    }
+      type: DataTypes.REAL,
+      allowNull: false,
+    },
   });
 };
 

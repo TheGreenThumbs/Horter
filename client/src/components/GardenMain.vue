@@ -1,7 +1,21 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">GARDEN NAME</p>
+      <p class="card-header-title">{{ gardenName }}</p>
+    </div>
+    <div class="columns">
+      <div class="column is-3">
+        <div class="lat">Latitude: {{ location.lat }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="lng">Longitude: {{ location.lng }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="width">Width: {{ gardenSize.width }}</div>
+      </div>
+      <div class="column is-3">
+        <div class="height">Height: {{ gardenSize.height }}</div>
+      </div>
     </div>
     <div class="card-content">
       <p>
@@ -145,6 +159,9 @@ export default {
   data() {
     return {
       gardenSize: { width: 10, height: 10 },
+      gardenName: "",
+      location: { lat: 30, lng: 30 },
+      gardenId: 0,
       plantList: [
         { position_x: 1, position_y: 2, radius: 2, id: 1 },
         { position_x: 5, position_y: 4, radius: 2, id: 2 },
@@ -180,6 +197,12 @@ export default {
       })
         .then(({ data }) => {
           this.plantList = data.plants;
+          this.gardenId = data.id;
+          this.gardenSize.length = data.length;
+          this.gardenSize.width = data.width;
+          this.location.lat = data.lat;
+          this.location.lng = data.lng;
+          this.gardenName = data.name;
         })
         .catch((err) => {
           console.error(err);
