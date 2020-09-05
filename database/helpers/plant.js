@@ -23,7 +23,9 @@ const createPlant = (info) =>
 
 const createPlantWithSelfData = ({ data }) =>
   new Promise((resolve, reject) => {
-    Plant.create({ ...data, id_trefle: data.id })
+    const newPlant = { ...data, id_trefle: data.id };
+    delete newPlant.id;
+    Plant.create(newPlant)
       .then((plant) => {
         resolve(plant);
       })
@@ -36,6 +38,7 @@ const findPlantByTrefleId = (trefleId) =>
   new Promise((resolve, reject) => {
     Plant.findOne({ where: { id_trefle: trefleId }, rejectOnEmpty: true })
       .then((plant) => {
+        console.log(plant);
         resolve(plant.id);
       })
       .catch((err) => {
