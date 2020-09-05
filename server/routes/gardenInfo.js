@@ -7,7 +7,8 @@ const {
   removeGarden,
 } = require("../../database/helpers/garden");
 
-const { createPlant } = require("../../database/helpers/plant");
+const { plantHelpers } = require("../../database/helpers");
+const searchSelf = require("../helpers/trefle-api");
 
 const {
   addPlantToGarden,
@@ -29,31 +30,43 @@ gardenInfo.get("/one", (req, res) => {
   });
 });
 
-/**
- * This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates
- * @param {object} req.body.plant
- * @param {number} req.body.gardenId
- * @returns no return yet specified
- */
-
+// This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates
+// Takes a gardenId, a plantId(which is a trefleid), and a slug potentially
 gardenInfo.post("/addplant", (req, res) => {
-  const { plant, gardenId } = req.body;
-  createPlant(plant).then((data) => {
-    const plantId = data.dataValues.id;
-    addPlantToGarden(
-      gardenId,
-      {
-        position_x: 1,
-        position_y: 1,
-        radius: 1,
-      },
-      plantId
-    )
-      .then(() => {
-        res.send("plant created");
-      })
-      .catch((err) => logger.error(err));
-  });
+  const { gardenId, plantId, slug } = req.body;
+  const newPlantInfo = {
+    position_x: 1,
+    position_y: 1,
+    radius: 1,
+  };
+  plantHelpers
+    .findPlantByTrefleId(plantId)
+    .then((id) => {
+      addPlantToGarden(gardenId, newPlantInfo, id)
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
+    })
+    .catch(() => {
+      searchSelf(slug)
+        .then((plant) => {
+          return plantHelpers.createPlantWithSelfData(plant);
+        })
+        .then((plant) => {
+          return addPlantToGarden(gardenId, newPlantInfo, plant.id);
+        })
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
+    });
 });
 /**
  * Get all the plants a user has planted in their gardens by user Id

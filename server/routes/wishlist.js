@@ -1,7 +1,11 @@
 const { Router } = require("express");
 
 const logger = require("../../winston");
-const { wishListHelpers } = require("../../database/helpers/index");
+const {
+  wishListHelpers,
+  plantHelpers,
+} = require("../../database/helpers/index");
+const searchSelf = require("../helpers/trefle-api");
 
 const wishListRouter = Router();
 
@@ -33,17 +37,37 @@ wishListRouter.delete("/", (req, res) => {
     });
 });
 
-// Add a new wishlist item with userId and plantId
+// Add a new wishlist item with userId and plantId(which is a trefleID) and potentially a slug
 wishListRouter.post("/", (req, res) => {
-  const { userId, plantId } = req.body;
-  wishListHelpers
-    .addToWishList(userId, plantId)
-    .then((item) => {
-      res.status(201).send(item);
+  const { userId, plantId, slug } = req.body;
+  plantHelpers
+    .findPlantByTrefleId(plantId)
+    .then((id) => {
+      wishListHelpers
+        .addToWishList(userId, id)
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
     })
-    .catch((err) => {
-      logger.error(err);
-      res.status(500).send(err);
+    .catch(() => {
+      searchSelf(slug)
+        .then((plant) => {
+          return plantHelpers.createPlantWithSelfData(plant);
+        })
+        .then((plant) => {
+          return wishListHelpers.addToWishList(userId, plant.id);
+        })
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
     });
 });
 
