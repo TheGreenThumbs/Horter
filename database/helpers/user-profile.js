@@ -18,6 +18,28 @@ const createUser = (newUser) =>
       });
   });
 
+const findUserById = (id) =>
+  new Promise((resolve, reject) => {
+    User.findOne({ where: { id }, rejectOnEmpty: true })
+      .then((user) => {
+        resolve(user);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+
+const findUserByGoogleId = (idGoogle) =>
+  new Promise((resolve, reject) => {
+    User.findOne({ where: { id_google: idGoogle } })
+      .then((user) => {
+        resolve(user);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+
 /**
  * Find a user by username, throws an error if none is found
  * @param {Integer} username username to get user by
@@ -57,8 +79,7 @@ const updateUser = (id, info) =>
       });
   });
 
-
-  /**
+/**
  * Removes a user and should cascade through it's associations
  *  currently errors if no user found and returns {deleted: true}
  *  if it is deleted
@@ -66,21 +87,22 @@ const updateUser = (id, info) =>
  * @returns {Object} Error if no USer found or {deleted: true}
  */
 const removeUser = (id) =>
-new Promise((resolve, reject) => {
-  User.destroy({ where: { id } })
-    .then((rows) => {
-      if (rows <= 0) throw new Error("User doesn't exist");
-      resolve({ deleted: true });
-    })
-    .catch((err) => {
-      reject(err);
-    });
-});
+  new Promise((resolve, reject) => {
+    User.destroy({ where: { id } })
+      .then((rows) => {
+        if (rows <= 0) throw new Error("User doesn't exist");
+        resolve({ deleted: true });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 
-  module.exports = {
-    createUser,
-    findUserByUsername,
-    updateUser,
-    removeUser
-  };
-  
+module.exports = {
+  createUser,
+  findUserByUsername,
+  updateUser,
+  removeUser,
+  findUserByGoogleId,
+  findUserById,
+};
