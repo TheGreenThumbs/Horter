@@ -21,23 +21,38 @@
       <!-- Search field ends -->
       <!-- Search results begins -->
       <div v-if="loaded">
-        <p v-for="plant in results" :key="plant.common_name">
-          {{ plant.common_name }}
-          <b-button
-            size="is-small"
-            icon-left="plus-circle"
-            @click="wishButtonClick(plant.id, plant.slug)"
-          >
-            Add to Wishlist
-          </b-button>
-          <b-button
-            size="is-small"
-            icon-left="plus-circle"
-            @click="gardenButtonClick(plant.id, plant.slug)"
-          >
-            Add to Garden
-          </b-button>
-        </p>
+        <article
+          class="media"
+          v-for="plant in results"
+          :key="plant.common_name"
+        >
+          <figure class="media-left"></figure>
+          <div class="media-content">
+            <div class="content">
+              <p>
+                {{ plant.common_name }}
+              </p>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <b-button
+                  size="is-small"
+                  icon-left="plus-circle"
+                  @click="wishButtonClick(plant.id, plant.slug)"
+                >
+                  Add to Wishlist
+                </b-button>
+                <b-button
+                  size="is-small"
+                  icon-left="plus-circle"
+                  @click="gardenButtonClick(plant.id, plant.slug)"
+                >
+                  Add to Garden
+                </b-button>
+              </div>
+            </nav>
+          </div>
+        </article>
       </div>
       <div v-else>
         <wishListSkeleton></wishListSkeleton>
@@ -98,7 +113,7 @@ export default {
           },
         })
         .then((res) => {
-          this.results = res.data;
+          this.$log.info(res);
         })
         .catch((err) => {
           console.error(err);
@@ -115,7 +130,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          this.$log.info(res);
         })
         .catch((err) => {
           console.error(err);
