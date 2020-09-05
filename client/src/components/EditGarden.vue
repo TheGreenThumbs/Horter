@@ -1,27 +1,27 @@
 <template>
   <div class="edit">
     <form @submit.prevent="handleSubmit">
-      <div>
-        <label>Garden Name</label>
+      <div class="columns">
+        <label class="column">Garden Name</label>
         <input v-model="gardenName" />
       </div>
-      <div>
-        <label>Latitude</label>
+      <div class="columns">
+        <label class="column">Latitude</label>
         <input v-model="latitude" />
       </div>
-      <div>
-        <label>Longitude</label>
+      <div class="columns">
+        <label class="column">Longitude</label>
         <input v-model="longitude" />
       </div>
-      <div>
-        <label>Width</label>
+      <div class="columns">
+        <label class="column">Width</label>
         <input v-model="width" />
       </div>
-      <div>
-        <label>Height</label>
+      <div class="columns">
+        <label class="column">Height</label>
         <input v-model="height" />
-        <button>Update</button>
       </div>
+      <button>Update</button>
     </form>
   </div>
 </template>
@@ -31,19 +31,19 @@ export default {
   name: "EditGarden",
   data() {
     return {
-      gardenName: "",
-      latitude: "",
-      longitude: "",
-      width: "",
-      height: "",
+      gardenName: null,
+      latitude: null,
+      longitude: null,
+      width: null,
+      height: null,
     };
   },
   methods: {
     handleSubmit() {
       this.$emit("edit:garden", {
-        gardenName: this.gardenName,
-        latitude: this.latitude,
-        longitude: this.longitude,
+        name: this.gardenName,
+        lat: this.latitude,
+        lng: this.longitude,
         width: this.width,
         height: this.height,
       });
@@ -51,3 +51,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.column {
+  color: white;
+}
+</style>
