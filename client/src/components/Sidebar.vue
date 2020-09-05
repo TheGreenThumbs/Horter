@@ -21,7 +21,11 @@
         <b-menu>
           <b-menu-list label="Horter"></b-menu-list>
           <b-menu-list label="Menu">
-            <b-menu-item icon="home" label="Home"></b-menu-item>
+            <b-menu-item
+              icon="home"
+              @click="$router.push('/')"
+              label="Home"
+            ></b-menu-item>
             <b-menu-item
               icon="sprout"
               label="Plant List"
@@ -50,7 +54,9 @@
             </b-menu-item>
           </b-menu-list>
           <b-menu-list label="Actions">
-            <b-menu-item label="Logout"></b-menu-item>
+            <a href="/auth/logout">
+              <b-menu-item label="Logout"></b-menu-item>
+            </a>
           </b-menu-list>
         </b-menu>
       </div>

@@ -7,7 +7,6 @@ and learn more about how to add to them and keep them growing strong. It feature
 troubleshoot gardener questions, as well as an Augmented Reality garden planning display which will help users
 envision what their garden will look like ‘off-the-page’.
 
-
 # Core Concepts
 
 The application is composed of several core features. App.vue is the main template. The routes are rendered on App.vue and

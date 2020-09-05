@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const logger = require("../../winston");
 
 const {
   findGardenById,
@@ -6,12 +7,14 @@ const {
   removeGarden,
 } = require("../../database/helpers/garden");
 
-const { createPlant } = require("../../database/helpers/plant");
+const { plantHelpers } = require("../../database/helpers");
+const searchSelf = require("../helpers/trefle-api");
 
 const {
   addPlantToGarden,
   updatePlantInGarden,
   removePlantInGarden,
+  getAllPlantsInGarden,
 } = require("../../database/helpers/plantInGarden");
 
 const gardenInfo = Router();
@@ -23,36 +26,61 @@ const gardenInfo = Router();
 gardenInfo.get("/one", (req, res) => {
   const { id } = req.query;
   findGardenById(id).then((garden) => {
-    console.log(garden);
     res.send(garden);
   });
 });
 
-/**
- * This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates
- * @param {object} req.body.plant
- * @param {number} req.body.gardenId
- * @returns no return yet specified
- */
-
+// This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates
+// Takes a gardenId, a plantId(which is a trefleid), and a slug potentially
 gardenInfo.post("/addplant", (req, res) => {
-  const { plant, gardenId } = req.body;
-  createPlant(plant).then((data) => {
-    const plantId = data.dataValues.id;
-    addPlantToGarden(
-      gardenId,
-      {
-        position_x: 1,
-        position_y: 1,
-        radius: 1,
-      },
-      plantId
-    )
-      .then(() => {
-        res.send("plant created");
-      })
-      .catch((err) => console.log(err));
-  });
+  const { gardenId, plantId, slug } = req.body;
+  const newPlantInfo = {
+    position_x: 1,
+    position_y: 1,
+    radius: 1,
+  };
+  plantHelpers
+    .findPlantByTrefleId(plantId)
+    .then((id) => {
+      addPlantToGarden(gardenId, newPlantInfo, id)
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
+    })
+    .catch(() => {
+      searchSelf(slug)
+        .then((plant) => {
+          return plantHelpers.createPlantWithSelfData(plant);
+        })
+        .then((plant) => {
+          return addPlantToGarden(gardenId, newPlantInfo, plant.id);
+        })
+        .then((item) => {
+          res.status(201).send(item);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
+    });
+});
+/**
+ * Get all the plants a user has planted in their gardens by user Id
+ */
+gardenInfo.get("/plants", (req, res) => {
+  const { id } = req.query;
+  getAllPlantsInGarden(id)
+    .then((plants) => {
+      res.status(200).send(plants);
+    })
+    .catch((err) => {
+      logger.error(err);
+      res.status(500).send(err);
+    });
 });
 
 /**
@@ -61,14 +89,15 @@ gardenInfo.post("/addplant", (req, res) => {
  *                          they will be updated to
  * @returns
  */
-gardenInfo.put("/userupdate", (req, res) => {
+gardenInfo.put("/gardenupdate", (req, res) => {
   const { id, info } = req.body;
+  logger.info(id, info);
   updateGardenInfo(id, info)
     .then((garden) => {
       res.status(200);
       res.send(garden);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => logger.error(err));
 });
 
 /**
@@ -79,11 +108,10 @@ gardenInfo.delete("/deleteplant", (req, res) => {
   const { id } = req.body;
   removePlantInGarden(id)
     .then(() => {
-      console.log("removed!");
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(500);
     });
 });
@@ -98,7 +126,7 @@ gardenInfo.delete("/deletegarden", (req, res) => {
     .then(() => {
       res.sendStatus(204);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => logger.error(err));
 });
 
 /**
@@ -111,11 +139,10 @@ gardenInfo.put("/locationdata", (req, res) => {
   const { id, info } = req.body;
   updatePlantInGarden(id, info)
     .then(() => {
-      console.log("updated plant in garden");
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       res.sendStatus(500);
     });
 });
