@@ -12,13 +12,35 @@ export default {
     id: {
       type: Number,
     },
+    name: {
+      type: String,
+    },
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
+    },
   },
   methods: {
     cardModal() {
       this.$buefy.modal.open({
         parent: this,
         component: Editor,
-        props: { id: this.id },
+        props: {
+          id: this.id,
+          name: this.name,
+          lat: this.lat,
+          lng: this.lng,
+          width: this.width,
+          height: this.height,
+        },
         hasModalCard: false,
         customClass: "custom-class custom-class-2",
         trapFocus: false,
