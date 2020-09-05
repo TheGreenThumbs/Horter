@@ -4,7 +4,6 @@ const { Router } = require("express");
 
 // const logger = require("../../winston");
 const { userHelpers } = require("../../database/helpers");
-// const logger = require("../../winston");
 
 const authRouter = Router();
 
@@ -63,5 +62,11 @@ authRouter.get(
     res.redirect("/");
   }
 );
+
+authRouter.get("/logout", (req, res) => {
+  req.logOut();
+  req.session.destroy();
+  res.redirect("/");
+});
 
 module.exports = authRouter;
