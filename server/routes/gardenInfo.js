@@ -13,6 +13,7 @@ const {
   addPlantToGarden,
   updatePlantInGarden,
   removePlantInGarden,
+  getAllPlantsInGarden,
 } = require("../../database/helpers/plantInGarden");
 
 const gardenInfo = Router();
@@ -53,6 +54,20 @@ gardenInfo.post("/addplant", (req, res) => {
       })
       .catch((err) => logger.error(err));
   });
+});
+/**
+ * Get all the plants a user has planted in their gardens by user Id
+ */
+gardenInfo.get("/plants", (req, res) => {
+  const { id } = req.query;
+  getAllPlantsInGarden(id)
+    .then((plants) => {
+      res.status(200).send(plants);
+    })
+    .catch((err) => {
+      logger.error(err);
+      res.status(500).send(err);
+    });
 });
 
 /**
