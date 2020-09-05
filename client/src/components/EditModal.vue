@@ -8,15 +8,20 @@
 import Editor from "./Editor.vue";
 export default {
   name: "EditModal",
+  props: {
+    id: {
+      type: Number,
+    },
+  },
   methods: {
     cardModal() {
       this.$buefy.modal.open({
         parent: this,
         component: Editor,
+        props: { id: this.id },
         hasModalCard: false,
         customClass: "custom-class custom-class-2",
         trapFocus: false,
-        "full-screen": false,
         width: 400,
       });
     },
