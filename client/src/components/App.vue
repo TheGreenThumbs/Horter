@@ -4,6 +4,9 @@
     <div class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
+    <div class="garden-main">
+      <gardenmain></gardenmain>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -11,6 +14,7 @@
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
+import GardenMain from "./GardenMain.vue";
 import router from "../router";
 
 export default {
@@ -19,6 +23,7 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
+    gardenmain: GardenMain,
   },
   created() {
     this.$log.debug("test", 123);
