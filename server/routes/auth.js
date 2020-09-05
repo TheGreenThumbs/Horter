@@ -1,29 +1,50 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth");
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const { Router } = require("express");
 
-const logger = require("../../winston");
+// const logger = require("../../winston");
 const { userHelpers } = require("../../database/helpers");
+// const logger = require("../../winston");
 
 const authRouter = Router();
 
 passport.use(
   new GoogleStrategy(
     {
-      callBackURL: "/auth/google/redirect",
+      callbackURL: "/auth/google/redirect",
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     (accessToken, refreshToken, profile, done) => {
-      // const {displayName, id, photos} = profile;
-      // const newUser = {
-      //   username: displayName,
-      //   id_google: id,
-      //   s3_id: photos,
-      // }
-      logger.info(profile);
-      userHelpers.createUser();
-      done(null, profile.displayName);
+      userHelpers
+        .findUserByGoogleId(profile.id)
+        .then((user) => {
+          if (!user) {
+            const { displayName, name, id, photos } = profile;
+            const newUser = {
+              username: displayName,
+              id_google: id,
+              s3_id: photos[0].value,
+              firstname: name.givenName,
+              lastname: name.familyName,
+              lat: 29,
+              lng: -90,
+            };
+            userHelpers
+              .createUser(newUser)
+              .then((createdUser) => {
+                done(null, createdUser);
+              })
+              .catch((err) => {
+                done(err);
+              });
+          } else {
+            done(null, user);
+          }
+        })
+        .catch((err) => {
+          done(err);
+        });
     }
   )
 );
