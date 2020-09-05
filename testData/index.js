@@ -1,22 +1,43 @@
 const { models } = require("../database");
 
-const { Garden, PlantInGarden, Plant } = models;
+const { Garden, PlantInGarden, Plant, User } = models;
 
 /**
  * Fills the database with dummy data
  */
 const fillDatabaseWithDummyData = () =>
   new Promise((resolve, reject) => {
-    Garden.create({
-      name: "Max Garden",
-      width: 15,
-      length: 15,
-      lat: -90,
-      lng: 29,
-      photo:
-        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/index-small-garden-ideas-1524680753.jpg",
-      zone: 5,
+    User.create({
+      username: "Max",
+      firstname: "Maxwell",
+      lastname: "Boecker",
+      id_google: "saidkasd",
+      lat: 29,
+      lng: -90,
     })
+      .then(() =>
+        User.create({
+          username: "jazminetsmith",
+          firstname: "Jaz",
+          lastname: "Smith",
+          id_google: "saidkasasdasdd",
+          lat: 29,
+          lng: -90,
+        })
+      )
+      .then(() =>
+        Garden.create({
+          name: "Max Garden",
+          width: 15,
+          length: 15,
+          lat: -90,
+          lng: 29,
+          photo:
+            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/index-small-garden-ideas-1524680753.jpg",
+          zone: 5,
+          userId: 1,
+        })
+      )
       .then(() =>
         Garden.create({
           name: "Jaz Garden",
@@ -26,6 +47,7 @@ const fillDatabaseWithDummyData = () =>
           lng: 29,
           photo: "https://i.ytimg.com/vi/z5IcJrZI5Yc/sddefault.jpg",
           zone: 5,
+          userId: 1,
         })
       )
       .then(() =>
@@ -38,6 +60,7 @@ const fillDatabaseWithDummyData = () =>
           photo:
             "https://theplantgallery.com/wp-content/uploads/2019/07/DSC00080-1.jpg",
           zone: 5,
+          userId: 2,
         })
       )
       .then(() =>
@@ -50,6 +73,7 @@ const fillDatabaseWithDummyData = () =>
           photo:
             "https://www.bhgre.com/bhgrelife/wp-content/uploads/2016/06/SmallGardens_featuredimage.png",
           zone: 5,
+          userId: 2,
         })
       )
       .then(() =>
