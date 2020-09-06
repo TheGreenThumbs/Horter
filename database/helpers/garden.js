@@ -20,6 +20,18 @@ const createGarden = (info) =>
       });
   });
 
+// Find all gardens by a given userId
+const findGardensByUserId = (userId) =>
+  new Promise((resolve, reject) => {
+    Garden.findAll({ where: { userId } })
+      .then((gardens) => {
+        resolve(gardens);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+
 /**
  * Find a garden by id, throws an error if none is found
  * @param {Integer} id garden id to locate garden by
@@ -95,4 +107,5 @@ module.exports = {
   findGardenById,
   updateGardenInfo,
   removeGarden,
+  findGardensByUserId,
 };
