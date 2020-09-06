@@ -1,15 +1,20 @@
 <template>
   <div>
-    <UserProfileHeader
-      :user="user"
-    />
-    <div class="ui stackable grid container">
+    <div class="ui stackable grid container" v-if="user">
       <div class="four wide column">
-        <UserProfileSidebarDetails :user="user"/>
+        <img class="ui tiny avatar image" :src="user.photoUrl">
+        <h3>{{`Welcome to your garden, @${user.username}.`}}</h3>
       </div>
       <div class="eight wide column">
         <div class="ui segment">
-          <h3 class="ui medium dividing header">{{user.status}}</h3>
+          <!-- <h3 class="ui medium dividing header">{{`Status: ${user.status}`}}</h3> -->
+          <input name="bid" type="text" v-model="bid" placeholder="Status" lazy>
+          <button :status="updateStatus" v-on:click="() => {
+             updateStatus(this.bid);
+             this.bid = '';
+            }">Update
+          </button>
+          <p>@{{user.username}}: {{ user.status }}</p>
         </div>
       </div>
       <div class="gardens">
@@ -17,26 +22,22 @@
       </div>
     </div>
   </div>
-</template>
+</template> 
 
 <script>
-  import UserProfileHeader from './UserProfileHeader.vue'
-  import UserProfileSidebarDetails from './UserProfileSidebarDetails.vue'
   import Carousel from './garden-carousel.vue'
-  import user from '../fake-data/fake-data.js'
+  import user  from '../fake-data/fake-data.js'
 
   export default {
     name: 'UserProfile',
     components: {
-      UserProfileSidebarDetails,
-      UserProfileHeader,
       Carousel,
     },
     data () {
       return {
         user: user,
         // authUser: '',
-        status: '',
+        bid: '',
       }
     },
     // beforeRouteUpdate (to, from, next) {
@@ -56,7 +57,9 @@
     //   }
     // },
     methods: {
-
+      updateStatus: (string) => {
+        return user.status = string;
+      }
     }
   }
 </script>
