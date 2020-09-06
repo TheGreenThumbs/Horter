@@ -28,6 +28,11 @@
             ></b-menu-item>
             <b-menu-item
               icon="sprout"
+              label="Profile"
+              @click="$router.push('UserProfile')"
+            ></b-menu-item>
+            <b-menu-item
+              icon="sprout"
               label="Plant List"
               disabled
             ></b-menu-item>

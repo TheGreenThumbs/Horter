@@ -11,6 +11,8 @@
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
+import UserProfile from './Profile/user-profile.vue';
+import user from './fake-data/fake-data.js';
 import router from "../router";
 import axios from "axios";
 
@@ -20,6 +22,7 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
+    user: UserProfile
   },
   data() {
     return {
