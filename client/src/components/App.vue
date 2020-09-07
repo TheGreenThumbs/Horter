@@ -1,17 +1,16 @@
 <template>
   <div>
     <navigation v-if="user.id" :user="user"></navigation>
-    <div v-if="user.id" class="chatbot">
-      <chatbotmodal></chatbotmodal>
-    </div>
     <router-view v-if="user.id" :user="user"></router-view>
     <login v-else></login>
+    <chatbotmodal v-if="user.id" class="chatbot"></chatbotmodal>
   </div>
 </template>
 
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
+import UserProfile from "./Profile/user-profile.vue";
 import Login from "./Login.vue";
 import user from "./fake-data/fake-data.js";
 import router from "../router";
@@ -23,6 +22,7 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
+    user: UserProfile,
     login: Login,
   },
   data() {
@@ -49,3 +49,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.chatbot {
+  display: fixed;
+  bottom: 0;
+}
+</style>

@@ -16,6 +16,8 @@ const router = new VueRouter({
     {
       path: "/wish",
       component: WishList,
+      name: "wish",
+      props: true,
     },
     {
       path: "/",
@@ -24,10 +26,9 @@ const router = new VueRouter({
     {
       path: "/UserProfile",
       component: UserProfile,
-    }
+    },
   ],
   mode: "history",
 });
 
- 
 export default router;
