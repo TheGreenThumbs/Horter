@@ -20,7 +20,6 @@ export default {
         hasModalCard: false,
         customClass: "custom-class custom-class-2",
         trapFocus: false,
-        "full-screen": false,
         width: 400,
       });
     },

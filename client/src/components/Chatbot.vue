@@ -31,6 +31,7 @@
 <script>
 import Message from "./Message.vue";
 import axios from "axios";
+import router from "../router";
 export default {
   name: "chatbot",
   components: {
@@ -43,6 +44,8 @@ export default {
   },
   methods: {
     submitMessage(message) {
+      let mArray = [];
+      let plant = "";
       // this should ideally contact the chatbot on submit with the message, then print the response
       this.messages.push(["User", message]);
       // axios
@@ -51,7 +54,24 @@ export default {
       //     this.messages.push(["ChatBot", data.data]);
       //   })
       //   .catch((err) => {});
-      this.messages.push(["ChatBot", "great!"]);
+
+      // i would like to plant [] in my garden
+      // show me a list of [] plants
+      // could you recommend any []
+      mArray = message.split(" ");
+      if (mArray.includes("plant")) {
+        let index = mArray.indexOf("plant") + 1;
+        plant = mArray[index];
+        this.$emit("close");
+        router.push({
+          name: "wish",
+          params: {
+            plant: plant,
+          },
+        });
+      }
+
+      // this.messages.push(["ChatBot", "great!"]);
     },
   },
 };
