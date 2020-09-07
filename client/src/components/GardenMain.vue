@@ -17,12 +17,7 @@
         <div class="height">Height: {{ gardenSize.height }}</div>
       </div>
     </div>
-    <div class="card-content">
-      <p>
-        Florem ipsum sneezeweed peruvian lily dune helleborine plumed thistle.
-        Scabious st john’s wort holy grass false beard. Bloom glory lily
-        drumstick gentian buttercup cosmos foxtail lily
-      </p>
+    <div class="card-content" id="garden-info">
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
@@ -225,3 +220,10 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+#garden-info
+  display: flex
+  flex-direction: column
+  align-items: center
+</style>
