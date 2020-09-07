@@ -68,7 +68,9 @@
     </b-sidebar>
     <!-- Left sidebar menu ends -->
     <!-- Hamburger menu button begins -->
-    <b-button @click="open = true"><b-icon icon="menu"></b-icon></b-button>
+    <b-button class="nav-button" @click="open = true"
+      ><b-icon icon="menu"></b-icon
+    ></b-button>
     <!-- Hamburger menu button ends -->
   </section>
 </template>
@@ -88,9 +90,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.p-1 {
-  padding: 1em;
-}
-</style>
