@@ -1,18 +1,16 @@
 <template>
   <div>
     <navigation></navigation>
-    <div class="chatbot">
-      <chatbotmodal></chatbotmodal>
-    </div>
     <router-view :user="user"></router-view>
+    <chatbotmodal class="chatbot"></chatbotmodal>
   </div>
 </template>
 
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
-import UserProfile from './Profile/user-profile.vue';
-import user from './fake-data/fake-data.js';
+import UserProfile from "./Profile/user-profile.vue";
+import user from "./fake-data/fake-data.js";
 import router from "../router";
 import axios from "axios";
 
@@ -22,7 +20,7 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
-    user: UserProfile
+    user: UserProfile,
   },
   data() {
     return {
@@ -48,3 +46,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.chatbot {
+  display: fixed;
+  bottom: 0;
+}
+</style>
