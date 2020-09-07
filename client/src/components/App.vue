@@ -1,18 +1,19 @@
 <template>
   <div>
-    <navigation></navigation>
-    <div class="chatbot">
+    <navigation v-if="user.id"></navigation>
+    <div v-if="user.id" class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
-    <router-view :user="user"></router-view>
+    <router-view v-if="user.id" :user="user"></router-view>
+    <login v-else></login>
   </div>
 </template>
 
 <script>
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
-import UserProfile from './Profile/user-profile.vue';
-import user from './fake-data/fake-data.js';
+import Login from "./Login.vue";
+import user from "./fake-data/fake-data.js";
 import router from "../router";
 import axios from "axios";
 
@@ -22,7 +23,7 @@ export default {
   components: {
     navigation: Navigation,
     chatbotmodal: ChatbotModal,
-    user: UserProfile
+    login: Login,
   },
   data() {
     return {
