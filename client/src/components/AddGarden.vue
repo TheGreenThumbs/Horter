@@ -60,8 +60,38 @@ export default {
       };
     },
     onSubmit() {
-      // axios({
-      // })
+      const newGarden = {
+        name: this.name,
+        width: this.width,
+        length: this.length,
+        lat: this.position.lat,
+        lng: this.position.lng,
+      };
+      axios({
+        method: "post",
+        url: "/garden",
+        data: {
+          garden: newGarden,
+        },
+      })
+        .then((garden) => {
+          this.$buefy.toast.open({
+            message: "Successfully made Garden",
+            type: "is-success",
+            duration: 1000,
+          });
+          this.$router.push({
+            path: "/garden",
+          });
+        })
+        .catch((err) => {
+          this.$buefy.toast.open({
+            message: "Error creating Garden",
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
+        });
     },
   },
   created() {
