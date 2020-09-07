@@ -69,6 +69,16 @@ export default {
             plant: plant,
           },
         });
+      } else if (mArray.includes("recommend")) {
+        let index = mArray.indexOf("recommend") + 2;
+        plant = mArray[index];
+        this.$emit("close");
+        router.push({
+          name: "wish",
+          params: {
+            plant: plant,
+          },
+        });
       }
 
       // this.messages.push(["ChatBot", "great!"]);

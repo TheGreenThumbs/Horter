@@ -1,14 +1,15 @@
 <template>
   <section>
     <div class="buttons">
-      <button class="button is-green" @click="cardModal()">
-        <b-icon icon="menu"></b-icon>
+      <button class="button" @click="cardModal()">
+        <b-icon icon="sprout-outline"></b-icon>
       </button>
     </div>
   </section>
 </template>
 
 <script>
+import { mdiBarley } from "@mdi/js";
 import Chatbot from "./Chatbot.vue";
 export default {
   name: "chatbot",
@@ -24,12 +25,17 @@ export default {
       });
     },
   },
+  data() {
+    return {
+      mdiBarley,
+    };
+  },
 };
 </script>
 
 <style scoped>
 .button {
-  color: green;
+  background-color: limegreen;
 }
 .buttons {
   color: green;
