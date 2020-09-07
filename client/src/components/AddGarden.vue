@@ -18,11 +18,14 @@
       ></b-input>
     </b-field>
     <GmapMap
-      :center="{ lat: 29, lng: -90 }"
-      :zoom="7"
+      class="add-garden-map"
+      :center="mapStart"
+      :zoom="14"
       map-type-id="terrain"
-      style="width: 500px; height: 500px"
+      style="width: 80vw; height: 300px"
+      @click="mapClick"
     >
+      <GmapMarker :position="position" />
     </GmapMap>
     <b-button @click="onSubmit" type="is-success">Add Garden</b-button>
   </section>
@@ -37,17 +40,37 @@ export default {
       name: "",
       width: "",
       length: "",
-      lat: 29,
-      lng: -90,
+      position: {
+        lat: 29.9855645,
+        lng: -90.1027271,
+      },
       photo: "",
       zone: 0,
+      mapStart: {
+        lat: 29.9855645,
+        lng: -90.1027271,
+      },
     };
   },
   methods: {
+    mapClick(e) {
+      this.position = {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+      };
+    },
     onSubmit() {
       // axios({
       // })
     },
+  },
+  created() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      this.$log.info(latitude, longitude);
+      this.mapStart.lat = +latitude;
+      this.mapStart.lng = +longitude;
+    });
   },
 };
 </script>
@@ -55,4 +78,6 @@ export default {
 <style lang="sass">
 .add-garden
   margin: 0 30px
+.add-garden-map
+  margin: 10px auto
 </style>
