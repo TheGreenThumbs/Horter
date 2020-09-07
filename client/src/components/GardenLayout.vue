@@ -18,6 +18,8 @@
       :snapToGrid="true"
       :gridX="gardenScale"
       :gridY="gardenScale"
+      :parentW="plantScale(gardenSize.width)"
+      :parentH="plantScale(gardenSize.height)"
     >
     </VueDragResize>
   </div>
