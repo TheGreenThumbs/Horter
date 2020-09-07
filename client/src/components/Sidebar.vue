@@ -13,13 +13,13 @@
     >
       <div class="p-1">
         <b-image
-          src="https://picsum.photos/600/400"
+          :src="user.s3_id"
           alt="A random image"
           ratio="4by4"
           :rounded="rounded"
         ></b-image>
         <b-menu>
-          <b-menu-list label="Horter"></b-menu-list>
+          <b-menu-list :label="user.username"></b-menu-list>
           <b-menu-list label="Menu">
             <b-menu-item
               icon="home"
@@ -76,6 +76,7 @@
 <script>
 export default {
   name: "sidebar",
+  props: ["user"],
   data() {
     return {
       open: false,
