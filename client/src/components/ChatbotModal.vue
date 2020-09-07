@@ -1,14 +1,15 @@
 <template>
   <section>
     <div class="buttons">
-      <button class="button is-green" @click="cardModal()">
-        <b-icon icon="menu"></b-icon>
+      <button class="button" @click="cardModal()">
+        <b-icon icon="robot"></b-icon>
       </button>
     </div>
   </section>
 </template>
 
 <script>
+import { mdiBarley } from "@mdi/js";
 import Chatbot from "./Chatbot.vue";
 export default {
   name: "chatbot",
@@ -20,17 +21,21 @@ export default {
         hasModalCard: false,
         customClass: "custom-class custom-class-2",
         trapFocus: false,
-        "full-screen": false,
         width: 400,
       });
     },
+  },
+  data() {
+    return {
+      mdiBarley,
+    };
   },
 };
 </script>
 
 <style scoped>
 .button {
-  color: green;
+  background-color: limegreen;
 }
 .buttons {
   color: green;
