@@ -12,7 +12,7 @@
       :x="plantScale(plant.position_x)"
       :y="plantScale(plant.position_y)"
       :stickSize="0"
-      :style="plantBorderRadius(plant.radius)"
+      :style="plantBorderRadius(plant)"
       @clicked="selectPlant(plant.id)"
       @dragstop="plantMoved"
       :snapToGrid="true"
@@ -76,8 +76,14 @@ export default {
     },
   },
   methods: {
-    plantBorderRadius: function (radius) {
-      return { "border-radius": `${this.plantScale(radius) / 2}px` };
+    plantBorderRadius: function ({ plant, radius }) {
+      if (!plant) return {};
+      const styles = {
+        "border-radius": `${this.plantScale(radius) / 2}px`,
+        "background-image": `url(${plant.photo_url})`,
+        "background-size": "contain",
+      };
+      return styles;
     },
     plantScale: function (num) {
       return num * this.gardenScale;
@@ -131,7 +137,9 @@ export default {
 <style lang="sass">
 .gardenLayout
   position: relative
-  background-color: grey
-.plant
   background-color: $brown
+  margin: 10px
+  border-radius: 10px
+.plant
+  background-color: $green
 </style>
