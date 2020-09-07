@@ -184,7 +184,25 @@ export default {
       this.plantList.forEach((plant, i) => {
         if (plant.id === this.selected) {
           const newPlant = { ...plant, ...info };
-          this.$set(this.plantList, i, { ...plant, ...info });
+          axios({
+            method: "put",
+            url: "/garden/locationdata",
+            data: {
+              id: plant.id,
+              info,
+            },
+          })
+            .then(() => {
+              this.$set(this.plantList, i, { ...plant, ...info });
+            })
+            .catch((err) => {
+              this.$log.error(err);
+              this.$buefy.toast.open({
+                message: "Problem Moving Plant",
+                type: "id-danger",
+                duration: 1000,
+              });
+            });
         }
       });
     },
