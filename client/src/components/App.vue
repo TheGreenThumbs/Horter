@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navigation v-if="user.id"></navigation>
+    <navigation v-if="user.id" :user="user"></navigation>
     <div v-if="user.id" class="chatbot">
       <chatbotmodal></chatbotmodal>
     </div>
