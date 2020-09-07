@@ -29,6 +29,19 @@ gardenInfo.get("/one", (req, res) => {
     res.send(garden);
   });
 });
+// Add a garden
+gardenInfo.post("/", (req, res) => {
+  const { garden } = req.body;
+  gardenHelpers
+    .createGarden(garden)
+    .then((response) => {
+      res.status(201).send(response);
+    })
+    .catch((err) => {
+      logger.error("Failed Adding Garden: %o", err);
+      res.status(500).send(err);
+    });
+});
 
 // Get all gardens for a given userId
 gardenInfo.get("/user", (req, res) => {
