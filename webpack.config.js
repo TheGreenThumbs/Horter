@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const { HotModuleReplacementPlugin } = require("webpack");
 const { join } = require("path");
+const dotenv = require("dotenv").config({ path: join(__dirname, "/.env") });
 
 module.exports = {
   entry: join(__dirname, "/client/src/index.js"),
@@ -45,7 +46,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       showErrors: true,
@@ -54,5 +55,8 @@ module.exports = {
       favicon: join(__dirname, "/client/src/assets/horterFavicon.png"),
     }),
     new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.parsed),
+    }),
   ],
 };

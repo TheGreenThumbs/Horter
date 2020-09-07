@@ -17,6 +17,13 @@
         placeholder="Garden Length"
       ></b-input>
     </b-field>
+    <GmapMap
+      :center="{ lat: 29, lng: -90 }"
+      :zoom="7"
+      map-type-id="terrain"
+      style="width: 500px; height: 500px"
+    >
+    </GmapMap>
     <b-button @click="onSubmit" type="is-success">Add Garden</b-button>
   </section>
 </template>
@@ -24,7 +31,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Add Garden",
+  name: "AddGarden",
   data() {
     return {
       name: "",
