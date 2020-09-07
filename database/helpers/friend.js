@@ -10,6 +10,24 @@ const addFriend = (userId, friendId) => {
   });
 };
 
+const removeFriend = (userId, friendId) => {
+  return new Promise((resolve, reject) => {
+    Friend.destroy({
+      where: {
+        id_user: userId,
+        id_friend: friendId,
+      },
+    })
+      .then((friend) => {
+        resolve(friend);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 module.exports = {
   addFriend,
+  removeFriend,
 };
