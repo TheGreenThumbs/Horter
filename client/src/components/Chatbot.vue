@@ -11,17 +11,15 @@
       </div>
       <br />
     </div> -->
-    <div v-for="(m, index) in messages" v-bind:key="index">
-      <div class="columns">
-        <div v-if="m[0] === 'ChatBot'">
-          <div class="column is-6 chatbot">
-            <div class="content-chatbot">{{ m[0] }}: {{ m[1] }}</div>
-          </div>
+    <div class="columns" v-for="(m, index) in messages" v-bind:key="index">
+      <div v-if="m[0] === 'ChatBot'">
+        <div class="column is-6 chatbot">
+          <div class="content-chatbot">{{ m[0] }}: {{ m[1] }}</div>
         </div>
-        <div v-else>
-          <div class="column is-6 user is-pulled-right">
-            <div class="content-user">{{ m[0] }}: {{ m[1] }}</div>
-          </div>
+      </div>
+      <div v-else>
+        <div class="column is-6 user is-pulled-right">
+          <div class="content-user">{{ m[0] }}: {{ m[1] }}</div>
         </div>
       </div>
     </div>

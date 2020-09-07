@@ -1,10 +1,10 @@
 const { Router } = require("express");
-// const { runSample } = require('../helpers/chatbot-api');
+const { runSample } = require("../helpers/chatbot-api");
 
 const chatbot = Router();
 
 chatbot.get("/", (req, res) => {
-  // runSample()
+  runSample();
   res.send("yolo!");
 });
 
