@@ -21,6 +21,9 @@
             <b-menu-item label="Garden2" disabled></b-menu-item>
             <b-menu-item label="Garden3" disabled></b-menu-item>
           </b-menu-list>
+          <router-link to="/addgarden">
+            <b-button type="is-success is-light">Add a Garden</b-button>
+          </router-link>
         </b-menu>
       </div>
     </b-sidebar>
