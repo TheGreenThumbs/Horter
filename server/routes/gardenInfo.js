@@ -7,7 +7,7 @@ const {
   removeGarden,
 } = require("../../database/helpers/garden");
 
-const { plantHelpers } = require("../../database/helpers");
+const { plantHelpers, gardenHelpers } = require("../../database/helpers");
 const searchSelf = require("../helpers/trefle-api");
 
 const {
@@ -28,6 +28,19 @@ gardenInfo.get("/one", (req, res) => {
   findGardenById(id).then((garden) => {
     res.send(garden);
   });
+});
+
+// Get all gardens for a given userId
+gardenInfo.get("/user", (req, res) => {
+  const { id } = req.query;
+  gardenHelpers
+    .findGardensByUserId(id)
+    .then((gardens) => {
+      res.status(200).send(gardens);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
 });
 
 // This function finds or creates a plant, then adds it to the garden with default 'garden layout' x and y coordinates

@@ -2,8 +2,7 @@ const axios = require("axios");
 
 const logger = require("../../winston");
 
-axios.defaults.headers.common.Authorization =
-  "fOHUVX-MMrR13ZpJb1AnBHj2Yh9lN-PsaxoUyzJ42hA";
+axios.defaults.headers.common.Authorization = process.env.TREFLE_TOKEN;
 
 const searchSelf = (slug) =>
   new Promise((resolve, reject) => {

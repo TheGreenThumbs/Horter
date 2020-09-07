@@ -2,6 +2,7 @@
 
 <template>
   <section>
+    <!-- Left sidebar menu begins -->
     <b-sidebar
       type="is-light"
       :fullheight="fullheight"
@@ -24,6 +25,11 @@
               icon="home"
               @click="$router.push('/')"
               label="Home"
+            ></b-menu-item>
+            <b-menu-item
+              icon="sprout"
+              label="Profile"
+              @click="$router.push('UserProfile')"
             ></b-menu-item>
             <b-menu-item
               icon="sprout"
@@ -60,8 +66,10 @@
         </b-menu>
       </div>
     </b-sidebar>
-    <!-- Next line is Hamburger menu button -->
+    <!-- Left sidebar menu ends -->
+    <!-- Hamburger menu button begins -->
     <b-button @click="open = true"><b-icon icon="menu"></b-icon></b-button>
+    <!-- Hamburger menu button ends -->
   </section>
 </template>
 

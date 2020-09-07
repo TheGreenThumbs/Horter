@@ -2,6 +2,7 @@
 
 <template>
   <section>
+    <!-- Right sidebar menu begins -->
     <b-sidebar
       type="is-light"
       :fullheight="fullheight"
@@ -23,10 +24,12 @@
         </b-menu>
       </div>
     </b-sidebar>
-    <!-- Next line is Vertical Ellipsis menu button -->
+    <!-- Right sidebar menu ends -->
+    <!-- Ellipsis menu button begins -->
     <b-button @click="open = true"
       ><b-icon icon="dots-vertical"></b-icon
     ></b-button>
+    <!-- Ellipsis menu button ends -->
   </section>
 </template>
 

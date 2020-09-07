@@ -38,7 +38,6 @@ const findPlantByTrefleId = (trefleId) =>
   new Promise((resolve, reject) => {
     Plant.findOne({ where: { id_trefle: trefleId }, rejectOnEmpty: true })
       .then((plant) => {
-        console.log(plant);
         resolve(plant.id);
       })
       .catch((err) => {

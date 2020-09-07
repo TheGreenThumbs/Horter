@@ -1,3 +1,5 @@
+<!-- Renders navigation bar with hamburger and ellipsis menu buttons -->
+
 <template>
   <section>
     <sidebar class="left-sidebar"></sidebar>

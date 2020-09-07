@@ -2,9 +2,6 @@
   <div>
     <div class="ui segment">
       <div class="ui grid container">
-      <div class="four wide column">
-        <img class="profile-pic" alt="avatar" :src="user.photoUrl" >
-      </div>
     </div>
       <h2 class="ui medium header">
         <!-- <router-link :to="`/${user.username}`">{{ user.name }}</router-link> -->
@@ -29,5 +26,7 @@
 </script>
 
 <style>
-
+.ui segment {
+    align-content: center;
+}
 </style>
