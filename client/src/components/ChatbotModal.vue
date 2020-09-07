@@ -2,7 +2,7 @@
   <section>
     <div class="buttons">
       <button class="button" @click="cardModal()">
-        <b-icon icon="sprout-outline"></b-icon>
+        <b-icon icon="robot"></b-icon>
       </button>
     </div>
   </section>

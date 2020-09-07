@@ -19,6 +19,7 @@ export default {
   methods: {
     handleSubmit() {
       this.$emit("submit:message", this.message);
+      this.message = "";
     },
   },
 };
