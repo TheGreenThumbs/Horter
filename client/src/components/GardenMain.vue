@@ -212,7 +212,7 @@ export default {
         .then(({ data }) => {
           this.plantList = data.plants;
           this.gardenId = data.id;
-          this.gardenSize.length = data.length;
+          this.gardenSize.height = data.length;
           this.gardenSize.width = data.width;
           this.location.lat = data.lat;
           this.location.lng = data.lng;
