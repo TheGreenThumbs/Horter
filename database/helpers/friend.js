@@ -27,7 +27,26 @@ const removeFriend = (userId, friendId) => {
   });
 };
 
+const getFriends = (userId) => {
+  return new Promise((resolve, reject) => {
+    Friend.findAll({
+      where: { id_user: userId },
+      include: [
+        {
+          model: models.User,
+          as: "friends",
+        },
+      ],
+    })
+      .then((friends) => {
+        resolve(friends);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
 module.exports = {
   addFriend,
   removeFriend,
+  getFriends,
 };
