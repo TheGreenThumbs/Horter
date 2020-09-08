@@ -15,12 +15,19 @@
         <b-menu>
           <b-menu-list label="Garden Menu">
             <b-menu-item
-              label="Garden1"
-              @click="$router.push('garden')"
+              v-for="garden in gardens"
+              :key="garden.id"
+              :label="garden.name"
+              @click="goToGarden(garden.id)"
             ></b-menu-item>
-            <b-menu-item label="Garden2" disabled></b-menu-item>
-            <b-menu-item label="Garden3" disabled></b-menu-item>
+            <b-menu-item
+              label="Test Garden"
+              @click="goToGarden(1)"
+            ></b-menu-item>
           </b-menu-list>
+          <router-link to="/addgarden">
+            <b-button type="is-success is-light">Add a Garden</b-button>
+          </router-link>
         </b-menu>
       </div>
     </b-sidebar>
@@ -34,8 +41,11 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "rightbar",
+  props: ["user"],
   data() {
     return {
       open: false,
@@ -44,7 +54,40 @@ export default {
       fullwidth: false,
       right: true,
       rounded: true,
+      gardens: [],
     };
+  },
+  created() {
+    axios({
+      method: "get",
+      url: "/garden/user",
+      params: {
+        id: this.user.id,
+      },
+    })
+      .then(({ data }) => {
+        this.$log.info(data);
+        this.gardens = data;
+      })
+      .catch((err) => {
+        this.$buefy.toast.open({
+          message: "Error getting gardens",
+          type: "is-danger",
+          duration: 1000,
+        });
+      });
+  },
+  methods: {
+    goToGarden(id) {
+      this.$router
+        .push({
+          path: "/garden",
+          query: { id },
+        })
+        .catch(() => {
+          this.$log.info("same route");
+        });
+    },
   },
 };
 </script>

@@ -212,17 +212,14 @@ export default {
       this.name = name;
       this.location = { lat, lng };
     },
-  },
-  mounted() {
-    this.$nextTick(function () {
+    loadGardens: function (id) {
       axios({
         method: "GET",
         url: "/garden/one",
-        params: {
-          id: 1,
-        },
+        params: { id },
       })
         .then(({ data }) => {
+          this.$log.info(data);
           this.plantList = data.plants;
           this.gardenId = data.id;
           this.gardenSize.height = data.length;
@@ -232,9 +229,23 @@ export default {
           this.name = data.name;
         })
         .catch((err) => {
-          console.error(err);
+          this.$buefy.toast.open({
+            message: `Error finding garden ${id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
         });
+    },
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.loadGardens(this.$route.query.id);
     });
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.loadGardens(to.query.id);
+    next();
   },
 };
 </script>
