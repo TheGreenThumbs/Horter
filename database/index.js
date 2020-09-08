@@ -7,7 +7,8 @@ const {
   plantFactory,
   plantInGardenFactory,
   wishListFactory,
-  userFactory
+  userFactory,
+  friendFactory,
 } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
@@ -39,6 +40,7 @@ const models = {
   PlantInGarden: plantInGardenFactory(sequelize),
   User: userFactory(sequelize),
   WishList: wishListFactory(sequelize),
+  Friend: friendFactory(sequelize),
 };
 
 // A function that sets up all the model associations, so we can drop the database
@@ -54,6 +56,16 @@ const associations = () => {
   models.WishList.belongsTo(models.User);
   models.Garden.belongsTo(models.User);
   models.User.hasMany(models.Garden);
+  models.User.hasMany(models.Friend);
+  models.Friend.belongsTo(models.User, {
+    as: "friends",
+    foreignKey: "id_friend",
+  });
+  models.User.hasMany(models.Friend);
+  models.Friend.belongsTo(models.User, {
+    as: "user",
+    foreignKey: "id_user",
+  });
 };
 associations();
 
