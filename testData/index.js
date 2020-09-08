@@ -26,6 +26,16 @@ const fillDatabaseWithDummyData = () =>
         })
       )
       .then(() =>
+        User.create({
+          username: "bulldoggie",
+          firstname: "Yolo",
+          lastname: "Mike",
+          id_google: "saidkasaasdd",
+          lat: 29,
+          lng: -90,
+        })
+      )
+      .then(() =>
         Garden.create({
           name: "Max Garden",
           width: 15,
