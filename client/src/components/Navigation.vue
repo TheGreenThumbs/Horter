@@ -2,8 +2,8 @@
 
 <template>
   <section>
-    <sidebar class="left-sidebar"></sidebar>
-    <rightbar class="right-sidebar"></rightbar>
+    <sidebar :user="user" class="left-sidebar"></sidebar>
+    <rightbar class="right-sidebar" :user="user"></rightbar>
   </section>
 </template>
 
@@ -13,6 +13,7 @@ import Rightbar from "./Rightbar.vue";
 
 export default {
   name: "navigation",
+  props: ["user"],
   components: {
     sidebar: Sidebar,
     rightbar: Rightbar,

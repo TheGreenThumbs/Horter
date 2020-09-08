@@ -153,5 +153,13 @@ export default {
       wishClicked: [],
     };
   },
+  props: ["plant"],
+
+  mounted() {
+    if (this.plant !== undefined) {
+      this.keyword = this.plant;
+      this.searchIconClick();
+    }
+  },
 };
 </script>

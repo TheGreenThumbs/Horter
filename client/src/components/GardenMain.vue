@@ -17,12 +17,7 @@
         <div class="height">Height: {{ gardenSize.height }}</div>
       </div>
     </div>
-    <div class="card-content">
-      <p>
-        Florem ipsum sneezeweed peruvian lily dune helleborine plumed thistle.
-        Scabious st john’s wort holy grass false beard. Bloom glory lily
-        drumstick gentian buttercup cosmos foxtail lily
-      </p>
+    <div class="card-content" id="garden-info">
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
@@ -189,7 +184,25 @@ export default {
       this.plantList.forEach((plant, i) => {
         if (plant.id === this.selected) {
           const newPlant = { ...plant, ...info };
-          this.$set(this.plantList, i, { ...plant, ...info });
+          axios({
+            method: "put",
+            url: "/garden/locationdata",
+            data: {
+              id: plant.id,
+              info,
+            },
+          })
+            .then(() => {
+              this.$set(this.plantList, i, { ...plant, ...info });
+            })
+            .catch((err) => {
+              this.$log.error(err);
+              this.$buefy.toast.open({
+                message: "Problem Moving Plant",
+                type: "id-danger",
+                duration: 1000,
+              });
+            });
         }
       });
     },
@@ -199,29 +212,47 @@ export default {
       this.name = name;
       this.location = { lat, lng };
     },
-  },
-  mounted() {
-    this.$nextTick(function () {
+    loadGardens: function (id) {
       axios({
         method: "GET",
         url: "/garden/one",
-        params: {
-          id: 1,
-        },
+        params: { id },
       })
         .then(({ data }) => {
+          this.$log.info(data);
           this.plantList = data.plants;
           this.gardenId = data.id;
-          this.gardenSize.length = data.length;
+          this.gardenSize.height = data.length;
           this.gardenSize.width = data.width;
           this.location.lat = data.lat;
           this.location.lng = data.lng;
           this.name = data.name;
         })
         .catch((err) => {
-          console.error(err);
+          this.$buefy.toast.open({
+            message: `Error finding garden ${id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
         });
+    },
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.loadGardens(this.$route.query.id);
     });
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.loadGardens(to.query.id);
+    next();
   },
 };
 </script>
+
+<style lang="sass">
+#garden-info
+  display: flex
+  flex-direction: column
+  align-items: center
+</style>
