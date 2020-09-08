@@ -23,6 +23,9 @@ apiSearch.get("/", (req, res) => {
     .get(`https://trefle.io/api/v1/plants/search?&q=${search}`)
     .then((plants) => {
       res.send(plants.data.data);
+    })
+    .catch((err) => {
+      console.error(err);
     });
 });
 

@@ -134,7 +134,12 @@
       </article>
     </div>
     <div class="card-footer">
-      <button class="card-footer-item">Add Plant</button>
+      <button
+        class="card-footer-item"
+        @click="$router.push({ name: 'wish', params: { gardenId } })"
+      >
+        Add Plant
+      </button>
       <editmodal
         :id="gardenId"
         :name="name"

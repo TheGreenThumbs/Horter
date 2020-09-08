@@ -21,10 +21,15 @@ export default {
 };
 </script>
 
-<style>
-.right-sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
+<style lang="sass">
+.right-sidebar
+  position: absolute
+  top: 0
+  right: 0
+
+.nav-button
+  border: none
+
+.p-1
+  padding: 1em
 </style>
