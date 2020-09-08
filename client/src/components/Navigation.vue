@@ -3,7 +3,7 @@
 <template>
   <section>
     <sidebar :user="user" class="left-sidebar"></sidebar>
-    <rightbar class="right-sidebar"></rightbar>
+    <rightbar class="right-sidebar" :user="user"></rightbar>
   </section>
 </template>
 

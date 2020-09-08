@@ -35,6 +35,7 @@
 import axios from "axios";
 export default {
   name: "AddGarden",
+  props: ["user"],
   data() {
     return {
       name: "",
@@ -66,6 +67,7 @@ export default {
         length: this.length,
         lat: this.position.lat,
         lng: this.position.lng,
+        userId: this.user.id,
       };
       axios({
         method: "post",
@@ -74,7 +76,7 @@ export default {
           garden: newGarden,
         },
       })
-        .then((garden) => {
+        .then(({ data }) => {
           this.$buefy.toast.open({
             message: "Successfully made Garden",
             type: "is-success",
@@ -82,6 +84,7 @@ export default {
           });
           this.$router.push({
             path: "/garden",
+            query: { id: data.id },
           });
         })
         .catch((err) => {
