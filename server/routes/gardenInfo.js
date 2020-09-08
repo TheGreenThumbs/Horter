@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const logger = require("../../winston");
-
+const upload = require("./photos");
 const {
   findGardenById,
   updateGardenInfo,
@@ -30,7 +30,7 @@ gardenInfo.get("/one", (req, res) => {
   });
 });
 // Add a garden
-gardenInfo.post("/", (req, res) => {
+gardenInfo.post("/", upload("photo"), (req, res) => {
   const { garden } = req.body;
   gardenHelpers
     .createGarden(garden)
