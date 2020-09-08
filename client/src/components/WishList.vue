@@ -41,7 +41,10 @@
                   @click="wishButtonClick(plant.id, plant.slug)"
                   :active="wishClicked.includes(plant.id)"
                 >
-                  Add to Wishlist
+                  <span v-if="!wishClicked.includes(plant.id)"
+                    >Add to Wishlist</span
+                  >
+                  <span v-else>Included in Wishlist</span>
                 </b-button>
                 <b-button
                   size="is-small"
@@ -90,8 +93,6 @@ export default {
           },
         })
         .then((res) => {
-          // Need to clean data
-          // . . . so build data scrubber helper function
           this.results = res.data;
           console.log(this.results);
         })
@@ -118,7 +119,6 @@ export default {
           console.error(err);
         });
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
-      console.log(wishIndex);
       if (wishIndex > -1) {
         console.log("Remove", wishIndex, this.wishClicked);
         this.wishClicked.splice(wishIndex, 1);
