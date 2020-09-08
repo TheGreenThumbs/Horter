@@ -3,6 +3,7 @@
     <b-field label="Garden Name">
       <b-input v-model="name" placeholder="Garden Name"></b-input>
     </b-field>
+    <add-photo :photo.sync="photo"></add-photo>
     <b-field label="Garden Width in Inches">
       <b-input
         v-model="width"
@@ -33,9 +34,13 @@
 
 <script>
 import axios from "axios";
+import AddPhoto from "./AddPhoto.vue";
 export default {
   name: "AddGarden",
   props: ["user"],
+  components: {
+    "add-photo": AddPhoto,
+  },
   data() {
     return {
       name: "",
@@ -45,7 +50,7 @@ export default {
         lat: 29.9855645,
         lng: -90.1027271,
       },
-      photo: "",
+      photo: null,
       zone: 0,
       mapStart: {
         lat: 29.9855645,
