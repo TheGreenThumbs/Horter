@@ -3,16 +3,23 @@ const { Router } = require("express");
 const logger = require("../../winston");
 
 const friend = Router();
-const { addFriend, removeFriend } = require("../../database/helpers/friend");
-
-// GET/userId Get all a user's friends
-// POST/friendId add a friend to current user
-// DELETE/friendId delete a friend from current user
+const {
+  addFriend,
+  removeFriend,
+  getFriends,
+} = require("../../database/helpers/friend");
 
 friend.get("/", (req, res) => {
   logger.info(req.query);
-  // need id_user here in query params
-  res.send("friend home!");
+  const { userId } = req.query;
+  getFriends(userId)
+    .then((data) => {
+      res.send(data.map((user) => user.dataValues.friends));
+    })
+    .catch((err) => {
+      logger.info(err);
+      res.sendStatus(500);
+    });
 });
 
 friend.post("/add", (req, res) => {

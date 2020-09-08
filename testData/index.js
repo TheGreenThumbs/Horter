@@ -27,9 +27,9 @@ const fillDatabaseWithDummyData = () =>
       )
       .then(() =>
         User.create({
-          username: "bulldoggie",
-          firstname: "Yolo",
-          lastname: "Mike",
+          username: "Bulldog73",
+          firstname: "Gerald",
+          lastname: "Michaelangelo",
           id_google: "saidkasaasdd",
           lat: 29,
           lng: -90,
