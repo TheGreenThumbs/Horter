@@ -219,10 +219,11 @@ export default {
         method: "GET",
         url: "/garden/one",
         params: {
-          id: 1,
+          id: this.$route.query.id,
         },
       })
         .then(({ data }) => {
+          this.$log.info(data);
           this.plantList = data.plants;
           this.gardenId = data.id;
           this.gardenSize.height = data.length;
@@ -232,7 +233,12 @@ export default {
           this.name = data.name;
         })
         .catch((err) => {
-          console.error(err);
+          this.$buefy.toast.open({
+            message: `Error finding garden ${this.$route.params.id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
         });
     });
   },

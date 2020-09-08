@@ -16,7 +16,7 @@
           <b-menu-list label="Garden Menu">
             <b-menu-item
               label="Garden1"
-              @click="$router.push('garden')"
+              @click="$router.push({ path: '/garden', query: { id: 1 } })"
             ></b-menu-item>
             <b-menu-item label="Garden2" disabled></b-menu-item>
             <b-menu-item label="Garden3" disabled></b-menu-item>

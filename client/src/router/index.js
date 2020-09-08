@@ -21,16 +21,16 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/",
-      component: Login,
-    },
-    {
       path: "/UserProfile",
       component: UserProfile,
     },
     {
       path: "/addgarden",
       component: AddGarden,
+    },
+    {
+      path: "/",
+      component: Login,
     },
   ],
   mode: "history",
