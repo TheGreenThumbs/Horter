@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 const webpack = require("webpack");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const { join } = require("path");
@@ -57,6 +58,11 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.parsed),
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 10240000,
     }),
   ],
 };
