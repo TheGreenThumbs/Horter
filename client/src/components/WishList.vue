@@ -159,6 +159,19 @@ export default {
       this.keyword = this.plant;
       this.searchIconClick();
     }
+    axios({
+      method: "GET",
+      url: "/wishlist",
+      params: { userId: this.user.id },
+    })
+      .then(({ data }) => {
+        this.$log.info(data);
+        this.results = data;
+        this.loaded = true;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 };
 </script>
