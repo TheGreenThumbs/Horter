@@ -136,6 +136,7 @@ export default {
         });
       this.gardenClicked.push(treflePlantId);
       this.keyword = "";
+      this.$router.push("garden");
     },
   },
   data() {
