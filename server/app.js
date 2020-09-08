@@ -6,6 +6,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 const logger = require("../winston");
+const { friend } = require("./routes/friend");
 const { apiSearch } = require("./routes/apiSearch");
 const { gardenInfo } = require("./routes/gardenInfo");
 const { chatbot } = require("./routes/chatbot");
@@ -43,6 +44,7 @@ passport.deserializeUser((userSession, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/friend", friend);
 app.use("/api/search", apiSearch);
 app.use("/garden", gardenInfo);
 app.use("/chatbot", chatbot);
