@@ -66,6 +66,7 @@ export default {
       };
     },
     onSubmit() {
+      const formData = new FormData();
       const newGarden = {
         name: this.name,
         width: this.width,
@@ -74,11 +75,16 @@ export default {
         lng: this.position.lng,
         userId: this.user.id,
       };
+      formData.append("photo", this.photo);
+      formData.append("garden", JSON.stringify(newGarden));
       axios({
         method: "post",
         url: "/garden",
-        data: {
-          garden: newGarden,
+        data: formData,
+        config: {
+          headers: {
+            "Content-type": "multipart/form-data",
+          },
         },
       })
         .then(({ data }) => {

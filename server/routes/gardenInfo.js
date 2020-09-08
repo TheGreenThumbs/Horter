@@ -30,10 +30,12 @@ gardenInfo.get("/one", (req, res) => {
   });
 });
 // Add a garden
-gardenInfo.post("/", upload("photo"), (req, res) => {
+gardenInfo.post("/", upload.single("photo"), (req, res) => {
   const { garden } = req.body;
+  const gardenParse = JSON.parse(garden);
+  gardenParse.photo = req.file.location;
   gardenHelpers
-    .createGarden(garden)
+    .createGarden(gardenParse)
     .then((response) => {
       res.status(201).send(response);
     })
