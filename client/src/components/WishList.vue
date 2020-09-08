@@ -110,7 +110,7 @@ export default {
         .post("/wishlist", {
           plantId: treflePlantId,
           slug: treflePlantSlug,
-          userId: this.userId,
+          userId: this.user.id,
         })
         .then((res) => {
           this.$log.info(res);
@@ -129,6 +129,7 @@ export default {
       this.keyword = "";
     },
     gardenButtonClick(treflePlantId, treflePlantSlug) {
+      console.log(this.gardenId);
       axios
         .post("/garden/addplant", {
           plantId: treflePlantId,
@@ -153,7 +154,7 @@ export default {
       wishClicked: [],
     };
   },
-  props: ["plant"],
+  props: ["plant", "user"],
 
   mounted() {
     if (this.plant !== undefined) {
