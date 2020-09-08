@@ -94,7 +94,6 @@ export default {
         })
         .then((res) => {
           this.results = res.data;
-          console.log(this.results);
         })
         .catch((err) => {
           console.error(err);
@@ -120,21 +119,19 @@ export default {
         });
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
       if (wishIndex > -1) {
-        console.log("Remove", wishIndex, this.wishClicked);
         this.wishClicked.splice(wishIndex, 1);
       } else {
-        console.log("Add", treflePlantId, this.wishClicked);
         this.wishClicked.push(treflePlantId);
       }
       this.keyword = "";
     },
     gardenButtonClick(treflePlantId, treflePlantSlug) {
-      console.log(this.gardenId);
+      this.gardenId = this.$route.params.gardenId;
       axios
         .post("/garden/addplant", {
           plantId: treflePlantId,
           slug: treflePlantSlug,
-          gardenId: this.gardenId,
+          gardenId: this.$route.params.gardenId,
         })
         .then((res) => {
           this.$log.info(res);
@@ -152,6 +149,7 @@ export default {
       keyword: "",
       results: [],
       wishClicked: [],
+      gardenId: -1,
     };
   },
   props: ["plant", "user"],
