@@ -39,7 +39,7 @@
                   size="is-small"
                   icon-left="plus-circle"
                   @click="wishButtonClick(plant.id, plant.slug)"
-                  :disabled="wishClicked.includes(plant.id)"
+                  :active="wishClicked.includes(plant.id)"
                 >
                   Add to Wishlist
                 </b-button>
@@ -47,7 +47,6 @@
                   size="is-small"
                   icon-left="plus-circle"
                   @click="gardenButtonClick(plant.id, plant.slug)"
-                  :disabled="gardenClicked.includes(plant.id)"
                 >
                   Add to Garden
                 </b-button>
@@ -118,7 +117,15 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-      this.wishClicked.push(treflePlantId);
+      const wishIndex = this.wishClicked.indexOf(treflePlantId);
+      console.log(wishIndex);
+      if (wishIndex > -1) {
+        console.log("Remove", wishIndex, this.wishClicked);
+        this.wishClicked.splice(wishIndex, 1);
+      } else {
+        console.log("Add", treflePlantId, this.wishClicked);
+        this.wishClicked.push(treflePlantId);
+      }
       this.keyword = "";
     },
     gardenButtonClick(treflePlantId, treflePlantSlug) {
@@ -134,7 +141,6 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-      this.gardenClicked.push(treflePlantId);
       this.keyword = "";
       this.$router.push("garden");
     },
@@ -145,7 +151,6 @@ export default {
       keyword: "",
       results: [],
       wishClicked: [],
-      gardenClicked: [],
     };
   },
 };
