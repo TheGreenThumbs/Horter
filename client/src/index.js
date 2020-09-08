@@ -19,6 +19,19 @@ Vue.use(GmapVue, {
   installComponents: true,
 });
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        console.log("SW registered:", registration);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  });
+}
+
 const isDevelopment = process.env.NODE_ENV === "development";
 
 const loggingOptions = {
