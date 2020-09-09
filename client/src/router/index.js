@@ -5,6 +5,7 @@ import WishList from "../components/WishList.vue";
 import Login from "../components/Login.vue";
 import UserProfile from "../components/Profile/user-profile.vue";
 import AddGarden from "../components/AddGarden.vue";
+import NearbyStores from "../components/NearbyStores.vue";
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,10 @@ const router = new VueRouter({
     {
       path: "/",
       component: Login,
+    },
+    {
+      path: "/nearbystores",
+      component: NearbyStores,
     },
   ],
   mode: "history",
