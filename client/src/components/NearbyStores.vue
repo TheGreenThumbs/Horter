@@ -37,17 +37,22 @@
 import axios from "axios";
 export default {
   name: "NearbyStores",
+  props: {
+    location: {
+      type: Object,
+    },
+  },
   data() {
     return {
       center: {
-        lat: 29.9855645,
-        lng: -90,
+        lat: this.location.lat,
+        lng: this.location.lng,
       },
       markers: [
         {
           position: {
-            lat: 29.9855645,
-            lng: -90.1027271,
+            lat: this.location.lat,
+            lng: this.location.lng,
           },
         },
       ],
@@ -61,12 +66,11 @@ export default {
       method: "GET",
       url: "/stores",
       params: {
-        lat: 30,
-        lng: -90,
+        lat: this.location.lat,
+        lng: this.location.lng,
       },
     })
       .then((stores) => {
-        console.log(stores.data);
         this.markers = stores.data;
       })
       .catch((err) => console.log(err));
