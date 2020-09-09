@@ -9,9 +9,9 @@ const { WishList, Plant } = models;
  */
 const addToWishList = (userId, plantId) =>
   new Promise((resolve, reject) => {
-    WishList.create({ plantId, userId })
+    WishList.findOrCreate({ where: { plantId, userId } })
       .then((wishlist) => {
-        resolve(wishlist);
+        resolve(wishlist[0]);
       })
       .catch((err) => {
         reject(err);
