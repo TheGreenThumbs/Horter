@@ -6,6 +6,7 @@ import Login from "../components/Login.vue";
 import UserProfile from "../components/Profile/user-profile.vue";
 import AddGarden from "../components/AddGarden.vue";
 import NearbyStores from "../components/NearbyStores.vue";
+import ARGarden from "../components/ARGarden.vue";
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,10 @@ const router = new VueRouter({
     {
       path: "/",
       component: Login,
+    },
+    {
+      path: "/argarden",
+      component: ARGarden,
     },
     {
       path: "/nearbystores/",

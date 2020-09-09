@@ -21,11 +21,7 @@
       <!-- Search field ends -->
       <!-- Search results begins -->
       <div v-if="loaded">
-        <article
-          class="media"
-          v-for="plant in results"
-          :key="plant.common_name"
-        >
+        <article class="media" v-for="plant in results" :key="plant.id">
           <figure class="media-left"></figure>
           <div class="media-content">
             <div class="content">
@@ -39,8 +35,12 @@
                   size="is-small"
                   icon-left="plus-circle"
                   @click="wishButtonClick(plant.id, plant.slug)"
+                  :active="wishClicked.includes(plant.id)"
                 >
-                  Add to Wishlist
+                  <span v-if="!wishClicked.includes(plant.id)"
+                    >Add to Wishlist</span
+                  >
+                  <span v-else>Included in Wishlist</span>
                 </b-button>
                 <b-button
                   size="is-small"
@@ -89,10 +89,7 @@ export default {
           },
         })
         .then((res) => {
-          // Need to clean data
-          // . . . so build data scrubber helper function
           this.results = res.data;
-          console.log(this.results);
         })
         .catch((err) => {
           console.error(err);
@@ -108,7 +105,7 @@ export default {
         .post("/wishlist", {
           plantId: treflePlantId,
           slug: treflePlantSlug,
-          userId: this.userId,
+          userId: this.user.id,
         })
         .then((res) => {
           this.$log.info(res);
@@ -116,14 +113,21 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+      const wishIndex = this.wishClicked.indexOf(treflePlantId);
+      if (wishIndex > -1) {
+        this.wishClicked.splice(wishIndex, 1);
+      } else {
+        this.wishClicked.push(treflePlantId);
+      }
       this.keyword = "";
     },
     gardenButtonClick(treflePlantId, treflePlantSlug) {
+      this.gardenId = this.$route.params.gardenId;
       axios
         .post("/garden/addplant", {
           plantId: treflePlantId,
           slug: treflePlantSlug,
-          gardenId: this.gardenId,
+          gardenId: this.$route.params.gardenId,
         })
         .then((res) => {
           this.$log.info(res);
@@ -132,6 +136,7 @@ export default {
           console.error(err);
         });
       this.keyword = "";
+      this.$router.push("garden");
     },
   },
   data() {
@@ -139,15 +144,36 @@ export default {
       loaded: false,
       keyword: "",
       results: [],
+      wishClicked: [],
+      gardenId: -1,
     };
   },
-  props: ["plant"],
+  props: ["plant", "user"],
 
   mounted() {
     if (this.plant !== undefined) {
       this.keyword = this.plant;
       this.searchIconClick();
     }
+    axios({
+      method: "GET",
+      url: "/wishlist",
+      params: { userId: this.user.id },
+    })
+      .then(({ data }) => {
+        this.$log.info(data);
+        this.results = data.map((plant) => {
+          return {
+            id: plant.plant.id_trefle,
+            common_name: plant.plant.common_name,
+            slug: plant.plant.slug,
+          };
+        });
+        this.loaded = true;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 };
 </script>

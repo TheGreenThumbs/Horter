@@ -33,7 +33,7 @@
     </b-sidebar>
     <!-- Right sidebar menu ends -->
     <!-- Ellipsis menu button begins -->
-    <b-button @click="open = true"
+    <b-button class="nav-button" @click="open = true"
       ><b-icon icon="dots-vertical"></b-icon
     ></b-button>
     <!-- Ellipsis menu button ends -->
@@ -53,7 +53,6 @@ export default {
       fullheight: true,
       fullwidth: false,
       right: true,
-      rounded: true,
       gardens: [],
     };
   },
@@ -91,9 +90,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.p-1 {
-  padding: 1em;
-}
-</style>
