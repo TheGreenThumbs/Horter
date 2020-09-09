@@ -5,6 +5,7 @@ import WishList from "../components/WishList.vue";
 import Login from "../components/Login.vue";
 import UserProfile from "../components/Profile/user-profile.vue";
 import AddGarden from "../components/AddGarden.vue";
+import ARGarden from "../components/ARGarden.vue";
 import NearbyStores from "../components/NearbyStores.vue";
 import ARGarden from "../components/ARGarden.vue";
 
@@ -39,7 +40,7 @@ const router = new VueRouter({
       component: ARGarden,
     },
     {
-      path: "/nearbystores/:location",
+      path: "/nearbystores/",
       name: "nearbystores",
       component: NearbyStores,
       props: true,
