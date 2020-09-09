@@ -11,7 +11,6 @@ const addToWishList = (userId, plantId) =>
   new Promise((resolve, reject) => {
     WishList.findOrCreate({ where: { userId, plantId } })
       .then((wishlist) => {
-        console.log("ADDTOWIHSLIST - DB HELPER", wishlist[0].id);
         resolve(wishlist[0].id);
       })
       .catch((err) => {
