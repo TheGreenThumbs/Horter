@@ -44,7 +44,7 @@ stores.get("/", (req, res) => {
 });
 
 stores.get("/one", (req, res) => {
-  const { placeId } = req.query;
+  const { placeId, name } = req.query;
   const URL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${GOOGLE_API_KEY}`;
   axios
     .get(URL)
@@ -61,7 +61,7 @@ stores.get("/one", (req, res) => {
       res.send(store);
     })
     .catch(() => {
-      res.send(500);
+      res.send({ name });
     });
 
   // singleStore = singleStore.result;

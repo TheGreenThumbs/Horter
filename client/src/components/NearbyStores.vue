@@ -94,6 +94,7 @@ export default {
         url: "/stores/one",
         params: {
           placeId: this.markers[index].placeId,
+          name: this.markers[index].name,
         },
       }).then((store) => {
         this.selectedStore = store.data;
