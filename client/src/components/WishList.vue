@@ -163,6 +163,7 @@ export default {
       .then(({ data }) => {
         this.$log.info(data);
         this.results = data.map((plant) => {
+          this.wishClicked.push(plant.plant.id_trefle);
           return {
             id: plant.plant.id_trefle,
             common_name: plant.plant.common_name,
