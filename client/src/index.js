@@ -46,6 +46,14 @@ const loggingOptions = {
 
 Vue.use(VueLogger, loggingOptions);
 
+Vue.config.ignoredElements = [
+  "a-scene",
+  "a-box",
+  "a-cone",
+  "a-camera",
+  "a-entity",
+];
+
 new Vue({
   render: (create) => create(App),
 }).$mount("#app");

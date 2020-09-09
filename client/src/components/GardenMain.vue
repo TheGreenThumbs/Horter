@@ -3,6 +3,11 @@
     <div class="card-header">
       <p class="card-header-title">{{ name }}</p>
     </div>
+    <b-button
+      @click="$router.push({ path: '/argarden', query: { id: gardenId } })"
+      type="is-success"
+      >AR View</b-button
+    >
     <div class="columns">
       <div class="column is-3">
         <div class="lat">Latitude: {{ location.lat }}</div>
