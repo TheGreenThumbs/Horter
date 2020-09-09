@@ -139,7 +139,12 @@
       </article>
     </div>
     <div class="card-footer">
-      <button class="card-footer-item">Add Plant</button>
+      <button
+        class="card-footer-item"
+        @click="$router.push({ name: 'wish', params: { gardenId } })"
+      >
+        Add Plant
+      </button>
       <router-link
         :to="{ name: 'nearbystores', params: { location: location } }"
       >
@@ -173,7 +178,7 @@ export default {
     return {
       gardenSize: { width: 10, height: 10 },
       name: "",
-      location: { lat: 30, lng: 30 },
+      location: { lat: 29, lng: -90 },
       gardenId: 0,
       plantList: [
         { position_x: 1, position_y: 2, radius: 2, id: 1 },
