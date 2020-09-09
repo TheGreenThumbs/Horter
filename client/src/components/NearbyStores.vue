@@ -1,10 +1,12 @@
 <template>
   <div class="body">
     <GmapMap
+      ref="map"
       :center="center"
       :zoom="12"
       map-type-id="terrain"
       style="width: 800px; height: 500px"
+      @dragend="resetCenter()"
     >
       <GmapMarker
         :key="index"
@@ -45,14 +47,14 @@ export default {
   data() {
     return {
       center: {
-        lat: this.location.lat,
-        lng: this.location.lng,
+        lat: 30,
+        lng: -90,
       },
       markers: [
         {
           position: {
-            lat: this.location.lat,
-            lng: this.location.lng,
+            lat: 30,
+            lng: -90,
           },
         },
       ],
@@ -62,12 +64,14 @@ export default {
     };
   },
   mounted() {
+    this.getGeo();
+    this.setLocation();
     axios({
       method: "GET",
       url: "/stores",
       params: {
-        lat: this.location.lat,
-        lng: this.location.lng,
+        lat: this.center.lat,
+        lng: this.center.lng,
       },
     })
       .then((stores) => {
@@ -94,6 +98,44 @@ export default {
       }).then((store) => {
         this.selectedStore = store.data;
       });
+    },
+    setLocation: function () {
+      if (this.location !== undefined) {
+        this.center.lat = this.location.lat;
+        this.center.lng = this.location.lng;
+      } else if (this.center === undefined) {
+        this.center.lat = 30;
+        this.center.lng = -90;
+      }
+    },
+    getGeo: function () {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+      });
+    },
+    resetCenter: function () {
+      let latlng = this.$refs.map.$mapObject.getCenter();
+      let latitude = latlng.lat();
+      let longitude = latlng.lng();
+      this.center = {
+        lat: latitude,
+        lng: longitude,
+      };
+      axios({
+        method: "GET",
+        url: "/stores",
+        params: {
+          lat: this.center.lat,
+          lng: this.center.lng,
+        },
+      })
+        .then((stores) => {
+          this.markers = stores.data;
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
