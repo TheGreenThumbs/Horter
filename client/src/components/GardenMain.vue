@@ -135,6 +135,11 @@
     </div>
     <div class="card-footer">
       <button class="card-footer-item">Add Plant</button>
+      <router-link
+        :to="{ name: 'nearbystores', params: { location: location } }"
+      >
+        <b-button type="is-success is-light">Nearby Stores</b-button>
+      </router-link>
       <editmodal
         :id="gardenId"
         :name="name"

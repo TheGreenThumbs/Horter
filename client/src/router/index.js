@@ -34,8 +34,10 @@ const router = new VueRouter({
       component: Login,
     },
     {
-      path: "/nearbystores",
+      path: "/nearbystores/",
+      name: "nearbystores",
       component: NearbyStores,
+      props: true,
     },
   ],
   mode: "history",
