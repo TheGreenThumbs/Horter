@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const axios = require("axios");
 require("dotenv").config();
+const logger = require("../../winston");
 
 const stores = Router();
 
@@ -12,7 +13,7 @@ const { GOOGLE_API_KEY } = process.env;
 
 stores.get("/", (req, res) => {
   const { lat, lng } = req.query;
-  console.log(lat, lng);
+  logger.info(req.query);
   const URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=hardware_store&radius=10000&key=${GOOGLE_API_KEY}`;
   axios
     .get(URL)

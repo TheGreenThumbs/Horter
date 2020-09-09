@@ -39,7 +39,7 @@ const router = new VueRouter({
       component: ARGarden,
     },
     {
-      path: "/nearbystores/",
+      path: "/nearbystores/:location",
       name: "nearbystores",
       component: NearbyStores,
       props: true,
