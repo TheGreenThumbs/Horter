@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <GmapMap
       :center="center"
       :zoom="12"
@@ -12,6 +12,7 @@
         :position="m.position"
         :clickable="true"
         :draggable="true"
+        :icon="m.icon"
         @click="findStore(index)"
       />
     </GmapMap>
@@ -25,8 +26,8 @@
       <div>
         {{ selectedStore.phone }}
       </div>
-      <div>
-        {{ selectedStore.schedule }}
+      <div v-for="(day, index) in selectedStore.schedule" :key="index">
+        {{ day }}
       </div>
     </div>
   </div>
@@ -52,15 +53,20 @@ export default {
       ],
       selectedStore: {},
       selected: false,
+      activeMarker: {},
     };
   },
   mounted() {
-    axios
-      .get("/stores", {
+    axios({
+      method: "GET",
+      url: "/stores",
+      params: {
         lat: 30,
         lng: -90,
-      })
+      },
+    })
       .then((stores) => {
+        console.log(stores.data);
         this.markers = stores.data;
       })
       .catch((err) => console.log(err));
@@ -68,6 +74,13 @@ export default {
   methods: {
     findStore(index) {
       this.selected = true;
+      this.markers[index].icon =
+        "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+      if (this.activeMarker) {
+        this.activeMarker.icon =
+          "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+        this.activeMarker = this.markers[index];
+      }
       axios({
         method: "GET",
         url: "/stores/one",
@@ -81,3 +94,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.body {
+  margin-left: 20px;
+}
+</style>
