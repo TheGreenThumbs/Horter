@@ -111,23 +111,37 @@ export default {
       this.search = "";
     },
     wishButtonClick(treflePlantId, treflePlantSlug) {
-      axios
-        .post("/wishlist", {
-          plantId: treflePlantId,
-          slug: treflePlantSlug,
-          userId: this.user.id,
-        })
-        .then((res) => {
-          this.$log.info(res);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
       if (wishIndex > -1) {
         this.wishClicked.splice(wishIndex, 1);
+        axios({
+          method: "DELETE",
+          url: "/wishlist",
+          params: {
+            userId: this.user.id,
+            plantId: treflePlantId,
+          },
+        })
+          .then((res) => {
+            this.$log.info(res);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       } else {
         this.wishClicked.push(treflePlantId);
+        axios
+          .post("/wishlist", {
+            plantId: treflePlantId,
+            slug: treflePlantSlug,
+            userId: this.user.id,
+          })
+          .then((res) => {
+            this.$log.info(res);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       }
       this.keyword = "";
     },
