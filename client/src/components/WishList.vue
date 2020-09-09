@@ -79,6 +79,16 @@ export default {
   components: {
     wishListSkeleton: WishListSkeleton,
   },
+  data() {
+    return {
+      loaded: false,
+      keyword: "",
+      results: [],
+      wishClicked: [],
+      gardenId: -1,
+    };
+  },
+  props: ["plant", "user"],
   methods: {
     searchIconClick() {
       this.loaded = false;
@@ -139,17 +149,6 @@ export default {
       this.$router.push("garden");
     },
   },
-  data() {
-    return {
-      loaded: false,
-      keyword: "",
-      results: [],
-      wishClicked: [],
-      gardenId: -1,
-    };
-  },
-  props: ["plant", "user"],
-
   mounted() {
     if (this.plant !== undefined) {
       this.keyword = this.plant;
@@ -162,14 +161,20 @@ export default {
     })
       .then(({ data }) => {
         this.$log.info(data);
-        this.results = data.map((plant) => {
-          this.wishClicked.push(plant.plant.id_trefle);
-          return {
-            id: plant.plant.id_trefle,
-            common_name: plant.plant.common_name,
-            slug: plant.plant.slug,
-          };
-        });
+        this.results = data
+          .filter((plant) => {
+            if (!this.wishClicked.includes(plant.plant.id_trefle)) {
+              this.wishClicked.push(plant.plant.id_trefle);
+              return plant;
+            }
+          })
+          .map((uniquePlant) => {
+            return {
+              id: uniquePlant.plant.id_trefle,
+              common_name: uniquePlant.plant.common_name,
+              slug: uniquePlant.plant.slug,
+            };
+          });
         this.loaded = true;
       })
       .catch((err) => {
