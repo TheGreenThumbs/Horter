@@ -28,6 +28,9 @@
           <router-link to="/addgarden">
             <b-button type="is-success is-light">Add a Garden</b-button>
           </router-link>
+          <router-link to="/nearbystores">
+            <b-button type="is-success is-light">Nearby Stores</b-button>
+          </router-link>
         </b-menu>
       </div>
     </b-sidebar>
