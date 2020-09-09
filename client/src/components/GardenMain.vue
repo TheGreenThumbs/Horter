@@ -145,6 +145,11 @@
       >
         Add Plant
       </button>
+      <router-link
+        :to="{ name: 'nearbystores', params: { location: location } }"
+      >
+        <b-button type="is-success is-light">Nearby Stores</b-button>
+      </router-link>
       <editmodal
         :id="gardenId"
         :name="name"
@@ -173,7 +178,7 @@ export default {
     return {
       gardenSize: { width: 10, height: 10 },
       name: "",
-      location: { lat: 30, lng: 30 },
+      location: { lat: 29, lng: -90 },
       gardenId: 0,
       plantList: [
         { position_x: 1, position_y: 2, radius: 2, id: 1 },
