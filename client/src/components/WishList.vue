@@ -43,6 +43,7 @@
                   <span v-else>Included in Wishlist</span>
                 </b-button>
                 <b-button
+                  v-if="gardenId > -1"
                   size="is-small"
                   icon-left="plus-circle"
                   @click="gardenButtonClick(plant.id, plant.slug)"
@@ -85,7 +86,7 @@ export default {
       keyword: "",
       results: [],
       wishClicked: [],
-      gardenId: -1,
+      gardenId: this.$route.params.gardenId || -1,
     };
   },
   props: ["plant", "user"],
@@ -149,9 +150,9 @@ export default {
       this.gardenId = this.$route.params.gardenId;
       axios
         .post("/garden/addplant", {
+          gardenId: this.$route.params.gardenId,
           plantId: treflePlantId,
           slug: treflePlantSlug,
-          gardenId: this.$route.params.gardenId,
         })
         .then((res) => {
           this.$log.info(res);
@@ -160,7 +161,10 @@ export default {
           console.error(err);
         });
       this.keyword = "";
-      this.$router.push("garden");
+      this.$router.push({
+        path: "/garden",
+        query: { id: this.gardenId },
+      });
     },
   },
   mounted() {
@@ -194,6 +198,7 @@ export default {
       .catch((err) => {
         console.error(err);
       });
+    console.log("***GARDENID***", this.gardenId);
   },
 };
 </script>

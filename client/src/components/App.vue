@@ -1,5 +1,5 @@
 <template>
-  <container>
+  <div class="container">
     <navigation v-if="user.id" :user="user"></navigation>
     <router-view
       class="content-container"
@@ -8,7 +8,7 @@
     ></router-view>
     <login v-else></login>
     <chatbotmodal v-if="user.id" class="chatbot"></chatbotmodal>
-  </container>
+  </div>
 </template>
 
 <script>

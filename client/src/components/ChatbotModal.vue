@@ -19,9 +19,8 @@ export default {
         parent: this,
         component: Chatbot,
         hasModalCard: false,
-        customClass: "custom-class custom-class-2",
         trapFocus: false,
-        width: 400,
+        width: "80vw",
       });
     },
   },
