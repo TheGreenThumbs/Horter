@@ -1,6 +1,6 @@
 const { models } = require("../index");
 
-const { WishList } = models;
+const { WishList, Plant } = models;
 
 /**
  * Add a plant to a user's wishlist
@@ -24,7 +24,10 @@ const addToWishList = (userId, plantId) =>
  */
 const getUserWishList = (userId) =>
   new Promise((resolve, reject) => {
-    WishList.findAll({ where: { userId } })
+    WishList.findAll({
+      where: { userId },
+      include: { model: Plant, as: "plant" },
+    })
       .then((list) => {
         resolve(list);
       })

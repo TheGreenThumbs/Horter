@@ -43,7 +43,6 @@ apiSearch.get("/self", (req, res) => {
   axios
     .get(`https://trefle.io/api/v1/species/${search}`)
     .then((plants) => {
-      // console.log(plants.data.data.growth);
       res.send(plants.data);
     })
     .catch((err) => {

@@ -9,6 +9,7 @@ const {
   wishListFactory,
   userFactory,
   friendFactory,
+  sessionFactory,
 } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
@@ -41,6 +42,7 @@ const models = {
   User: userFactory(sequelize),
   WishList: wishListFactory(sequelize),
   Friend: friendFactory(sequelize),
+  Session: sessionFactory(sequelize),
 };
 
 // A function that sets up all the model associations, so we can drop the database

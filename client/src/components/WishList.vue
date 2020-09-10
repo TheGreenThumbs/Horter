@@ -21,11 +21,7 @@
       <!-- Search field ends -->
       <!-- Search results begins -->
       <div v-if="loaded">
-        <article
-          class="media"
-          v-for="plant in results"
-          :key="plant.common_name"
-        >
+        <article class="media" v-for="plant in results" :key="plant.id">
           <figure class="media-left"></figure>
           <div class="media-content">
             <div class="content">
@@ -166,7 +162,13 @@ export default {
     })
       .then(({ data }) => {
         this.$log.info(data);
-        this.results = data;
+        this.results = data.map((plant) => {
+          return {
+            id: plant.plant.id_trefle,
+            common_name: plant.plant.common_name,
+            slug: plant.plant.slug,
+          };
+        });
         this.loaded = true;
       })
       .catch((err) => {
