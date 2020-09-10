@@ -17,7 +17,7 @@ chatbot.get("/", (req, res) => {
       console.log(err);
       res.status(500);
     });
-  //res.send("yolo!");
+  // res.send("yolo!");
 });
 
 module.exports = {
