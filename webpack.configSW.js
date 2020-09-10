@@ -1,4 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const WebppackPwaManifest = require("webpack-pwa-manifest");
 const webpack = require("webpack");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const { join } = require("path");
@@ -57,6 +60,23 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.parsed),
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 10240000,
+    }),
+    new WebppackPwaManifest({
+      name: "Horter",
+      short_name: "Horter",
+      description: "A Gardening helper",
+      background_color: "#89C371",
+      icons: [
+        {
+          src: join(__dirname, "/client/src/assets/horter.png"),
+          sizes: [96, 128, 192, 256, 384, 512],
+        },
+      ],
     }),
   ],
 };
