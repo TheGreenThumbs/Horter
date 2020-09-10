@@ -55,7 +55,22 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data);
+          console.log(data.data.response);
+          let plant = data.data.plant;
+          this.messages.push(["ChatBot", data.data.response]);
+
+          // const changePage = function(){
+
+          //   };
+          // setTimeout(changePage, 1000);
+
+          this.$emit("close");
+          router.push({
+            name: "wish",
+            params: {
+              plant: plant,
+            },
+          });
         })
         .catch((err) => {});
 
