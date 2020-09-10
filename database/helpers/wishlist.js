@@ -10,8 +10,8 @@ const { WishList, Plant } = models;
 const addToWishList = (userId, plantId) =>
   new Promise((resolve, reject) => {
     WishList.findOrCreate({ where: { userId, plantId } })
-      .then((wishlist) => {
-        resolve(wishlist[0].id);
+      .then((data) => {
+        resolve(data[0]);
       })
       .catch((err) => {
         reject(err);
