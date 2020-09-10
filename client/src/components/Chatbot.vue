@@ -1,29 +1,11 @@
 <template>
-  <div class="divclass">
+  <div class="chatbot-modal">
     <h2 class="header">My Chat With Chatbot</h2>
-    <br />
-    <!-- <div v-for="(m, index) in messages" v-bind:key="index">
-      <div v-if="m[0] === 'ChatBot'" class="message-chatbot">
-        <div class="content-chatbot">{{ m[0] }}: {{ m[1] }}</div>
-      </div>
-      <div v-else class="message-user">
-        <div class="content-user">{{ m[0] }}: {{ m[1] }}</div>
-      </div>
-      <br />
-    </div> -->
-    <div class="columns" v-for="(m, index) in messages" v-bind:key="index">
-      <div v-if="m[0] === 'ChatBot'">
-        <div class="column is-6 chatbot">
-          <div class="content-chatbot">{{ m[0] }}: {{ m[1] }}</div>
-        </div>
-      </div>
-      <div v-else>
-        <div class="column is-6 user is-pulled-right">
-          <div class="content-user">{{ m[0] }}: {{ m[1] }}</div>
-        </div>
+    <div class="chatbot-box">
+      <div :class="messageClass(m[0])" v-for="(m, i) in messages" :key="i">
+        <p>{{ m[0] }}: {{ m[1] }}</p>
       </div>
     </div>
-    <br />
     <message v-on:submit:message="submitMessage" />
   </div>
 </template>
@@ -43,6 +25,7 @@ export default {
     };
   },
   methods: {
+    messageClass: (speaker) => `chatbot-message ${speaker}`,
     submitMessage(message) {
       let mArray = [];
       let plant = "";
@@ -100,37 +83,35 @@ export default {
       //   });
       // }
 
-      // this.messages.push(["ChatBot", "great!"]);
+      this.messages.push(["ChatBot", "great!"]);
     },
   },
 };
 </script>
 
-<style scoped>
-.header {
-  text-align: center;
-}
-.divclass {
-  color: white;
-  background-color: green;
-  border-radius: 10px;
-}
-.column {
-  background-color: rgb(197, 195, 195);
-  padding-right: 30px;
-  border-radius: 10px;
-}
-.content-chatbot {
-  color: black;
-}
-.user {
-  background-color: rgb(81, 68, 255);
-  padding-left: 50px;
-  border-radius: 10px;
-  right: 0;
-  position: relative;
-}
-.content-user {
-  color: black;
-}
+<style scoped lang="sass">
+.header
+  text-align: center
+
+.chatbot-box
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  padding: 20px 5px
+
+.ChatBot
+  align-self: flex-end
+
+.chatbot-message
+  background-color: #e6e6e6
+  border-radius: 10px
+  color: black
+  padding: 5px
+  max-width: 80%
+  margin: 5px 0
+
+.chatbot-modal
+  color: white
+  background-color: green
+  border-radius: 10px
 </style>
