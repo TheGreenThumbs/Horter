@@ -23,9 +23,15 @@ export default {
 
 <style lang="sass">
 .right-sidebar
-  position: absolute
+  position: fixed
   top: 0
   right: 0
+  z-index: 39
+.left-sidebar
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 39
 
 .nav-button
   border: none

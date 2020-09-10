@@ -1,14 +1,12 @@
 <template>
-  <div class="card">
-    <div class="card-image">
-      <figure class="image is-4by4">
+  <div class="card login-card">
+    <div class="card-header login-title">
+      <div class="card-image">
         <img :src="imageUrl" alt="Logo" />
-      </figure>
-    </div>
-    <div class="card-content">
-      <div class="content">
-        <h1>Horter</h1>
       </div>
+      <h1 class="card-header-title logo-title">Horter</h1>
+    </div>
+    <div class="card-content login-content">
       <a href="/auth/google">
         <b-button type="is-info">Login</b-button>
       </a>
@@ -26,3 +24,20 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+.login-card
+  max-width: 200px
+  margin: 20vh auto
+.login-title
+  display: flex
+  flex-direction: column
+  align-items: center
+.logo-title
+  color: $green
+  font-size: 3em
+.login-content
+  display: flex
+  flex-direction: column
+  align-items: center
+</style>
