@@ -65,7 +65,7 @@ gardenInfo.post("/addplant", (req, res) => {
   const newPlantInfo = {
     position_x: 1,
     position_y: 1,
-    radius: 1,
+    radius: 2,
   };
   plantHelpers
     .findPlantByTrefleId(plantId)
