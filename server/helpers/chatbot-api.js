@@ -8,7 +8,7 @@ const { PROJECT_ID } = process.env;
  * Send a query to the dialogflow agent, and return the query result.
  * @param {string} projectId The project to be used
  */
-async function runSample(projectId = PROJECT_ID) {
+async function runSample(projectId = PROJECT_ID, question) {
   // A unique identifier for the given session
   const sessionId = uuid.v4();
 
@@ -25,7 +25,7 @@ async function runSample(projectId = PROJECT_ID) {
     queryInput: {
       text: {
         // The query to send to the dialogflow agent
-        text: "hello",
+        text: question,
         // The language used by the client (en-US)
         languageCode: "en-US",
       },
@@ -36,6 +36,8 @@ async function runSample(projectId = PROJECT_ID) {
   const responses = await sessionClient.detectIntent(request);
   console.log("Detected intent");
   const result = responses[0].queryResult;
+  // this gives back the string pf the found plant
+  console.log(responses[0].queryResult.parameters.fields.plant.stringValue);
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
   if (result.intent) {
@@ -43,6 +45,7 @@ async function runSample(projectId = PROJECT_ID) {
   } else {
     console.log(`  No intent matched.`);
   }
+  return responses[0].queryResult.parameters.fields.plant.stringValue;
 }
 
 module.exports = {
