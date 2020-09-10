@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="buttons">
-      <button class="button" @click="cardModal()">
+    <div class="buttons" id="chatbot-buttons">
+      <button class="button" id="chatbot-button" @click="cardModal()">
         <b-icon icon="robot"></b-icon>
       </button>
     </div>
@@ -33,11 +33,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.button {
-  background-color: limegreen;
-}
-.buttons {
-  color: green;
-}
+<style lang="sass">
+#chatbot-button
+  background-color: limegreen
+  margin-bottom: 0
+#chatbot-buttons
+  margin-bottom: 0
 </style>

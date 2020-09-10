@@ -1,10 +1,14 @@
 <template>
-  <div>
+  <container>
     <navigation v-if="user.id" :user="user"></navigation>
-    <router-view v-if="user.id" :user="user"></router-view>
+    <router-view
+      class="content-container"
+      v-if="user.id"
+      :user="user"
+    ></router-view>
     <login v-else></login>
     <chatbotmodal v-if="user.id" class="chatbot"></chatbotmodal>
-  </div>
+  </container>
 </template>
 
 <script>
@@ -49,9 +53,18 @@ export default {
   },
 };
 </script>
-<style scoped>
-.chatbot {
-  display: fixed;
-  bottom: 0;
-}
+<style lang="sass">
+html, body
+  height: 100%
+  margin: 0
+  padding: 0
+.chatbot
+  position: fixed
+  z-index: 39
+  bottom: 0
+.content-container
+  max-width: 800px
+  margin: 0 auto
+  height: 100%
+  padding: 20px
 </style>
