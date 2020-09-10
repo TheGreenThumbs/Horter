@@ -1,7 +1,7 @@
 const dialogflow = require("@google-cloud/dialogflow");
 const uuid = require("uuid");
 require("dotenv").config();
-
+const logger = require("../../winston");
 const { PROJECT_ID } = process.env;
 
 /**
@@ -34,18 +34,16 @@ async function runSample(projectId = PROJECT_ID, question) {
 
   // Send request and log result
   const responses = await sessionClient.detectIntent(request);
-  console.log("Detected intent");
   const result = responses[0].queryResult;
   // this gives back the string pf the found plant
-  console.log(responses[0].queryResult.parameters.fields.plant.stringValue);
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
-  if (result.intent) {
-    console.log(`  Intent: ${result.intent.displayName}`);
-  } else {
-    console.log(`  No intent matched.`);
-  }
-  return responses[0].queryResult.parameters.fields.plant.stringValue;
+  logger.info(responses);
+  logger.info(responses[0].queryResult.parameters.fields.plant.stringValue);
+
+  const info = {
+    plant: responses[0].queryResult.parameters.fields.plant.stringValue,
+    response: result.fulfillmentText,
+  };
+  return info;
 }
 
 module.exports = {

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { runSample } = require("../helpers/chatbot-api");
-// const { loggers } = require("winston");
+const logger = require("../../winston");
 require("dotenv").config();
 
 const { PROJECT_ID } = process.env;
@@ -14,7 +14,7 @@ chatbot.get("/", (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
       res.status(500);
     });
   // res.send("yolo!");
