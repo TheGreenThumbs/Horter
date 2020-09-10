@@ -132,9 +132,9 @@ export default {
         this.wishClicked.push(treflePlantId);
         axios
           .post("/wishlist", {
+            userId: this.user.id,
             plantId: treflePlantId,
             slug: treflePlantSlug,
-            userId: this.user.id,
           })
           .then((res) => {
             this.$log.info(res);
