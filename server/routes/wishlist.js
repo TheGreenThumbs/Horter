@@ -23,13 +23,21 @@ wishListRouter.get("/", (req, res) => {
     });
 });
 
-// Delete a wishlist item by wishlist id
+// Delete a wishlist item by wishlist userId and plantId (which is a trefleID)
 wishListRouter.delete("/", (req, res) => {
-  const { id } = req.query;
-  wishListHelpers
-    .deleteWishListItem(id)
-    .then((result) => {
-      res.status(200).send(result);
+  const { userId, plantId } = req.query;
+  plantHelpers
+    .findPlantByTrefleId(plantId)
+    .then((id) => {
+      wishListHelpers
+        .deleteWishListItem(userId, id)
+        .then((result) => {
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          logger.error(err);
+          res.status(500).send(err);
+        });
     })
     .catch((err) => {
       logger.error(err);

@@ -4,6 +4,7 @@ const wishListFactory = require("./wishlist");
 const plantFactory = require("./plant");
 const userFactory = require("./user-profile");
 const friendFactory = require("./friend");
+const sessionFactory = require("./session");
 
 module.exports = {
   gardenFactory,
@@ -12,4 +13,5 @@ module.exports = {
   userFactory,
   wishListFactory,
   friendFactory,
+  sessionFactory,
 };

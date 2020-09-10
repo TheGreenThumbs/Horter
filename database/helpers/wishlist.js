@@ -9,9 +9,9 @@ const { WishList, Plant } = models;
  */
 const addToWishList = (userId, plantId) =>
   new Promise((resolve, reject) => {
-    WishList.create({ plantId, userId })
-      .then((wishlist) => {
-        resolve(wishlist);
+    WishList.findOrCreate({ where: { userId, plantId } })
+      .then((data) => {
+        resolve(data[0]);
       })
       .catch((err) => {
         reject(err);
@@ -38,11 +38,12 @@ const getUserWishList = (userId) =>
 
 /**
  * Delete a wishlist item
- * @param {Integer} id id of wishlist item
+ * @param {Integer} userId id of user
+ * @param {Integer} plantId id of plant
  */
-const deleteWishListItem = (id) =>
+const deleteWishListItem = (userId, plantId) =>
   new Promise((resolve, reject) => {
-    WishList.destroy({ where: { id } })
+    WishList.destroy({ where: { userId, plantId } })
       .then((rows) => {
         if (rows <= 0) throw new Error("WishList Item doesn't exist");
         resolve({ deleted: true });

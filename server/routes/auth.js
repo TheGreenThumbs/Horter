@@ -59,7 +59,7 @@ authRouter.get(
   "/google/redirect",
   passport.authenticate("google"),
   (req, res) => {
-    res.redirect("/");
+    res.redirect("/UserProfile");
   }
 );
 
