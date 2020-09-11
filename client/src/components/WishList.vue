@@ -194,11 +194,11 @@ export default {
               slug: uniquePlant.plant.slug,
             };
           });
-        this.loaded = true;
       })
       .catch((err) => {
         console.error(err);
       });
+    this.loaded = true;
   },
 };
 </script>
