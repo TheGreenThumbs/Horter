@@ -168,6 +168,7 @@ export default {
     },
   },
   mounted() {
+    this.loaded = false;
     if (this.plant !== undefined) {
       this.keyword = this.plant;
       this.searchIconClick();
