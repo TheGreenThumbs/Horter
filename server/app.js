@@ -7,7 +7,7 @@ const passport = require("passport");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const logger = require("../winston");
+// const logger = require("../winston");
 const { friend } = require("./routes/friend");
 const { apiSearch } = require("./routes/apiSearch");
 const { gardenInfo } = require("./routes/gardenInfo");
@@ -57,7 +57,6 @@ app.use(
 );
 
 passport.serializeUser((user, done) => {
-  logger.info(user);
   done(null, { id: user.id });
 });
 

@@ -1,14 +1,14 @@
 <template>
   <div class="ui segment">
-    <div class="ui grid container" :user0="user0">
-      <carousel-3d>
-        <div class="ui segment" v-for="(garden, i) in user0.gardens" :key="i">
-          <slide :index="i">
+    <div class="ui grid container">
+      <div class="ui segment">
+        <carousel-3d :display="gardens.length">
+          <slide :index="i" v-for="(garden, i) in gardens" :key="i">
             {{ garden.name }}
             <img :src="garden.photo" />
           </slide>
-        </div>
-      </carousel-3d>
+        </carousel-3d>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +16,6 @@
 <script>
 import Vue from "vue";
 import carousel3d from "vue-carousel-3d";
-import user0 from "./user-profile.vue";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 
 Vue.use(Carousel3d);
@@ -25,34 +24,10 @@ export default {
   name: "Carousel",
 
   components: {
-    Carousel3d,
-    Slide,
+    "carousel-3d": Carousel3d,
+    slide: Slide,
   },
-  props: ["user0"],
-
-  data() {
-    return {
-      // user0: user0,
-    };
-  },
-
-  methods: {
-    getGardens: () => {
-      axios
-        .post(`/garden${this.user.id}`, {
-          plantId: treflePlantId,
-          slug: treflePlantSlug,
-          gardenId: this.gardenId,
-        })
-        .then((res) => {
-          this.$log.info(res);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      this.keyword = "";
-    },
-  },
+  props: ["gardens"],
 };
 </script>
 
