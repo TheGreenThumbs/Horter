@@ -46,17 +46,11 @@
               label="New Plant"
               disabled
             ></b-menu-item>
-            <b-menu-item icon="account">
-              <template slot="label" slot-scope="props">
-                Friends
-                <b-icon
-                  class="is-pulled-right"
-                  :icon="props.expanded ? 'menu-down' : 'menu-up'"
-                ></b-icon>
-              </template>
-              <b-menu-item label="Friend1"></b-menu-item>
-              <b-menu-item label="Friend2"></b-menu-item>
-            </b-menu-item>
+            <b-menu-item
+              icon="sprout"
+              label="Search Friends"
+              @click="$router.push('FriendSearch')"
+            ></b-menu-item>
           </b-menu-list>
           <b-menu-list label="Actions">
             <a href="/auth/logout">

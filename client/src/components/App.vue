@@ -15,8 +15,8 @@
 import Navigation from "./Navigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
 import UserProfile from "./Profile/user-profile.vue";
+import FriendProfile from "./Profile/friend-profile.vue";
 import Login from "./Login.vue";
-import user from "./fake-data/fake-data.js";
 import router from "../router";
 import axios from "axios";
 
@@ -28,6 +28,7 @@ export default {
     chatbotmodal: ChatbotModal,
     user: UserProfile,
     login: Login,
+    friend: FriendProfile,
   },
   data() {
     return {
@@ -45,6 +46,7 @@ export default {
       url: "/auth",
     })
       .then(({ data }) => {
+        this.$log.info(data);
         this.user = data;
       })
       .catch((err) => {

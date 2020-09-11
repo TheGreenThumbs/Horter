@@ -15,6 +15,7 @@ const { chatbot } = require("./routes/chatbot");
 const { wishListRouter, authRouter } = require("./routes");
 const { userHelpers } = require("../database/helpers");
 const { stores } = require("./routes/nearbyStores");
+const { userInfo } = require("./routes/user.js");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -81,6 +82,7 @@ app.use("/chatbot", chatbot);
 app.use("/wishlist", wishListRouter);
 app.use("/auth", authRouter);
 app.use("/stores", stores);
+app.use("/user", userInfo);
 
 app.use("/", express.static(path.join(__dirname, "../client/build")));
 app.get("*", (req, res) => {
