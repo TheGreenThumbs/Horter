@@ -23,13 +23,11 @@ const router = new VueRouter({
       path: "/wish",
       component: WishList,
       name: "wish",
-      props: true,
     },
     {
       path: "/plant",
       component: PlantList,
       name: "plant",
-      // props: true,
     },
     {
       path: "/UserProfile",
