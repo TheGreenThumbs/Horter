@@ -9,12 +9,41 @@
       <!-- Plant listing begins -->
       <div v-if="loaded">
         <article class="media" v-for="plant in results" :key="plant.id">
-          <figure class="media-left"></figure>
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <b-image
+                :src="plant.photo_url"
+                alt="Plant"
+                ratio="4by4"
+                :rounded="rounded"
+              ></b-image>
+            </p>
+          </figure>
           <div class="media-content">
             <div class="content">
-              <p>
-                {{ plant.common_name }}
-              </p>
+              <b-collapse
+                aria-id="contentIdForA11y2"
+                class="panel"
+                animation="slide"
+                v-model="plant.isOpen"
+              >
+                <div
+                  slot="trigger"
+                  class="panel-heading"
+                  role="button"
+                  aria-controls="contentIdForA11y2"
+                >
+                  <strong>{{ plant.common_name }}</strong>
+                </div>
+                <div class="panel-block">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  <br />
+                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc
+                  varius lectus, nec rutrum justo nibh eu lectus. <br />
+                  Ut vulputate semper dui. Fusce erat odio, sollicitudin vel
+                  erat vel, interdum mattis neque.
+                </div>
+              </b-collapse>
             </div>
           </div>
         </article>
@@ -40,6 +69,7 @@ export default {
     return {
       loaded: false,
       results: [],
+      rounded: true,
     };
   },
   props: ["user"],
@@ -53,12 +83,15 @@ export default {
     })
       .then(({ data }) => {
         this.$log.info(data);
-        this.results = data;
-        this.loaded = true;
+        this.results = data.map((plant) => {
+          plant.isOpen = false;
+          return plant;
+        });
       })
       .catch((err) => {
         console.error(err);
       });
+    this.loaded = true;
   },
 };
 </script>
