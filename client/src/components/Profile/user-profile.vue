@@ -7,17 +7,17 @@
           :src="user.s3_id"
           style="border-radius: 290486px"
         />
-        <h3>{{ `Welcome to your garden,  @${user.username}.` }}</h3>
+        <h3>{{ `Welcome to your garden, @${user.username}.` }}</h3>
       </div>
       <div class="eight wide column">
         <div class="ui segment">
           <h3 class="ui medium dividing header">
-            {{ `Status: ${user.status}` }}
+            {{ `${user.username}: ${user0.status2}` }}
           </h3>
           <input
             name="bid"
             type="text"
-            v-model="this.bid"
+            v-model="bid"
             placeholder="Status"
             lazy
           />
@@ -25,19 +25,18 @@
             :status="updateStatus"
             v-on:click="
               () => {
-                user.status = this.bid;
-                updateStatus(this.bid);
-                this.bid = '';
+                user0.status2 = bid;
+                bid = '';
               }
             "
           >
             Update
           </button>
-          <p>@{{ user.username }}: {{ user.status }}</p>
+          <!-- <p>@{{ user.username }}: {{ user.status }}</p> -->
         </div>
       </div>
       <div class="gardens">
-        <Carousel :gardens="gardens" :user="user" />
+        <Carousel :user0="user0" />
       </div>
     </div>
   </div>
@@ -46,6 +45,7 @@
 <script>
 import Carousel from "./garden-carousel.vue";
 import axios from "axios";
+import user0 from "../fake-data/fake-data.js";
 
 export default {
   name: "UserProfile",
@@ -59,6 +59,7 @@ export default {
       authUser: "",
       // gardens: '/user/gardens'
       bid: "",
+      user0: user0,
     };
   },
 

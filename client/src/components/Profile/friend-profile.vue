@@ -14,7 +14,7 @@
           <h3 class="ui medium dividing header">
             {{ `@${user.username}: ${user.status}` }}
           </h3>
-          <button v-on:click="() => {}">Follow</button>
+          <!-- <button v-on:click="() => {}">Follow</button> -->
           <button v-on:click="() => {}">Unfollow</button>
         </div>
       </div>

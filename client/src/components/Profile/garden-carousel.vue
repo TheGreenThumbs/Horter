@@ -1,8 +1,8 @@
 <template>
   <div class="ui segment">
-    <div class="ui grid container" :user="user">
+    <div class="ui grid container" :user0="user0">
       <carousel-3d>
-        <div class="ui segment" v-for="(garden, i) in user.gardens" :key="i">
+        <div class="ui segment" v-for="(garden, i) in user0.gardens" :key="i">
           <slide :index="i">
             {{ garden.name }}
             <img :src="garden.photo" />
@@ -16,7 +16,7 @@
 <script>
 import Vue from "vue";
 import carousel3d from "vue-carousel-3d";
-// import user from '../fake-data/fake-data.js';
+import user0 from "./user-profile.vue";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 
 Vue.use(Carousel3d);
@@ -28,11 +28,11 @@ export default {
     Carousel3d,
     Slide,
   },
-  props: ["user"],
+  props: ["user0"],
 
   data() {
     return {
-      user: user,
+      // user0: user0,
     };
   },
 
