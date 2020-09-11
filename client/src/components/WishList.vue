@@ -198,7 +198,6 @@ export default {
       .catch((err) => {
         console.error(err);
       });
-    console.log("***GARDENID***", this.gardenId);
   },
 };
 </script>
