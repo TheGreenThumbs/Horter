@@ -34,7 +34,7 @@
             <b-menu-item
               icon="sprout"
               label="Plant List"
-              disabled
+              @click="$router.push('plant')"
             ></b-menu-item>
             <b-menu-item
               icon="sprout-outline"

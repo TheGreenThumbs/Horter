@@ -24,13 +24,13 @@ const addPlantToGarden = (id, info, plantId) =>
 
 /**
  * Finds all the plants a user has in their garden only returns unique plants
- * @param {Integer} id id of user to find plants in garden by
+ * @param {Integer} userId id of user to find plants in garden by
  * @returns {Array} Plants in Gardens belonging to user
  */
 // TODO: Make this work once plants and Users table exists
-const getAllPlantsInGarden = (id) =>
+const getAllPlantsInGarden = (userId) =>
   new Promise((resolve, reject) => {
-    Garden.findAll({ where: { userId: id } })
+    Garden.findAll({ where: { userId } })
       .then((gardens) => {
         return Promise.all(gardens.map((i) => i.getPlants({ include: Plant })));
       })
