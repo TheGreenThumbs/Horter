@@ -6,6 +6,7 @@ const {
   findUserByUsername,
   updateUser,
   removeUser,
+  findUserById,
 } = require("../../database/helpers/user-profile");
 
 const userInfo = Router();
@@ -15,10 +16,26 @@ const userInfo = Router();
  * @returns {object} this is the user obj from the DB
  */
 userInfo.get("/getuser", (req, res) => {
-  const { username } = req.query;
-  findUserByUsername(username).then((user) => {
-    res.send(user);
-  });
+  const { username, id } = req.query;
+  if (username) {
+    findUserByUsername(username)
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((err) => {
+        logger.error("Error Finding user by username: %o", err);
+        res.status(500).send({});
+      });
+  } else {
+    findUserById(id)
+      .then((user) => {
+        res.status(200).send(user);
+      })
+      .catch((err) => {
+        logger.error("Error Finding user by id: %o", err);
+        res.status(500).send({});
+      });
+  }
 });
 
 userInfo.post("/adduser", (req, res) => {
@@ -44,7 +61,10 @@ userInfo.put("/userupdate", (req, res) => {
       res.status(200);
       res.send(user);
     })
-    .catch((err) => logger.error(err));
+    .catch((err) => {
+      logger.error(err);
+      res.status(500).send(err);
+    });
 });
 
 // DELETE/userId/ remove user
