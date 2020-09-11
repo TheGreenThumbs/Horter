@@ -46,8 +46,10 @@ export default {
 
           //   };
           // setTimeout(changePage, 1000);
-
-          this.$emit("close");
+          setTimeout(() => {
+            this.$emit("close");
+          }, 1000);
+          // this.$emit("close");
           router.push({
             name: "wish",
             params: {
@@ -83,7 +85,7 @@ export default {
       //   });
       // }
 
-      this.messages.push(["ChatBot", "great!"]);
+      // this.messages.push(["ChatBot", "great!"]);
     },
   },
 };
