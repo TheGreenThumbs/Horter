@@ -12,7 +12,7 @@ const fillDatabaseWithDummyData = () =>
       firstname: "Maxwell",
       lastname: "Boecker",
       id_google: "saidkasd",
-      lat: 29,
+      lat: 30,
       lng: -90,
     })
       .then(() =>
@@ -40,7 +40,7 @@ const fillDatabaseWithDummyData = () =>
           name: "Max Garden",
           width: 15,
           length: 15,
-          lat: 29,
+          lat: 30,
           lng: -90,
           photo:
             "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/index-small-garden-ideas-1524680753.jpg",
