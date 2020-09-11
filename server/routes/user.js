@@ -61,7 +61,10 @@ userInfo.put("/userupdate", (req, res) => {
       res.status(200);
       res.send(user);
     })
-    .catch((err) => logger.error(err));
+    .catch((err) => {
+      logger.error(err);
+      res.status(500).send(err);
+    });
 });
 
 // DELETE/userId/ remove user

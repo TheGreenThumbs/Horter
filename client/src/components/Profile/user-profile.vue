@@ -14,15 +14,19 @@
           <h3 class="ui medium dividing header">
             {{ `${profile.username}: ${profile.status}` }}
           </h3>
-          <b-field label="Update your Status">
-            <b-input
-              name="newStatus"
-              type="textarea"
-              v-model="newStatus"
-              placeholder="What are you up to?"
-            />
-          </b-field>
-          <b-button type="is-primary"> Update </b-button>
+          <div class="status-form" v-if="user.id === profile.id">
+            <b-field label="Update your Status">
+              <b-input
+                name="newStatus"
+                type="textarea"
+                v-model="newStatus"
+                placeholder="What are you up to?"
+              />
+            </b-field>
+            <b-button type="is-primary" @click="updateStatus">
+              Update
+            </b-button>
+          </div>
         </div>
       </div>
       <div class="gardens">
@@ -48,6 +52,29 @@ export default {
       newStatus: "",
       profile: {},
     };
+  },
+  methods: {
+    async updateStatus() {
+      try {
+        const response = await axios({
+          method: "put",
+          url: "/user/userupdate",
+          data: {
+            id: this.user.id,
+            info: { status: this.newStatus },
+          },
+        });
+        this.profile.status = this.newStatus;
+        this.newStatus = "";
+      } catch (err) {
+        this.$buefy.toast.open({
+          duration: 1000,
+          message: "Couldn't update Status",
+          type: "is-danger",
+        });
+        this.$log.error("Error Changing Status ", err);
+      }
+    },
   },
   async mounted() {
     if (this.$route.query.id) {
