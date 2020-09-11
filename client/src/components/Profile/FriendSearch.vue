@@ -7,7 +7,9 @@
       <div class="eight wide column">
         <div class="ui segment">
           <img class="userimage" src="user0.photoUrl" />
-          <p @click="$router.push('FriendProfile')">@{{ user0.username }}</p>
+          <p type="text" @click="$router.push('FriendProfile')">
+            @{{ user0.username }}
+          </p>
         </div>
       </div>
     </div>

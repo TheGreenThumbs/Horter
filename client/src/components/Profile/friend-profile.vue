@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="gardens">
-        <Carousel :user="user" />
+        <Carousel :user0="user" />
       </div>
     </div>
   </div>
@@ -37,6 +37,9 @@ export default {
       // authUser: '',
       bid: "",
     };
+  },
+  components: {
+    Carousel: Carousel,
   },
   computed: {
     isOwner() {
