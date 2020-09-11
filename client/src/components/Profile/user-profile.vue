@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="gardens">
-        <Carousel :user="user" />
+        <Carousel :gardens="gardens" />
       </div>
     </div>
   </div>
