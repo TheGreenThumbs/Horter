@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import GardenMain from "../components/GardenMain.vue";
 import WishList from "../components/WishList.vue";
+import PlantList from "../components/PlantList.vue";
 import Login from "../components/Login.vue";
 import UserProfile from "../components/Profile/user-profile.vue";
 import FriendSearch from "../components/Profile/FriendSearch.vue";
@@ -21,7 +22,11 @@ const router = new VueRouter({
       path: "/wish",
       component: WishList,
       name: "wish",
-      props: true,
+    },
+    {
+      path: "/plant",
+      component: PlantList,
+      name: "plant",
     },
     {
       path: "/UserProfile",
