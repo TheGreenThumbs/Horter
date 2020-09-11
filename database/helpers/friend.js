@@ -1,3 +1,4 @@
+const logger = require("../../winston");
 const { models } = require("../index");
 
 const { Friend } = models;
@@ -5,8 +6,13 @@ const { Friend } = models;
 const addFriend = (userId, friendId) => {
   return new Promise((resolve, reject) => {
     Friend.create({ id_user: userId, id_friend: friendId })
-      .then((friend) => resolve(friend))
-      .catch((err) => reject(err));
+      .then((friend) => {
+        resolve(friend);
+      })
+      .catch((err) => {
+        logger.error("Error making a friend: %o", err);
+        reject(err);
+      });
   });
 };
 
@@ -45,8 +51,21 @@ const getFriends = (userId) => {
   });
 };
 
+const getFriendStatus = (userId, friendId) =>
+  new Promise((resolve, reject) => {
+    Friend.findOne({ where: { id_user: userId, id_friend: friendId } })
+      .then((status) => {
+        resolve(!!status);
+      })
+      .catch((err) => {
+        logger.error("Error with friends table: %o", err);
+        reject(err);
+      });
+  });
+
 module.exports = {
   addFriend,
   removeFriend,
   getFriends,
+  getFriendStatus,
 };

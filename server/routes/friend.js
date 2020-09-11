@@ -7,10 +7,10 @@ const {
   addFriend,
   removeFriend,
   getFriends,
+  getFriendStatus,
 } = require("../../database/helpers/friend");
 
 friend.get("/", (req, res) => {
-  logger.info(req.query);
   const { userId } = req.query;
   getFriends(userId)
     .then((data) => {
@@ -22,11 +22,22 @@ friend.get("/", (req, res) => {
     });
 });
 
+friend.get("/status", (req, res) => {
+  const { userId, friendId } = req.query;
+  getFriendStatus(userId, friendId)
+    .then((status) => {
+      res.status(200).send(status);
+    })
+    .catch((err) => {
+      logger.error("Error with friends table: %o", err);
+      res.status(500).send(err);
+    });
+});
+
 friend.post("/add", (req, res) => {
   const info = req.body;
   addFriend(info.id_user, info.id_friend)
     .then((data) => {
-      logger.info(data);
       res.send(data);
     })
     .catch((err) => {
@@ -38,8 +49,7 @@ friend.post("/add", (req, res) => {
 friend.delete("/remove", (req, res) => {
   const info = req.body;
   removeFriend(info.id_user, info.id_friend)
-    .then((data) => {
-      logger.info(data);
+    .then(() => {
       res.sendStatus(204);
     })
     .catch((err) => {

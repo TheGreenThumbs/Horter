@@ -27,6 +27,11 @@
               Update
             </b-button>
           </div>
+          <div v-else>
+            <b-switch v-model="friend" type="is-info">{{
+              friend ? "Following" : "Not Following"
+            }}</b-switch>
+          </div>
         </div>
       </div>
       <div class="gardens">
@@ -51,7 +56,31 @@ export default {
       gardens: [],
       newStatus: "",
       profile: {},
+      friend: false,
     };
+  },
+  watch: {
+    friend: async function () {
+      const action = !this.friend ? "remove" : "add";
+      const method = !this.friend ? "delete" : "post";
+      try {
+        const response = await axios({
+          method,
+          url: `/friend/${action}`,
+          data: {
+            id_user: this.user.id,
+            id_friend: this.profile.id,
+          },
+        });
+      } catch (err) {
+        this.$buefy.toast.open({
+          duration: 1000,
+          message: "Couldn't update Friendship",
+          type: "is-danger",
+        });
+        this.$log.error("Error Changing Friend ", err);
+      }
+    },
   },
   methods: {
     async updateStatus() {
@@ -86,7 +115,16 @@ export default {
             id: this.$route.query.id,
           },
         });
+        const friendResponse = await axios({
+          method: "get",
+          url: "/friend/status",
+          params: {
+            userId: this.user.id,
+            friendId: this.$route.query.id,
+          },
+        });
         this.profile = response.data;
+        this.friend = friendResponse.data;
       } catch (err) {
         this.$log.error(err);
         this.$buefy.toast.open({
