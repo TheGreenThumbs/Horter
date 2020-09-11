@@ -4,6 +4,8 @@ import GardenMain from "../components/GardenMain.vue";
 import WishList from "../components/WishList.vue";
 import Login from "../components/Login.vue";
 import UserProfile from "../components/Profile/user-profile.vue";
+import FriendSearch from "../components/Profile/FriendSearch.vue";
+import FriendProfile from "../components/Profile/friend-profile.vue";
 import AddGarden from "../components/AddGarden.vue";
 import ARGarden from "../components/ARGarden.vue";
 import NearbyStores from "../components/NearbyStores.vue";
@@ -27,8 +29,16 @@ const router = new VueRouter({
       component: UserProfile,
     },
     {
+      path: "/FriendSearch",
+      component: FriendSearch,
+    },
+    {
       path: "/addgarden",
       component: AddGarden,
+    },
+    {
+      path: "/FriendProfile",
+      component: FriendProfile,
     },
     {
       path: "/",
