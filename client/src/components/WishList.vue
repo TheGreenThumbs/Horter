@@ -168,6 +168,7 @@ export default {
     },
   },
   mounted() {
+    this.loaded = false;
     if (this.plant !== undefined) {
       this.keyword = this.plant;
       this.searchIconClick();
@@ -193,12 +194,11 @@ export default {
               slug: uniquePlant.plant.slug,
             };
           });
-        this.loaded = true;
       })
       .catch((err) => {
         console.error(err);
       });
-    console.log("***GARDENID***", this.gardenId);
+    this.loaded = true;
   },
 };
 </script>
