@@ -72,7 +72,7 @@
 <script>
 export default {
   name: "sidebar",
-  props: ["user"],
+  props: ["user", "swipeOpen"],
   data() {
     return {
       open: false,
@@ -82,6 +82,16 @@ export default {
       right: false,
       rounded: true,
     };
+  },
+  watch: {
+    swipeOpen: function () {
+      this.open = this.swipeOpen;
+    },
+    open: function () {
+      if (!this.open) {
+        this.$emit("close-sidebars");
+      }
+    },
   },
 };
 </script>

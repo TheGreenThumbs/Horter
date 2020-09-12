@@ -22,12 +22,13 @@
         <div class="height">Height: {{ gardenSize.height }}</div>
       </div>
     </div>
-    <div class="card-content" id="garden-info">
+    <div class="card-content" id="garden-info" ref="gardenInfo">
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
         :plants="plantList"
         v-on:plant-moved="plantMoved"
+        :width="screenWidth"
       ></garden-layout>
       <div v-if="selected > 0">
         <article class="media">
@@ -138,10 +139,32 @@
             </div>
           </div>
         </article>
+        <div class="sliders">
+          <b-field label="Plant scale">
+            <b-slider
+              size="is-small"
+              :min="sliderMin"
+              :max="sliderMax"
+              :step="2"
+              :rounded="rounded"
+              :tooltip="false"
+              v-model="sliderValue"
+              @change="sliderChange"
+            >
+              <template v-for="scale in [2, 4, 6, 8, 10]">
+                <b-slider-tick
+                  id="tick"
+                  :value="scale"
+                  :key="scale"
+                ></b-slider-tick>
+              </template>
+            </b-slider>
+          </b-field>
+        </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()"
-            >Remove Plant from Garden</b-button
-          >
+          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+            Remove Plant from Garden
+          </b-button>
         </div>
       </div>
     </div>
@@ -194,6 +217,11 @@ export default {
       ],
       selected: -1,
       msg: "Garden Main Page",
+      screenWidth: 0,
+      rounded: true,
+      sliderMin: 2,
+      sliderMax: 10,
+      sliderValue: -1,
     };
   },
   computed: {
@@ -259,6 +287,31 @@ export default {
           this.$log.error(err);
         });
     },
+    sliderChange(radius) {
+      axios({
+        method: "PUT",
+        url: "/garden/locationdata",
+        data: {
+          id: this.selected,
+          info: { radius },
+        },
+      })
+        .then(({ data }) => {
+          this.$log.info(data);
+          this.plantList.filter(
+            (i) => i.id === this.selected
+          )[0].radius = radius;
+          this.selectedPlant.radius = radius;
+        })
+        .catch((err) => {
+          this.$buefy.toast.open({
+            message: `Error finding garden ${id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
+        });
+    },
     removePlantButtonClick() {
       axios({
         method: "DELETE",
@@ -282,6 +335,7 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.loadGardens(this.$route.query.id);
+      this.screenWidth = this.$refs.gardenInfo.clientWidth;
     });
   },
   beforeRouteUpdate(to, from, next) {
