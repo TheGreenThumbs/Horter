@@ -2,11 +2,7 @@
   <div>
     <div class="ui stackable grid container" v-if="profile">
       <div class="four wide column">
-        <img
-          class="ui tiny avatar image"
-          :src="profile.s3_id"
-          style="border-radius: 290486px"
-        />
+        <b-image :src="profile.s3_id" ratio="1x1" rounded />
         <h3>{{ `Welcome to your garden, @${profile.username}.` }}</h3>
       </div>
       <div class="eight wide column">
@@ -34,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div class="gardens">
+      <div class="gardens" v-if="gardens.length">
         <Carousel :gardens="gardens" />
       </div>
     </div>
