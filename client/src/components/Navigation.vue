@@ -2,8 +2,18 @@
 
 <template>
   <section>
-    <sidebar :user="user" class="left-sidebar"></sidebar>
-    <rightbar class="right-sidebar" :user="user"></rightbar>
+    <sidebar
+      :user="user"
+      class="left-sidebar"
+      :swipeOpen="openLeft"
+      v-on:close-sidebars="closeSidebars"
+    ></sidebar>
+    <rightbar
+      class="right-sidebar"
+      :user="user"
+      :swipeOpen="openRight"
+      v-on:close-sidebars="closeSidebars"
+    ></rightbar>
   </section>
 </template>
 
@@ -13,10 +23,15 @@ import Rightbar from "./Rightbar.vue";
 
 export default {
   name: "navigation",
-  props: ["user"],
+  props: ["user", "openLeft", "openRight"],
   components: {
     sidebar: Sidebar,
     rightbar: Rightbar,
+  },
+  methods: {
+    closeSidebars: function () {
+      this.$emit("close-navbars");
+    },
   },
 };
 </script>
