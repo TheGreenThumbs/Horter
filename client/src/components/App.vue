@@ -1,6 +1,15 @@
 <template>
-  <div class="container">
-    <navigation v-if="user.id" :user="user"></navigation>
+  <div
+    class="container wrapper"
+    v-touch:swipe.right="swipeLeft"
+    v-touch:swipe.left="swipeRight"
+  >
+    <navigation
+      :user="user"
+      :openLeft="openLeft"
+      :openRight="openRight"
+      v-on:close-navbars="closeBars"
+    ></navigation>
     <router-view
       class="content-container"
       v-if="user.id"
@@ -33,7 +42,21 @@ export default {
   data() {
     return {
       user: {},
+      openLeft: false,
+      openRight: false,
     };
+  },
+  methods: {
+    swipeLeft() {
+      this.openLeft = true;
+    },
+    swipeRight() {
+      this.openRight = true;
+    },
+    closeBars() {
+      this.openRight = false;
+      this.openLeft = false;
+    },
   },
   created() {
     this.$log.debug("test", 123);
@@ -69,4 +92,6 @@ html, body
   margin: 0 auto
   height: 100%
   padding: 20px
+.wrapper
+  height: 100%
 </style>

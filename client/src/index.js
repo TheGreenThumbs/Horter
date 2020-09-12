@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueLogger from "vuejs-logger";
+import Vue2TouchEvents from "vue2-touch-events";
 import Buefy from "buefy";
 import * as GmapVue from "gmap-vue";
 import "buefy/dist/buefy.css";
@@ -45,6 +46,8 @@ const loggingOptions = {
 };
 
 Vue.use(VueLogger, loggingOptions);
+
+Vue.use(Vue2TouchEvents);
 
 Vue.config.ignoredElements = [
   "a-scene",
