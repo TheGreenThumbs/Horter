@@ -48,7 +48,6 @@ gardenInfo.post("/", upload.single("photo"), (req, res) => {
 // Get all gardens for a given userId
 gardenInfo.get("/user", (req, res) => {
   const { id } = req.query;
-  console.log(id);
   gardenHelpers
     .findGardensByUserId(id)
     .then((gardens) => {

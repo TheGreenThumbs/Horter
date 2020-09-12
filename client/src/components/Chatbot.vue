@@ -52,19 +52,14 @@ export default {
               "ChatBot",
               "Was there a particular garden you were searching plants for?",
             ]);
-            this.$log.info("***user***", this.user.id);
-            axios
-              .get({
-                method: "GET",
-                url: "/garden/user",
-                params: {
-                  id: user.id,
-                },
-              })
-              .then((gardens) => {
-                console.log(gardens);
-              })
-              .catch((err) => this.$log.error(err));
+
+            axios({
+              method: "GET",
+              url: "/garden/user",
+              params: {
+                id: this.user.id,
+              },
+            }).then((data) => console.log(data));
 
             // setTimeout(() => {
             //   this.$emit("close");
