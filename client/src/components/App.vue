@@ -9,6 +9,7 @@
       :openLeft="openLeft"
       :openRight="openRight"
       v-on:close-navbars="closeBars"
+      v-if="user.id"
     ></navigation>
     <router-view
       class="content-container"
