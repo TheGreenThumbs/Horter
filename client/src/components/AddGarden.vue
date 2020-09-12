@@ -25,6 +25,10 @@
       map-type-id="terrain"
       style="width: 80vw; height: 300px"
       @click="mapClick"
+      :options="{
+        streetViewControl: false,
+        mapTypeControl: false,
+      }"
     >
       <GmapMarker :position="position" />
     </GmapMap>
