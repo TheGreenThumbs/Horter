@@ -46,11 +46,19 @@ export default {
           updateMain: this.updateMain,
         },
         hasModalCard: false,
-        customClass: "custom-class custom-class-2",
+        customClass: "edit-modal",
         trapFocus: true,
         width: 400,
+        canCancel: ["outside"],
       });
     },
   },
 };
 </script>
+
+<style lang="sass">
+.edit-modal
+  height: 100vh
+.modal-content
+  max-height: 100% !important
+</style>
