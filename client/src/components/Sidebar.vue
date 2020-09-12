@@ -27,7 +27,7 @@
               label="Home"
             ></b-menu-item>
             <b-menu-item
-              icon="sprout"
+              icon="account"
               label="Profile"
               @click="$router.push('UserProfile')"
             ></b-menu-item>
@@ -47,14 +47,14 @@
               disabled
             ></b-menu-item>
             <b-menu-item
-              icon="sprout"
+              icon="account-supervisor"
               label="Search Friends"
               @click="$router.push('FriendSearch')"
             ></b-menu-item>
           </b-menu-list>
           <b-menu-list label="Actions">
             <a href="/auth/logout">
-              <b-menu-item label="Logout"></b-menu-item>
+              <b-menu-item icon="logout" label="Logout"></b-menu-item>
             </a>
           </b-menu-list>
         </b-menu>
@@ -72,7 +72,7 @@
 <script>
 export default {
   name: "sidebar",
-  props: ["user"],
+  props: ["user", "swipeOpen"],
   data() {
     return {
       open: false,
@@ -82,6 +82,16 @@ export default {
       right: false,
       rounded: true,
     };
+  },
+  watch: {
+    swipeOpen: function () {
+      this.open = this.swipeOpen;
+    },
+    open: function () {
+      if (!this.open) {
+        this.$emit("close-sidebars");
+      }
+    },
   },
 };
 </script>

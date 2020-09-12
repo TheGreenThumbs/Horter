@@ -30,114 +30,143 @@
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
       ></garden-layout>
-      <article v-if="selected > 0" class="media">
-        <figure class="media-left">
-          <p class="image is-64x64">
-            <img :src="selectedPlant.photo_url" />
-          </p>
-        </figure>
-        <div class="media-content">
-          <div class="content">
-            <strong>{{ selectedPlant.common_name }}</strong>
-            <div v-if="selectedPlant.duration" class="columns is-mobile is-8">
-              <div class="column is-one-third">Duration</div>
-              <div class="column">
-                {{ selectedPlant.duration }}
+      <div v-if="selected > 0">
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img :src="selectedPlant.photo_url" />
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <strong>{{ selectedPlant.common_name }}</strong>
+              <div v-if="selectedPlant.duration" class="columns is-mobile is-8">
+                <div class="column is-one-third">Duration</div>
+                <div class="column">
+                  {{ selectedPlant.duration }}
+                </div>
               </div>
-            </div>
-            <div class="columns is-mobile is-8">
-              <div class="column is-one-third">Edible</div>
-              <div class="column">
-                {{ selectedPlant.edible ? "Yes" : "No" }}
+              <div class="columns is-mobile is-8">
+                <div class="column is-one-third">Edible</div>
+                <div class="column">
+                  {{ selectedPlant.edible ? "Yes" : "No" }}
+                </div>
               </div>
-            </div>
-            <div class="columns is-mobile is-8">
-              <div class="column is-one-third">Vegetable</div>
-              <div class="column">
-                {{ selectedPlant.vegetable ? "Yes" : "No" }}
+              <div class="columns is-mobile is-8">
+                <div class="column is-one-third">Vegetable</div>
+                <div class="column">
+                  {{ selectedPlant.vegetable ? "Yes" : "No" }}
+                </div>
               </div>
-            </div>
-            <div v-if="selectedPlant.ph_min" class="columns is-mobile is-8">
-              <div class="column is-one-quarter">PH</div>
-              <div class="column">
-                {{ selectedPlant.ph_min }} - {{ selectedPlant.ph_max }}
+              <div v-if="selectedPlant.ph_min" class="columns is-mobile is-8">
+                <div class="column is-one-quarter">PH</div>
+                <div class="column">
+                  {{ selectedPlant.ph_min }} - {{ selectedPlant.ph_max }}
+                </div>
               </div>
-            </div>
-            <div v-if="selectedPlant.light" class="columns is-mobile is-8">
-              <div class="column is-one-quarter">Light</div>
-              <div class="column">
-                <b-progress
-                  :value="selectedPlant.light * 10"
-                  type="is-warning"
-                ></b-progress>
+              <div v-if="selectedPlant.light" class="columns is-mobile is-8">
+                <div class="column is-one-quarter">Light</div>
+                <div class="column">
+                  <b-progress
+                    :value="selectedPlant.light * 10"
+                    type="is-warning"
+                  ></b-progress>
+                </div>
               </div>
-            </div>
-            <div class="columns is-mobile is-8">
-              <div class="column is-one-quarter">Rainfall</div>
-              <div class="column">
-                {{ Math.floor(selectedPlant.precipitation_min / 25.4) }}" -
-                {{ Math.floor(selectedPlant.precipitation_max / 25.4) }}"
+              <div class="columns is-mobile is-8">
+                <div class="column is-one-quarter">Rainfall</div>
+                <div class="column">
+                  {{ Math.floor(selectedPlant.precipitation_min / 25.4) }}" -
+                  {{ Math.floor(selectedPlant.precipitation_max / 25.4) }}"
+                </div>
               </div>
-            </div>
-            <div v-if="selectedPlant.temp_min" class="columns is-mobile is-8">
-              <div class="column">Temperature Minimum</div>
-              <div class="column">{{ selectedPlant.temp_min }}°F</div>
-            </div>
-            <div v-if="selectedPlant.temp_max" class="columns is-mobile is-8">
-              <div class="column is-one-quarter">Temp Max</div>
-              <div class="column">{{ selectedPlant.temp_max }}°F</div>
-            </div>
-            <div
-              v-if="selectedPlant.soil_nutriments"
-              class="columns is-mobile is-8"
-            >
-              <div class="column is-one-quarter">Nutriments</div>
-              <div class="column">
-                <b-progress
-                  :value="selectedPlant.soil_nutriments * 10"
-                  type="is-success"
-                ></b-progress>
+              <div v-if="selectedPlant.temp_min" class="columns is-mobile is-8">
+                <div class="column">Temperature Minimum</div>
+                <div class="column">{{ selectedPlant.temp_min }}°F</div>
               </div>
-            </div>
-            <div
-              v-if="selectedPlant.soil_salinity"
-              class="columns is-mobile is-8"
-            >
-              <div class="column is-one-quarter">Salinity</div>
-              <div class="column">
-                <b-progress
-                  :value="selectedPlant.soil_salinity * 10"
-                  type="is-success"
-                ></b-progress>
+              <div v-if="selectedPlant.temp_max" class="columns is-mobile is-8">
+                <div class="column is-one-quarter">Temp Max</div>
+                <div class="column">{{ selectedPlant.temp_max }}°F</div>
               </div>
-            </div>
-            <div
-              v-if="selectedPlant.soil_humidity"
-              class="columns is-mobile is-8"
-            >
-              <div class="column is-one-quarter">Humidity</div>
-              <div class="column">
-                <b-progress
-                  :value="selectedPlant.soil_humidity * 10"
-                  type="is-success"
-                ></b-progress>
+              <div
+                v-if="selectedPlant.soil_nutriments"
+                class="columns is-mobile is-8"
+              >
+                <div class="column is-one-quarter">Nutriments</div>
+                <div class="column">
+                  <b-progress
+                    :value="selectedPlant.soil_nutriments * 10"
+                    type="is-success"
+                  ></b-progress>
+                </div>
               </div>
-            </div>
-            <div
-              v-if="selectedPlant.soil_texture"
-              class="columns is-mobile is-8"
-            >
-              <div class="column is-one-quarter">Texture</div>
-              <div class="column">
-                <b-progress
-                  :value="selectedPlant.soil_texture * 10"
-                  type="is-success"
-                ></b-progress>
+              <div
+                v-if="selectedPlant.soil_salinity"
+                class="columns is-mobile is-8"
+              >
+                <div class="column is-one-quarter">Salinity</div>
+                <div class="column">
+                  <b-progress
+                    :value="selectedPlant.soil_salinity * 10"
+                    type="is-success"
+                  ></b-progress>
+                </div>
+              </div>
+              <div
+                v-if="selectedPlant.soil_humidity"
+                class="columns is-mobile is-8"
+              >
+                <div class="column is-one-quarter">Humidity</div>
+                <div class="column">
+                  <b-progress
+                    :value="selectedPlant.soil_humidity * 10"
+                    type="is-success"
+                  ></b-progress>
+                </div>
+              </div>
+              <div
+                v-if="selectedPlant.soil_texture"
+                class="columns is-mobile is-8"
+              >
+                <div class="column is-one-quarter">Texture</div>
+                <div class="column">
+                  <b-progress
+                    :value="selectedPlant.soil_texture * 10"
+                    type="is-success"
+                  ></b-progress>
+                </div>
               </div>
             </div>
           </div>
+        </article>
+        <div class="sliders">
+          <b-field label="Plant scale">
+            <b-slider
+              size="is-small"
+              :min="sliderMin"
+              :max="sliderMax"
+              :step="2"
+              :rounded="rounded"
+              :tooltip="false"
+              v-model="sliderValue"
+              @change="sliderChange"
+            >
+              <template v-for="scale in [2, 4, 6, 8, 10]">
+                <b-slider-tick
+                  id="tick"
+                  :value="scale"
+                  :key="scale"
+                ></b-slider-tick>
+              </template>
+            </b-slider>
+          </b-field>
         </div>
-      </article>
+        <div class="buttons">
+          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+            Remove Plant from Garden
+          </b-button>
+        </div>
+      </div>
     </div>
     <div class="card-footer">
       <button
@@ -189,6 +218,10 @@ export default {
       selected: -1,
       msg: "Garden Main Page",
       screenWidth: 0,
+      rounded: true,
+      sliderMin: 2,
+      sliderMax: 10,
+      sliderValue: -1,
     };
   },
   computed: {
@@ -248,6 +281,29 @@ export default {
         .catch((err) => {
           this.$buefy.toast.open({
             message: `Error finding garden ${id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
+        });
+    },
+    sliderChange(radius) {
+      this.plantList.filter((i) => i.id === this.selected)[0].radius = radius;
+      this.selectedPlant.radius = radius;
+    },
+    removePlantButtonClick() {
+      axios({
+        method: "DELETE",
+        url: "/garden/deleteplant",
+        data: { id: this.selected },
+      })
+        .then(() => {
+          this.loadGardens(this.gardenId);
+          this.selected = -1;
+        })
+        .catch((err) => {
+          this.$buefy.toast.open({
+            message: `Error deleting plant ${plantId}`,
             type: "is-danger",
             duration: 1000,
           });

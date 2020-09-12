@@ -45,7 +45,7 @@ import axios from "axios";
 
 export default {
   name: "rightbar",
-  props: ["user"],
+  props: ["user", "swipeOpen"],
   data() {
     return {
       open: false,
@@ -75,6 +75,16 @@ export default {
           duration: 1000,
         });
       });
+  },
+  watch: {
+    swipeOpen: function () {
+      this.open = this.swipeOpen;
+    },
+    open: function () {
+      if (!this.open) {
+        this.$emit("close-sidebars");
+      }
+    },
   },
   methods: {
     goToGarden(id) {

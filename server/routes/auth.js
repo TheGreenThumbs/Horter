@@ -64,7 +64,6 @@ authRouter.get(
 );
 
 authRouter.get("/", (req, res) => {
-  console.log(req.user);
   if (req.user) {
     res.status(200).json(req.user);
   } else {
