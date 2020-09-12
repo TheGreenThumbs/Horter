@@ -14,6 +14,7 @@
 import Message from "./Message.vue";
 import axios from "axios";
 import router from "../router";
+
 export default {
   name: "chatbot",
   components: {
@@ -23,6 +24,8 @@ export default {
 
   data: function () {
     return {
+      gardenName: "",
+      plant: "",
       messages: [["ChatBot", "Hey there! How can I help?"]],
     };
   },
@@ -40,40 +43,55 @@ export default {
         },
       })
         .then((data) => {
-          if (data.data.plant === undefined) {
-            this.messages.push(["ChatBot", data.data.response]);
-          } else if (data.data.plant) {
-            let plant = data.data.plant;
-            this.messages.push(["ChatBot", data.data.response]);
-            // get user id
-            // find user gardens
-            // reply to user
+          if (data.data.garden !== undefined) {
+            this.gardenName = data.data.garden;
+          }
+          if (data.data.plant !== undefined) {
+            this.plant = data.data.plant;
+          }
+          this.messages.push(["ChatBot", data.data.response]);
+          return axios({
+            method: "GET",
+            url: "/garden/user",
+            params: {
+              id: this.user.id,
+            },
+          });
+        })
+        .then((gardens) => {
+          if (this.gardenName) {
+            let gardenid = this.gardens.data
+              .filter((g) => g.name === this.gardenName)
+              .map((g) => g.id);
+            console.log(gardenId);
+          } else {
+            let string = "";
+            gardens.data.map((g) => {
+              string += `${g.name}, `;
+            });
             this.messages.push([
               "ChatBot",
-              "Was there a particular garden you were searching plants for?",
+              `Was there a particular garden you were searching plants for? I have: ${string.slice(
+                0,
+                -2
+              )}`,
             ]);
-
-            axios({
-              method: "GET",
-              url: "/garden/user",
-              params: {
-                id: this.user.id,
-              },
-            }).then((data) => console.log(data));
-
-            // setTimeout(() => {
-            //   this.$emit("close");
-            // }, 1000);
-
-            // router.push({
-            //   name: "wish",
-            //   params: {
-            //     plant: plant,
-            //   },
-            // });
           }
+
+          // setTimeout(() => {
+          //   this.$emit("close");
+          // }, 1000);
+
+          // router.push({
+          //   name: "wish",
+          //   params: {
+          //     plant: plant,
+          //   },
+          // });
         })
-        .catch((err) => {});
+        .catch((err) => {
+          this.$log.error(err);
+        });
 
       // i would like to plant [] in my garden
       // show me a list of [] plants
