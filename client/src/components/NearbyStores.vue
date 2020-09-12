@@ -5,7 +5,7 @@
       :center="center"
       :zoom="12"
       map-type-id="terrain"
-      style="width: 800px; height: 500px"
+      style="width: 90vw; height: 500px; margin: 0 auto"
       @dragend="resetCenter()"
     >
       <GmapMarker
@@ -17,21 +17,31 @@
         :icon="m.icon"
         @click="findStore(index)"
       />
+      <gmap-info-window
+        v-if="activeMarker.position"
+        :position="{
+          lat: activeMarker.position.lat,
+          lng: activeMarker.position.lng,
+        }"
+        :opened="infoBoxOpen"
+        @closeclick="infoBoxOpen = false"
+      >
+        <div v-if="selected">
+          <div>
+            {{ selectedStore.name }}
+          </div>
+          <div>
+            {{ selectedStore.address }}
+          </div>
+          <div>
+            {{ selectedStore.phone }}
+          </div>
+          <div v-for="(day, index) in selectedStore.schedule" :key="index">
+            {{ day }}
+          </div>
+        </div>
+      </gmap-info-window>
     </GmapMap>
-    <div v-if="selected">
-      <div>
-        {{ selectedStore.name }}
-      </div>
-      <div>
-        {{ selectedStore.address }}
-      </div>
-      <div>
-        {{ selectedStore.phone }}
-      </div>
-      <div v-for="(day, index) in selectedStore.schedule" :key="index">
-        {{ day }}
-      </div>
-    </div>
   </div>
 </template>
 
@@ -61,6 +71,7 @@ export default {
       selectedStore: {},
       selected: false,
       activeMarker: {},
+      infoBoxOpen: false,
     };
   },
   mounted() {
@@ -82,6 +93,7 @@ export default {
   methods: {
     findStore(index) {
       this.selected = true;
+      this.infoBoxOpen = true;
       this.markers[index].icon =
         "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
       if (this.activeMarker) {
@@ -98,6 +110,7 @@ export default {
         },
       }).then((store) => {
         this.selectedStore = store.data;
+        this.infoBoxOpen = true;
       });
     },
     setLocation: function () {
@@ -143,7 +156,9 @@ export default {
 </script>
 
 <style>
-.body {
-  margin-left: 20px;
+.vue-map-container {
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
 }
 </style>

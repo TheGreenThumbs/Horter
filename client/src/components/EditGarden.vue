@@ -1,27 +1,22 @@
 <template>
   <div class="edit">
     <form @submit.prevent="handleSubmit">
-      <div class="columns">
-        <label class="column">Garden Name</label>
-        <input v-model="gardenName" />
-      </div>
-      <div class="columns">
-        <label class="column">Latitude</label>
-        <input v-model="latt" />
-      </div>
-      <div class="columns">
-        <label class="column">Longitude</label>
-        <input v-model="long" />
-      </div>
-      <div class="columns">
-        <label class="column">Width</label>
-        <input v-model="wid" />
-      </div>
-      <div class="columns">
-        <label class="column">Height</label>
-        <input v-model="hei" />
-      </div>
-      <button>Update</button>
+      <b-field label="Garden Name">
+        <b-input v-model="gardenName" />
+      </b-field>
+      <b-field label="Latitude">
+        <b-input v-model="latt" />
+      </b-field>
+      <b-field label="Longitude">
+        <b-input v-model="long" />
+      </b-field>
+      <b-field label="Width">
+        <b-input v-model="wid" />
+      </b-field>
+      <b-field label="Height">
+        <b-input v-model="hei" />
+      </b-field>
+      <b-button type="is-success">Update</b-button>
     </form>
   </div>
 </template>
@@ -72,8 +67,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.column {
-  color: white;
-}
+<style lang="sass">
+.edit
+  padding: 20px
+  background-color: lightgrey
+  border-radius: 20px
+  margin: 20px
 </style>
