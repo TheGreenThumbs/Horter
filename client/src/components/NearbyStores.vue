@@ -7,6 +7,10 @@
       map-type-id="terrain"
       style="width: 90vw; height: 500px; margin: 0 auto"
       @dragend="resetCenter()"
+      :options="{
+        streetViewControl: false,
+        mapTypeControl: false,
+      }"
     >
       <GmapMarker
         :key="index"
