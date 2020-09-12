@@ -19,6 +19,8 @@ export default {
   components: {
     Message,
   },
+  props: ["user"],
+
   data: function () {
     return {
       messages: [["ChatBot", "Hey there! How can I help?"]],
@@ -38,24 +40,43 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data.data.response);
-          let plant = data.data.plant;
-          this.messages.push(["ChatBot", data.data.response]);
+          if (data.data.plant === undefined) {
+            this.messages.push(["ChatBot", data.data.response]);
+          } else if (data.data.plant) {
+            let plant = data.data.plant;
+            this.messages.push(["ChatBot", data.data.response]);
+            // get user id
+            // find user gardens
+            // reply to user
+            this.messages.push([
+              "ChatBot",
+              "Was there a particular garden you were searching plants for?",
+            ]);
+            this.$log.info("***user***", this.user.id);
+            axios
+              .get({
+                method: "GET",
+                url: "/garden/user",
+                params: {
+                  id: user.id,
+                },
+              })
+              .then((gardens) => {
+                console.log(gardens);
+              })
+              .catch((err) => this.$log.error(err));
 
-          // const changePage = function(){
+            // setTimeout(() => {
+            //   this.$emit("close");
+            // }, 1000);
 
-          //   };
-          // setTimeout(changePage, 1000);
-          setTimeout(() => {
-            this.$emit("close");
-          }, 1000);
-          // this.$emit("close");
-          router.push({
-            name: "wish",
-            params: {
-              plant: plant,
-            },
-          });
+            // router.push({
+            //   name: "wish",
+            //   params: {
+            //     plant: plant,
+            //   },
+            // });
+          }
         })
         .catch((err) => {});
 
