@@ -22,12 +22,13 @@
         <div class="height">Height: {{ gardenSize.height }}</div>
       </div>
     </div>
-    <div class="card-content" id="garden-info">
+    <div class="card-content" id="garden-info" ref="gardenInfo">
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
         :plants="plantList"
         v-on:plant-moved="plantMoved"
+        :width="screenWidth"
       ></garden-layout>
       <article v-if="selected > 0" class="media">
         <figure class="media-left">
@@ -187,6 +188,7 @@ export default {
       ],
       selected: -1,
       msg: "Garden Main Page",
+      screenWidth: 0,
     };
   },
   computed: {
@@ -256,6 +258,7 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.loadGardens(this.$route.query.id);
+      this.screenWidth = this.$refs.gardenInfo.clientWidth;
     });
   },
   beforeRouteUpdate(to, from, next) {

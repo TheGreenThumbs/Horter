@@ -36,13 +36,14 @@ export default {
   name: "gardenLayout",
   data() {
     return {
-      gardenScale: 20,
+      //gardenScale: 20,
       moveStart: {
         left: 0,
         top: 0,
         width: 0,
         height: 0,
       },
+      windowWidth: 0,
     };
   },
   props: {
@@ -67,8 +68,15 @@ export default {
       type: Number,
       required: true,
     },
+    width: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
+    gardenScale() {
+      return Math.floor(this.width / this.gardenSize.width);
+    },
     gardenStyles: function () {
       const height = this.plantScale(this.gardenSize.height);
       const width = this.plantScale(this.gardenSize.width);
@@ -86,7 +94,7 @@ export default {
       return styles;
     },
     plantScale: function (num) {
-      return num * this.gardenScale;
+      return Math.floor(num * this.gardenScale);
     },
     selectPlant: function (id) {
       this.moveStart = this.$refs[id][0].rect;
@@ -110,8 +118,8 @@ export default {
       }
       // No Collision
       const plantInfo = {
-        position_y: loc.top / this.gardenScale,
-        position_x: loc.left / this.gardenScale,
+        position_y: Math.floor(loc.top / this.gardenScale),
+        position_x: Math.floor(loc.left / this.gardenScale),
       };
       this.$log.info("NO COLLISION");
       this.$log.info("Plant Info", plantInfo);
@@ -127,9 +135,19 @@ export default {
         });
       }
     },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
   },
   components: {
     VueDragResize,
+  },
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
