@@ -138,10 +138,32 @@
             </div>
           </div>
         </article>
+        <div class="sliders">
+          <b-field label="Plant scale">
+            <b-slider
+              size="is-small"
+              :min="sliderMin"
+              :max="sliderMax"
+              :step="2"
+              :rounded="rounded"
+              :tooltip="false"
+              v-model="sliderValue"
+              @change="sliderChange"
+            >
+              <template v-for="scale in [2, 4, 6, 8, 10]">
+                <b-slider-tick
+                  id="tick"
+                  :value="scale"
+                  :key="scale"
+                ></b-slider-tick>
+              </template>
+            </b-slider>
+          </b-field>
+        </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()"
-            >Remove Plant from Garden</b-button
-          >
+          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+            Remove Plant from Garden
+          </b-button>
         </div>
       </div>
     </div>
@@ -194,6 +216,10 @@ export default {
       ],
       selected: -1,
       msg: "Garden Main Page",
+      rounded: true,
+      sliderMin: 2,
+      sliderMax: 10,
+      sliderValue: -1,
     };
   },
   computed: {
@@ -258,6 +284,10 @@ export default {
           });
           this.$log.error(err);
         });
+    },
+    sliderChange(radius) {
+      this.plantList.filter((i) => i.id === this.selected)[0].radius = radius;
+      this.selectedPlant.radius = radius;
     },
     removePlantButtonClick() {
       axios({
