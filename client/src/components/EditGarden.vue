@@ -1,6 +1,6 @@
 <template>
   <div class="edit">
-    <form @submit.prevent="handleSubmit">
+    <form>
       <b-field label="Garden Name">
         <b-input v-model="gardenName" />
       </b-field>
@@ -16,7 +16,7 @@
       <b-field label="Height">
         <b-input v-model="hei" />
       </b-field>
-      <b-button type="is-success">Update</b-button>
+      <b-button @click="handleSubmit" type="is-success">Update</b-button>
     </form>
   </div>
 </template>

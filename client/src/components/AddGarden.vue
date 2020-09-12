@@ -25,6 +25,10 @@
       map-type-id="terrain"
       style="width: 80vw; height: 300px"
       @click="mapClick"
+      :options="{
+        streetViewControl: false,
+        mapTypeControl: false,
+      }"
     >
       <GmapMarker :position="position" />
     </GmapMap>
@@ -65,7 +69,39 @@ export default {
         lng: e.latLng.lng(),
       };
     },
+    verifyForm() {
+      let valid = true;
+      let message = "";
+      if (!this.name.length) {
+        message = "Garden must have a name";
+        valid = false;
+      }
+      if (this.length <= 0) {
+        message = "Length must be higher than 0";
+        valid = false;
+      }
+      if (this.width <= 0) {
+        message = "Width must be higher than 0";
+        valid = false;
+      }
+      if (!this.photo) {
+        message = "Garden must have a photo";
+        valid = false;
+      }
+      if (valid) {
+        return true;
+      }
+      this.$buefy.toast.open({
+        duration: 1000,
+        message,
+        type: "is-danger",
+      });
+      return false;
+    },
     onSubmit() {
+      if (!this.verifyForm()) {
+        return;
+      }
       const formData = new FormData();
       const newGarden = {
         name: this.name,
