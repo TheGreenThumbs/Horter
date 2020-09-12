@@ -66,7 +66,7 @@ html, body
   bottom: 0
 .content-container
   max-width: 800px
-  margin: 0 auto
+  margin: 30px auto
   height: 100%
   padding: 20px
 </style>
