@@ -286,8 +286,29 @@ export default {
         });
     },
     sliderChange(radius) {
-      this.plantList.filter((i) => i.id === this.selected)[0].radius = radius;
-      this.selectedPlant.radius = radius;
+      axios({
+        method: "PUT",
+        url: "/garden/locationdata",
+        data: {
+          id: this.selected,
+          info: { radius },
+        },
+      })
+        .then(({ data }) => {
+          this.$log.info(data);
+          this.plantList.filter(
+            (i) => i.id === this.selected
+          )[0].radius = radius;
+          this.selectedPlant.radius = radius;
+        })
+        .catch((err) => {
+          this.$buefy.toast.open({
+            message: `Error finding garden ${id}`,
+            type: "is-danger",
+            duration: 1000,
+          });
+          this.$log.error(err);
+        });
     },
     removePlantButtonClick() {
       axios({
