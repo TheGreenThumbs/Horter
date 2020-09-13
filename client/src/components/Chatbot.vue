@@ -60,10 +60,21 @@ export default {
         })
         .then((gardens) => {
           if (this.gardenName) {
-            let gardenid = this.gardens.data
+            let gardenId = gardens.data
               .filter((g) => g.name === this.gardenName)
               .map((g) => g.id);
             console.log(gardenId);
+            setTimeout(() => {
+              this.$emit("close");
+            }, 1000);
+
+            router.push({
+              name: "wish",
+              params: {
+                plant: this.plant,
+                gardenId: gardenId[0],
+              },
+            });
           } else {
             let string = "";
             gardens.data.map((g) => {
@@ -77,17 +88,6 @@ export default {
               )}`,
             ]);
           }
-
-          // setTimeout(() => {
-          //   this.$emit("close");
-          // }, 1000);
-
-          // router.push({
-          //   name: "wish",
-          //   params: {
-          //     plant: plant,
-          //   },
-          // });
         })
         .catch((err) => {
           this.$log.error(err);
