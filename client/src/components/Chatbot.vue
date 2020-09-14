@@ -102,13 +102,12 @@ export default {
                 name: "wish",
               });
             } else if (this.page.includes("friends")) {
-              // console.log(this.page);
-              // setTimeout(() => {
-              // this.$emit("close");
-              // }, 1000);
-              // router.push({
-              // name: "friends",
-              // });
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "friend",
+              });
             } else if (this.page.includes("nearby stores")) {
               console.log(this.page);
               setTimeout(() => {

@@ -11,6 +11,7 @@ chatbot.get("/", (req, res) => {
   const { message } = req.query;
   runSample(PROJECT_ID, message)
     .then((data) => {
+      console.log(data);
       res.send(data);
     })
     .catch((err) => {

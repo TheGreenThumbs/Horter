@@ -38,6 +38,7 @@ const router = new VueRouter({
     {
       path: "/FriendSearch",
       component: FriendSearch,
+      name: "friend",
     },
     {
       path: "/addgarden",
