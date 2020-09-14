@@ -6,7 +6,7 @@
         height=".5"
         :width="gardenScale(gardenSize.width)"
         position="0 -1 -5"
-        rotation="45 0 0"
+        :rotation="gardenRotation"
         scale="1 1 1"
         color="#3e2723"
       >
@@ -29,20 +29,50 @@ export default {
         { position_x: 5, position_y: 5, radius: 2, id: 2 },
         { position_x: 10, position_y: 10, radius: 4, id: 3 },
       ],
+      windowWidth: 0,
+      spin: 0,
     };
+  },
+  computed: {
+    gardenRotation() {
+      return `45 ${this.spin} 0`;
+    },
   },
   methods: {
     gardenScale: (num) => num * 0.1,
     plantPosition: function (plant) {
-      const x = ((plant.position_x - this.gardenSize.width / 2) * 0.06).toFixed(
-        2
-      );
+      const truePlantX = this.gardenScale(plant.position_x + plant.radius / 2);
+      const x = (
+        truePlantX -
+        this.gardenScale(this.gardenSize.width) / 2
+      ).toFixed(2);
       const y = ((plant.position_y - 1) * 0.06).toFixed(2);
       this.$log.info(`x: ${x} y: ${y}`);
-      return `${x} 1 ${y}`;
+      return `${x} .5 ${y}`;
+      // return `1.5 .5 1.5`;
+    },
+    touchStart(e) {
+      const touchX = e.touches[0].clientX;
+      if (touchX < this.windowWidth / 2) {
+        this.spin -= 20;
+      } else {
+        this.spin += 20;
+      }
+      if (this.spin >= 360 || this.spin <= -360) this.spin = 0;
+    },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
     },
   },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   mounted() {
+    document
+      .querySelector("a-scene")
+      .addEventListener("touchstart", this.touchStart);
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
     axios({
       method: "GET",
       url: "/garden/one",
