@@ -46,7 +46,11 @@ export default {
         truePlantX -
         this.gardenScale(this.gardenSize.width) / 2
       ).toFixed(2);
-      const y = ((plant.position_y - 1) * 0.06).toFixed(2);
+      const truePlantY = this.gardenScale(plant.position_y + plant.radius / 2);
+      const y = (
+        truePlantY -
+        this.gardenScale(this.gardenSize.height) / 2
+      ).toFixed(2);
       this.$log.info(`x: ${x} y: ${y}`);
       return `${x} .5 ${y}`;
       // return `1.5 .5 1.5`;
