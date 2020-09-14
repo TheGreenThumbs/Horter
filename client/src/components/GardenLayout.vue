@@ -1,5 +1,5 @@
 <template>
-  <div class="gardenLayout" :style="gardenStyles">
+  <div class="gardenLayout" :style="gardenStyles" v-if="!!plants.length">
     <VueDragResize
       v-for="plant in plants"
       :key="plant.id"
@@ -7,19 +7,19 @@
       class="plant"
       :isResizable="false"
       :parentLimitation="true"
-      :w="plantScale(plant.radius)"
-      :h="plantScale(plant.radius)"
-      :x="plantScale(plant.position_x)"
-      :y="plantScale(plant.position_y)"
+      :w="plantScale(plant.radius) || 1"
+      :h="plantScale(plant.radius) || 1"
+      :x="gScaleMultiplier(plant.position_x) || 1"
+      :y="gScaleMultiplier(plant.position_y) || 1"
       :stickSize="0"
       :style="plantBorderRadius(plant)"
       @clicked="selectPlant(plant.id)"
       @dragstop="plantMoved"
       :snapToGrid="true"
-      :gridX="gardenScale"
-      :gridY="gardenScale"
-      :parentW="plantScale(gardenSize.width)"
-      :parentH="plantScale(gardenSize.height)"
+      :gridX="gardenScale || 1"
+      :gridY="gardenScale || 1"
+      :parentW="gScaleMultiplier(gardenSize.width)"
+      :parentH="gScaleMultiplier(gardenSize.height)"
     >
     </VueDragResize>
   </div>
@@ -78,8 +78,8 @@ export default {
       return Math.floor(this.width / this.gardenSize.width);
     },
     gardenStyles: function () {
-      const height = this.plantScale(this.gardenSize.height);
-      const width = this.plantScale(this.gardenSize.width);
+      const height = this.gScaleMultiplier(this.gardenSize.height);
+      const width = this.gScaleMultiplier(this.gardenSize.width);
       return { height: `${height}px`, width: `${width}px` };
     },
   },
@@ -94,6 +94,9 @@ export default {
       return styles;
     },
     plantScale: function (num) {
+      return Math.floor(num * this.gardenScale);
+    },
+    gScaleMultiplier(num) {
       return Math.floor(num * this.gardenScale);
     },
     selectPlant: function (id) {
