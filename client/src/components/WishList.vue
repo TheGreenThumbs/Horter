@@ -23,9 +23,14 @@
       <div v-if="loaded">
         <article class="media" v-for="plant in results" :key="plant.id">
           <figure class="media-left">
-            <p class="image is-64x64">
-              <b-image :src="plant.image_url" :rounded="true"></b-image>
-            </p>
+            <a class="image is-64x64" @click="imageClick(plant.image_url)">
+              <b-image
+                :src="plant.image_url"
+                :rounded="true"
+                :value="plant.image_url"
+                v-model="modalImageUrl"
+              ></b-image>
+            </a>
           </figure>
           <div class="media-content">
             <div class="content">
@@ -63,6 +68,15 @@
               </div>
             </nav>
           </div>
+          <b-modal
+            v-model="isImageModalActive"
+            @close="isImageModalActive = false"
+            :width="300"
+          >
+            <p>
+              <img :src="modalImageUrl" />
+            </p>
+          </b-modal>
         </article>
       </div>
       <div v-else>
@@ -97,6 +111,8 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
+      isImageModalActive: false,
+      modalImageUrl: "",
     };
   },
   props: ["plant", "user"],
@@ -120,6 +136,10 @@ export default {
     },
     clearIconClick() {
       this.search = "";
+    },
+    imageClick(imageUrl) {
+      this.isImageModalActive = true;
+      this.modalImageUrl = imageUrl;
     },
     wishButtonClick(treflePlantId, treflePlantSlug) {
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
