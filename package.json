@@ -69,7 +69,8 @@
     "vue-router": "^3.4.3",
     "vue2-touch-events": "^2.3.2",
     "vuejs-logger": "^1.5.4",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "node-fetch": ">=2.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
