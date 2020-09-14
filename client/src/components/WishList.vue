@@ -87,6 +87,7 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
+      reloader: 0,
     };
   },
   props: ["plant", "user"],
@@ -179,7 +180,6 @@ export default {
       params: { userId: this.user.id },
     })
       .then(({ data }) => {
-        this.$log.info(data);
         this.results = data
           .filter((plant) => {
             if (!this.wishClicked.includes(plant.plant.id_trefle)) {
@@ -199,6 +199,13 @@ export default {
         console.error(err);
       });
     this.loaded = true;
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    this.keyword = to.query.name;
+    this.gardenId = to.query.gardenId;
+    this.searchIconClick();
+    next();
   },
 };
 </script>
