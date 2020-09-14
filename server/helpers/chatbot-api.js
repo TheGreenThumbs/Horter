@@ -45,9 +45,14 @@ async function runSample(projectId = PROJECT_ID, question) {
       garden: result.queryText,
       response: result.fulfillmentText,
     };
-  } else {
+  } else if (result.intent.displayName === "searchplant") {
     info = {
       plant: result.parameters.fields.plant.stringValue,
+      response: result.fulfillmentText,
+    };
+  } else {
+    info = {
+      page: result.parameters.fields.destination.stringValue,
       response: result.fulfillmentText,
     };
   }

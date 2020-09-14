@@ -17,6 +17,7 @@ const router = new VueRouter({
     {
       path: "/garden",
       component: GardenMain,
+      name: "garden",
     },
     {
       path: "/wish",
@@ -32,14 +33,17 @@ const router = new VueRouter({
     {
       path: "/UserProfile",
       component: UserProfile,
+      name: "profile",
     },
     {
       path: "/FriendSearch",
       component: FriendSearch,
+      name: "friend",
     },
     {
       path: "/addgarden",
       component: AddGarden,
+      name: "addgarden",
     },
     {
       path: "/",

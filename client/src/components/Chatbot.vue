@@ -26,6 +26,7 @@ export default {
     return {
       gardenName: "",
       plant: "",
+      page: "",
       messages: [["ChatBot", "Hey there! How can I help?"]],
     };
   },
@@ -48,6 +49,9 @@ export default {
           }
           if (data.data.plant !== undefined) {
             this.plant = data.data.plant;
+          }
+          if (data.data.page !== undefined) {
+            this.page = data.data.page;
           }
           this.messages.push(["ChatBot", data.data.response]);
           return axios({
@@ -75,6 +79,51 @@ export default {
                 gardenId: gardenId[0],
               },
             });
+          } else if (this.page) {
+            if (this.page.includes("create") || this.page.includes("add")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "addgarden",
+              });
+            } else if (this.page.includes("garden")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "garden",
+              });
+            } else if (this.page.includes("wish")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "wish",
+              });
+            } else if (this.page.includes("friends")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "friend",
+              });
+            } else if (this.page.includes("nearby stores")) {
+              console.log(this.page);
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "nearbystores",
+              });
+            } else if (this.page.includes("profile")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "profile",
+              });
+            }
           } else {
             let string = "";
             gardens.data.map((g) => {
@@ -92,34 +141,6 @@ export default {
         .catch((err) => {
           this.$log.error(err);
         });
-
-      // i would like to plant [] in my garden
-      // show me a list of [] plants
-      // could you recommend any []
-      // mArray = message.split(" ");
-      // if (mArray.includes("plant")) {
-      //   let index = mArray.indexOf("plant") + 1;
-      //   plant = mArray[index];
-      //   this.$emit("close");
-      //   router.push({
-      //     name: "wish",
-      //     params: {
-      //       plant: plant,
-      //     },
-      //   });
-      // } else if (mArray.includes("recommend")) {
-      //   let index = mArray.indexOf("recommend") + 2;
-      //   plant = mArray[index];
-      //   this.$emit("close");
-      //   router.push({
-      //     name: "wish",
-      //     params: {
-      //       plant: plant,
-      //     },
-      //   });
-      // }
-
-      // this.messages.push(["ChatBot", "great!"]);
     },
   },
 };
