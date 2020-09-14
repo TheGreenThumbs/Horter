@@ -54,6 +54,7 @@ gardenInfo.get("/user", (req, res) => {
       res.status(200).send(gardens);
     })
     .catch((err) => {
+      logger.error(err);
       res.status(500).send(err);
     });
 });
