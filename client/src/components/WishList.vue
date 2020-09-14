@@ -21,12 +21,17 @@
       <!-- Search field ends -->
       <!-- Search results begins -->
       <div v-if="loaded">
-        <article class="media" v-for="plant in results" :key="plant.id">
+        <article
+          class="media"
+          v-for="plant in results"
+          v-if="plant.common_name"
+          :key="plant.id"
+        >
           <figure class="media-left">
             <a class="image is-64x64" @click="imageClick(plant.image_url)">
               <b-image
                 :src="plant.image_url"
-                :rounded="true"
+                :rounded="rounded"
                 :value="plant.image_url"
                 v-model="modalImageUrl"
               ></b-image>
@@ -36,9 +41,6 @@
             <div class="content">
               <p>
                 {{ plant.common_name }}
-              </p>
-              <p>
-                {{ plant.scientific_name }}
               </p>
               <p>
                 {{ plant.family_common_name }}
@@ -71,7 +73,6 @@
           <b-modal
             v-model="isImageModalActive"
             @close="isImageModalActive = false"
-            :width="300"
           >
             <p>
               <img :src="modalImageUrl" />
@@ -111,6 +112,7 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
+      rounded: true,
       isImageModalActive: false,
       modalImageUrl: "",
     };
