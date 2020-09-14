@@ -22,11 +22,21 @@
       <!-- Search results begins -->
       <div v-if="loaded">
         <article class="media" v-for="plant in results" :key="plant.id">
-          <figure class="media-left"></figure>
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <b-image :src="plant.image_url" :rounded="true"></b-image>
+            </p>
+          </figure>
           <div class="media-content">
             <div class="content">
               <p>
                 {{ plant.common_name }}
+              </p>
+              <p>
+                {{ plant.scientific_name }}
+              </p>
+              <p>
+                {{ plant.family_common_name }}
               </p>
             </div>
             <nav class="level is-mobile">
