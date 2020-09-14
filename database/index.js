@@ -13,7 +13,7 @@ const {
 } = factories;
 
 const dbHost = process.env.DB_HOST || "localhost";
-const dbName = process.env.DB_NAME || "horter";
+const dbName = process.env.DB_NAME || process.env.TEST_DB || "horter";
 const dbUser = process.env.DB_USER || "postgres";
 const dbPass = process.env.DB_PASS || "";
 

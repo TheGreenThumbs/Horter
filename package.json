@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "test": "mocha --recursive --exit",
+    "test": " TEST_DB=hortertest RESET_DB=true mocha --recursive --exit",
     "lint": "eslint --fix --ignore-path .eslintignore .",
     "start": "node server/index.js",
     "build": "webpack --config webpack.configSW.js --mode production",

@@ -6,7 +6,7 @@
  */
 const sessionFactory = async (sequelize) => {
   if (process.env.RESET_DB === "true") {
-    return sequelize.query(`DROP TABLE "session";
+    return sequelize.query(`DROP TABLE IF EXISTS "session";
     CREATE TABLE "session" (
       "sid" varchar NOT NULL COLLATE "default",
       "sess" json NOT NULL,
