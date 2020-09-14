@@ -18,6 +18,7 @@
 
 <script>
 import axios from "axios";
+import plantTexture from "../assets/plantTexture.jpg";
 export default {
   name: "ARGarden",
   data() {
@@ -56,12 +57,15 @@ export default {
         data.plants.forEach((plant) => {
           const cone = document.createElement("a-cone");
           color = color === "green" ? "lightgreen" : "green";
-          cone.setAttribute("color", color);
+          //cone.setAttribute("color", color);
+          cone.setAttribute("src", plantTexture);
+          cone.setAttribute("repeat", "1");
+          cone.setAttribute("roughness", "1");
           cone.setAttribute(
             "radius-bottom",
-            this.gardenScale(plant.radius / 2)
+            this.gardenScale(plant.radius / 3)
           );
-          cone.setAttribute("radius-top", ".03");
+          cone.setAttribute("radius-top", this.gardenScale(plant.radius / 5));
           cone.setAttribute("height", ".5");
           cone.setAttribute("position", this.plantPosition(plant));
           plants.append(cone);
