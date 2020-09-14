@@ -17,7 +17,7 @@
       :user="user"
     ></router-view>
     <login v-else></login>
-    <chatbotmodal v-if="user.id" class="chatbot"></chatbotmodal>
+    <chatbotmodal v-if="user.id" class="chatbot" :user="user"></chatbotmodal>
   </div>
 </template>
 

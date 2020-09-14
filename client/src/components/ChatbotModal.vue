@@ -13,12 +13,14 @@ import { mdiBarley } from "@mdi/js";
 import Chatbot from "./Chatbot.vue";
 export default {
   name: "chatbot",
+  props: ["user"],
   methods: {
     cardModal() {
       this.$buefy.modal.open({
         parent: this,
         component: Chatbot,
         hasModalCard: false,
+        props: { user: this.user },
         trapFocus: false,
         width: "80vw",
       });

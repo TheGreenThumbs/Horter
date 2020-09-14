@@ -14,13 +14,18 @@
 import Message from "./Message.vue";
 import axios from "axios";
 import router from "../router";
+
 export default {
   name: "chatbot",
   components: {
     Message,
   },
+  props: ["user"],
+
   data: function () {
     return {
+      gardenName: "",
+      plant: "",
       messages: [["ChatBot", "Hey there! How can I help?"]],
     };
   },
@@ -38,26 +43,55 @@ export default {
         },
       })
         .then((data) => {
-          console.log(data.data.response);
-          let plant = data.data.plant;
+          if (data.data.garden !== undefined) {
+            this.gardenName = data.data.garden;
+          }
+          if (data.data.plant !== undefined) {
+            this.plant = data.data.plant;
+          }
           this.messages.push(["ChatBot", data.data.response]);
-
-          // const changePage = function(){
-
-          //   };
-          // setTimeout(changePage, 1000);
-          setTimeout(() => {
-            this.$emit("close");
-          }, 1000);
-          // this.$emit("close");
-          router.push({
-            name: "wish",
+          return axios({
+            method: "GET",
+            url: "/garden/user",
             params: {
-              plant: plant,
+              id: this.user.id,
             },
           });
         })
-        .catch((err) => {});
+        .then((gardens) => {
+          if (this.gardenName) {
+            let gardenId = gardens.data
+              .filter((g) => g.name === this.gardenName)
+              .map((g) => g.id);
+            console.log(gardenId);
+            setTimeout(() => {
+              this.$emit("close");
+            }, 1000);
+
+            router.push({
+              name: "wish",
+              params: {
+                plant: this.plant,
+                gardenId: gardenId[0],
+              },
+            });
+          } else {
+            let string = "";
+            gardens.data.map((g) => {
+              string += `${g.name}, `;
+            });
+            this.messages.push([
+              "ChatBot",
+              `Was there a particular garden you were searching plants for? I have: ${string.slice(
+                0,
+                -2
+              )}`,
+            ]);
+          }
+        })
+        .catch((err) => {
+          this.$log.error(err);
+        });
 
       // i would like to plant [] in my garden
       // show me a list of [] plants

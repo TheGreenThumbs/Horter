@@ -14,6 +14,10 @@ chatbot.get("/", (req, res) => {
       res.send(data);
     })
     .catch((err) => {
+      const data = {
+        response: "Could you try rephrasing that? I didn't understand you.",
+      };
+      res.send(data);
       logger.error(err);
       res.status(500);
     });
