@@ -1,5 +1,5 @@
 <template>
-  <div class="gardenLayout" :style="gardenStyles" v-if="plants.length">
+  <div class="gardenLayout" :style="gardenStyles" v-if="!!plants.length">
     <VueDragResize
       v-for="plant in plants"
       :key="plant.id"
@@ -7,10 +7,10 @@
       class="plant"
       :isResizable="false"
       :parentLimitation="true"
-      :w="plantScale(plant.radius)"
-      :h="plantScale(plant.radius)"
-      :x="gScaleMultiplier(plant.position_x)"
-      :y="gScaleMultiplier(plant.position_y)"
+      :w="plantScale(plant.radius) || 1"
+      :h="plantScale(plant.radius) || 1"
+      :x="gScaleMultiplier(plant.position_x) || 1"
+      :y="gScaleMultiplier(plant.position_y) || 1"
       :stickSize="0"
       :style="plantBorderRadius(plant)"
       @clicked="selectPlant(plant.id)"
