@@ -28,14 +28,26 @@
           :key="plant.id"
         >
           <figure class="media-left">
-            <a class="image is-64x64" @click="imageClick(plant.image_url)">
-              <b-image
-                :src="plant.image_url"
-                :rounded="rounded"
-                :value="plant.image_url"
-                v-model="modalImageUrl"
-              ></b-image>
-            </a>
+            <div v-if="plant.image_url">
+              <a class="image is-64x64" @click="imageClick(plant.image_url)">
+                <b-image
+                  :src="plant.image_url"
+                  :rounded="rounded"
+                  :value="plant.image_url"
+                  v-model="modalImageUrl"
+                ></b-image>
+              </a>
+            </div>
+            <div v-else>
+              <p class="image is-64x64">
+                <b-skeleton
+                  circle
+                  width="64px"
+                  height="64px"
+                  :animated="false"
+                ></b-skeleton>
+              </p>
+            </div>
           </figure>
           <div class="media-content">
             <div class="content">
@@ -234,3 +246,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.wishlist-media-left {
+  width: 64px;
+}
+</style>
