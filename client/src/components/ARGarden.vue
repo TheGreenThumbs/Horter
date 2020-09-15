@@ -1,11 +1,17 @@
 <template>
-  <a-scene embedded class="ar-garden">
+  <a-scene
+    embedded
+    class="ar-garden"
+    v-touch:tap="spinTouch"
+    v-touch:swipe.top="slideUp"
+    v-touch:swipe.bottom="slideDown"
+  >
     <a-camera>
       <a-box
         :depth="gardenScale(gardenSize.height)"
         height=".5"
         :width="gardenScale(gardenSize.width)"
-        position="0 -1 -5"
+        :position="gardenPosition"
         :rotation="gardenRotation"
         scale="1 1 1"
         color="#3e2723"
@@ -31,14 +37,27 @@ export default {
       ],
       windowWidth: 0,
       spin: 0,
+      positionX: -5,
+      positionY: -1,
     };
   },
   computed: {
     gardenRotation() {
       return `45 ${this.spin} 0`;
     },
+    gardenPosition() {
+      return `0 ${this.positionY} ${this.positionX}`;
+    },
   },
   methods: {
+    slideDown() {
+      this.positionX += 0.5;
+      this.positionY -= 0.5;
+    },
+    slideUp() {
+      this.positionX -= 0.5;
+      this.positionY += 0.5;
+    },
     gardenScale: (num) => num * 0.1,
     plantPosition: function (plant) {
       const truePlantX = this.gardenScale(plant.position_x + plant.radius / 2);
@@ -55,8 +74,8 @@ export default {
       return `${x} .5 ${y}`;
       // return `1.5 .5 1.5`;
     },
-    touchStart(e) {
-      const touchX = e.touches[0].clientX;
+    spinTouch(e) {
+      const touchX = e.changedTouches[0].clientX;
       if (touchX < this.windowWidth / 2) {
         this.spin -= 20;
       } else {
@@ -72,9 +91,6 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
-    document
-      .querySelector("a-scene")
-      .addEventListener("touchstart", this.touchStart);
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     axios({
