@@ -1,5 +1,6 @@
-const { models } = require("../index");
 const { Op } = require("sequelize");
+const { models } = require("../index");
+
 const { User } = models;
 
 /**
