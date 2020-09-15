@@ -32,6 +32,7 @@
               <a class="image is-64x64" @click="imageClick(plant.image_url)">
                 <b-image
                   :src="plant.image_url"
+                  ratio="4by4"
                   :rounded="rounded"
                   :value="plant.image_url"
                   v-model="modalImageUrl"
