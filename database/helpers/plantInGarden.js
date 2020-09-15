@@ -36,14 +36,14 @@ const getAllPlantsInGarden = (userId) =>
       })
       .then((plants) => {
         const unique = [];
-        const uniquePlants = plants.filter((plant) => {
+        const uniquePlants = plants.flat().filter((plant) => {
           if (!unique.includes(plant.plantId)) {
             unique.push(plant.plantId);
             return true;
           }
           return false;
         });
-        resolve(uniquePlants[0].map((i) => i.plant));
+        resolve(uniquePlants.map((i) => i.plant));
       })
       .catch((err) => {
         reject(err);
