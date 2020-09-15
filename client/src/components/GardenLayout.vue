@@ -1,5 +1,5 @@
 <template>
-  <div class="gardenLayout" :style="gardenStyles" v-if="!!plants.length">
+  <div class="gardenLayout" :style="gardenStyles">
     <VueDragResize
       v-for="plant in plants"
       :key="plant.id"

@@ -21,12 +21,41 @@
       <!-- Search field ends -->
       <!-- Search results begins -->
       <div v-if="loaded">
-        <article class="media" v-for="plant in results" :key="plant.id">
-          <figure class="media-left"></figure>
+        <article
+          class="media"
+          v-for="plant in results"
+          v-if="plant.common_name"
+          :key="plant.id"
+        >
+          <figure class="media-left">
+            <div v-if="plant.image_url">
+              <a class="image is-64x64" @click="imageClick(plant.image_url)">
+                <b-image
+                  :src="plant.image_url"
+                  :rounded="rounded"
+                  :value="plant.image_url"
+                  v-model="modalImageUrl"
+                ></b-image>
+              </a>
+            </div>
+            <div v-else>
+              <p class="image is-64x64">
+                <b-skeleton
+                  circle
+                  width="64px"
+                  height="64px"
+                  :animated="false"
+                ></b-skeleton>
+              </p>
+            </div>
+          </figure>
           <div class="media-content">
             <div class="content">
               <p>
                 {{ plant.common_name }}
+              </p>
+              <p>
+                {{ plant.family_common_name }}
               </p>
             </div>
             <nav class="level is-mobile">
@@ -53,6 +82,14 @@
               </div>
             </nav>
           </div>
+          <b-modal
+            v-model="isImageModalActive"
+            @close="isImageModalActive = false"
+          >
+            <p>
+              <img :src="modalImageUrl" />
+            </p>
+          </b-modal>
         </article>
       </div>
       <div v-else>
@@ -87,6 +124,9 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
+      rounded: true,
+      isImageModalActive: false,
+      modalImageUrl: "",
     };
   },
   props: ["plant", "user"],
@@ -110,6 +150,10 @@ export default {
     },
     clearIconClick() {
       this.search = "";
+    },
+    imageClick(imageUrl) {
+      this.isImageModalActive = true;
+      this.modalImageUrl = imageUrl;
     },
     wishButtonClick(treflePlantId, treflePlantSlug) {
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
@@ -202,3 +246,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.wishlist-media-left {
+  width: 64px;
+}
+</style>

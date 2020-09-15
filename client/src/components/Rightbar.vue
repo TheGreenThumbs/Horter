@@ -56,7 +56,7 @@ export default {
       gardens: [],
     };
   },
-  created() {
+  mounted() {
     axios({
       method: "get",
       url: "/garden/user",
@@ -69,6 +69,7 @@ export default {
         this.gardens = data;
       })
       .catch((err) => {
+        this.$log.error(err);
         this.$buefy.toast.open({
           message: "Error getting gardens",
           type: "is-danger",
