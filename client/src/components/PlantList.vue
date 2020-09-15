@@ -10,14 +10,15 @@
       <div v-if="loaded">
         <article class="media" v-for="plant in results" :key="plant.id">
           <figure class="media-left">
-            <p class="image is-64x64">
+            <a class="image is-64x64" @click="imageClick(plant.photo_url)">
               <b-image
                 :src="plant.photo_url"
-                alt="Plant"
                 ratio="4by4"
                 :rounded="rounded"
+                :value="plant.image_url"
+                v-model="modalImageUrl"
               ></b-image>
-            </p>
+            </a>
           </figure>
           <div class="media-content">
             <div class="content">
@@ -46,6 +47,14 @@
               </b-collapse>
             </div>
           </div>
+          <b-modal
+            v-model="isImageModalActive"
+            @close="isImageModalActive = false"
+          >
+            <p>
+              <img :src="modalImageUrl" />
+            </p>
+          </b-modal>
         </article>
       </div>
       <div v-else>
@@ -61,7 +70,7 @@ import WishListSkeleton from "./WishListSkeleton.vue";
 import axios from "axios";
 
 export default {
-  name: "Wish",
+  name: "Plant",
   components: {
     wishListSkeleton: WishListSkeleton,
   },
@@ -70,10 +79,17 @@ export default {
       loaded: false,
       results: [],
       rounded: true,
+      isImageModalActive: false,
+      modalImageUrl: "",
     };
   },
   props: ["user"],
-  methods: {},
+  methods: {
+    imageClick(imageUrl) {
+      this.isImageModalActive = true;
+      this.modalImageUrl = imageUrl;
+    },
+  },
   mounted() {
     this.loaded = false;
     axios({
