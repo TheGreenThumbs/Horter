@@ -12,6 +12,7 @@
 
 <script>
 import Message from "./Message.vue";
+import Fuse from "fuse.js";
 import axios from "axios";
 import router from "../router";
 
@@ -44,6 +45,7 @@ export default {
         },
       })
         .then((data) => {
+          console.log("charbot response", data.data);
           if (data.data.garden !== undefined) {
             this.gardenName = data.data.garden;
           }
@@ -64,9 +66,14 @@ export default {
         })
         .then((gardens) => {
           if (this.gardenName) {
-            let gardenId = gardens.data
-              .filter((g) => g.name === this.gardenName)
-              .map((g) => g.id);
+            const fuse = new Fuse(gardens.data, { keys: ["name"] });
+            const result = fuse.search(this.gardenName);
+            console.log("FUSE", result[0]);
+            let gardenId = result[0].item.id;
+            console.log("id", gardenId);
+            // let gardenId = gardens.data
+            //   .filter((g) => g.name === this.gardenName)
+            //   .map((g) => g.id);
             setTimeout(() => {
               this.$emit("close");
             }, 1000);
@@ -76,11 +83,11 @@ export default {
                 name: "wish",
                 params: {
                   plant: this.plant,
-                  gardenId: gardenId[0],
+                  gardenId,
                 },
                 query: {
                   name: this.plant,
-                  gardenId: gardenId[0],
+                  gardenId,
                 },
               })
               .then((data) => this.$log(data))
