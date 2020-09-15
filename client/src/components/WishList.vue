@@ -29,34 +29,12 @@
         >
           <figure class="media-left">
             <thumbnail :plant="plant"></thumbnail>
-            <!-- <div v-if="plant.image_url">
-              <a class="image is-64x64" @click="imageClick(plant.image_url)">
-                <b-image
-                  :src="plant.image_url"
-                  ratio="4by4"
-                  :rounded="rounded"
-                  :value="plant.image_url"
-                  v-model="modalImageUrl"
-                ></b-image>
-              </a>
-            </div>
-            <div v-else>
-              <p class="image is-64x64">
-                <b-skeleton
-                  circle
-                  width="64px"
-                  height="64px"
-                  :animated="false"
-                ></b-skeleton>
-              </p>
-            </div> -->
           </figure>
           <div class="media-content">
             <div class="content">
               <p>
                 <strong>{{ plant.common_name }}</strong>
-              </p>
-              <p>
+                <br />
                 {{ plant.family_common_name }}
               </p>
             </div>
@@ -84,28 +62,12 @@
               </div>
             </nav>
           </div>
-          <!-- <b-modal
-            v-model="isImageModalActive"
-            @close="isImageModalActive = false"
-          >
-            <p>
-              <img :src="modalImageUrl" />
-            </p>
-          </b-modal> -->
         </article>
       </div>
       <div v-else>
         <wishListSkeleton></wishListSkeleton>
       </div>
       <!-- Search results ends -->
-
-      <!-- <suspense>
-        <template #default> -->
-      <!-- </template>
-        <template #fallback>
-          <wishListSkeleton></wishListSkeleton>
-        </template>
-      </suspense> -->
     </div>
   </div>
 </template>
@@ -128,9 +90,6 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
-      rounded: true,
-      isImageModalActive: false,
-      modalImageUrl: "",
       reloader: 0,
     };
   },
@@ -156,10 +115,6 @@ export default {
     clearIconClick() {
       this.search = "";
     },
-    // imageClick(imageUrl) {
-    //   this.isImageModalActive = true;
-    //   this.modalImageUrl = imageUrl;
-    // },
     wishButtonClick(treflePlantId, treflePlantSlug) {
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
       if (wishIndex > -1) {
@@ -248,7 +203,6 @@ export default {
       });
     this.loaded = true;
   },
-
   beforeRouteUpdate(to, from, next) {
     this.keyword = to.query.name;
     this.gardenId = to.query.gardenId;
