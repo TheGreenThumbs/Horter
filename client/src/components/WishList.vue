@@ -28,7 +28,8 @@
           :key="plant.id"
         >
           <figure class="media-left">
-            <div v-if="plant.image_url">
+            <thumbnail :plant="plant"></thumbnail>
+            <!-- <div v-if="plant.image_url">
               <a class="image is-64x64" @click="imageClick(plant.image_url)">
                 <b-image
                   :src="plant.image_url"
@@ -48,12 +49,12 @@
                   :animated="false"
                 ></b-skeleton>
               </p>
-            </div>
+            </div> -->
           </figure>
           <div class="media-content">
             <div class="content">
               <p>
-                {{ plant.common_name }}
+                <strong>{{ plant.common_name }}</strong>
               </p>
               <p>
                 {{ plant.family_common_name }}
@@ -83,14 +84,14 @@
               </div>
             </nav>
           </div>
-          <b-modal
+          <!-- <b-modal
             v-model="isImageModalActive"
             @close="isImageModalActive = false"
           >
             <p>
               <img :src="modalImageUrl" />
             </p>
-          </b-modal>
+          </b-modal> -->
         </article>
       </div>
       <div v-else>
@@ -110,6 +111,7 @@
 </template>
 
 <script>
+import PlantThumbnail from "./PlantThumbnail.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
 import axios from "axios";
 
@@ -117,6 +119,7 @@ export default {
   name: "Wish",
   components: {
     wishListSkeleton: WishListSkeleton,
+    thumbnail: PlantThumbnail,
   },
   data() {
     return {
@@ -153,10 +156,10 @@ export default {
     clearIconClick() {
       this.search = "";
     },
-    imageClick(imageUrl) {
-      this.isImageModalActive = true;
-      this.modalImageUrl = imageUrl;
-    },
+    // imageClick(imageUrl) {
+    //   this.isImageModalActive = true;
+    //   this.modalImageUrl = imageUrl;
+    // },
     wishButtonClick(treflePlantId, treflePlantSlug) {
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
       if (wishIndex > -1) {
@@ -254,9 +257,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.wishlist-media-left {
-  width: 64px;
-}
-</style>
