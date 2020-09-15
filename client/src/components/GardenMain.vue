@@ -226,7 +226,12 @@ export default {
   },
   computed: {
     selectedPlant: function () {
-      return this.plantList.filter((i) => i.id === this.selected)[0].plant;
+      let plantInGarden = this.plantList.filter(
+        (i) => i.id === this.selected
+      )[0];
+      this.sliderValue = plantInGarden.radius;
+      let plant = plantInGarden.plant;
+      return plant;
     },
   },
   methods: {
