@@ -156,15 +156,15 @@ export default {
         })
         .then((res) => {
           this.$log.info(res);
+          this.keyword = "";
+          this.$router.push({
+            path: "/garden",
+            query: { id: this.gardenId },
+          });
         })
         .catch((err) => {
           console.error(err);
         });
-      this.keyword = "";
-      this.$router.push({
-        path: "/garden",
-        query: { id: this.gardenId },
-      });
     },
   },
   mounted() {
