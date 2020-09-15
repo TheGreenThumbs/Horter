@@ -67,18 +67,24 @@ export default {
             let gardenId = gardens.data
               .filter((g) => g.name === this.gardenName)
               .map((g) => g.id);
-            console.log(gardenId);
             setTimeout(() => {
               this.$emit("close");
             }, 1000);
 
-            router.push({
-              name: "wish",
-              params: {
-                plant: this.plant,
-                gardenId: gardenId[0],
-              },
-            });
+            router
+              .push({
+                name: "wish",
+                params: {
+                  plant: this.plant,
+                  gardenId: gardenId[0],
+                },
+                query: {
+                  name: this.plant,
+                  gardenId: gardenId[0],
+                },
+              })
+              .then((data) => this.$log(data))
+              .catch((err) => this.$log(err));
           } else if (this.page) {
             if (this.page.includes("create") || this.page.includes("add")) {
               setTimeout(() => {
@@ -109,7 +115,6 @@ export default {
                 name: "friend",
               });
             } else if (this.page.includes("nearby stores")) {
-              console.log(this.page);
               setTimeout(() => {
                 this.$emit("close");
               }, 1000);
