@@ -50,7 +50,6 @@ const findUserByUsername = (username) =>
     User.findOne({
       where: { username },
       rejectOnEmpty: true,
-      include: "user",
     })
       .then((user) => {
         resolve(user);
