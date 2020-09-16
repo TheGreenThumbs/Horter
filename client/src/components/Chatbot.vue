@@ -149,12 +149,18 @@ export default {
               }, 1000);
               router.push({
                 name: "wish",
+                params: {
+                  plant: this.plant,
+                },
+                query: {
+                  name: this.plant,
+                },
               });
             }
           }
         })
         .catch((err) => {
-          this.$log.error(err);
+          console.log(err);
         });
     },
   },
