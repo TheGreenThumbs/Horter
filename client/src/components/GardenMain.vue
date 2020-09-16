@@ -67,7 +67,11 @@
           </b-field>
         </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+          <b-button
+            type="is-warning"
+            icon-left="minus-circle"
+            @click="removePlantButtonClick()"
+          >
             Remove Plant from Garden
           </b-button>
         </div>
