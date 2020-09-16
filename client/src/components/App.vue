@@ -2,6 +2,11 @@
   <div
     class="container wrapper"
     v-touch:swipe.right="swipeLeft"
+    v-touch-options:swipe="{
+      direction: 'horizontal',
+      swipeTolerance: 200,
+      threshold: 200,
+    }"
     v-touch:swipe.left="swipeRight"
   >
     <navigation
