@@ -44,14 +44,21 @@ export default {
   left: 0
   width: 100%
   background-color: $lightGreen
+
 .right-sidebar
   position: fixed
   top: 0
   right: 0
+  button
+    background-color: $lightGreen
+
 .left-sidebar
   position: relative
   top: 0
   left: 0
+  button
+    background-color: $lightGreen
+
 .nav-button
   border: none
 
