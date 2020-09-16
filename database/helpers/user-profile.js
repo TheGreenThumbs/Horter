@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { models } = require("../index");
 
 const { User } = models;
@@ -48,7 +49,11 @@ const findUserByGoogleId = (idGoogle) =>
 const findUserByUsername = (username) =>
   new Promise((resolve, reject) => {
     User.findOne({
-      where: { username },
+      where: {
+        username: {
+          [Op.iLike]: `%${username}%`,
+        },
+      },
       rejectOnEmpty: true,
     })
       .then((user) => {
