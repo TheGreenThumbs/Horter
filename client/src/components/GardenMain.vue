@@ -79,6 +79,7 @@
           <b-button
             type="is-success"
             class="card-footer-item"
+            icon-left="plus-circle"
             @click="$router.push({ name: 'wish', params: { gardenId } })"
           >
             Add Plant
