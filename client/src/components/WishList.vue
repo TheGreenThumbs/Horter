@@ -191,11 +191,16 @@ export default {
         })
         .then((res) => {
           this.$log.info(res);
-          this.keyword = "";
-          this.$router.push({
-            path: "/garden",
-            query: { id: this.gardenId },
+          this.$buefy.toast.open({
+            type: "is-success",
+            duration: 1000,
+            message: `Added ${res.data.plantName}`,
           });
+          // this.keyword = "";
+          // this.$router.push({
+          //   path: "/garden",
+          //   query: { id: this.gardenId },
+          // });
         })
         .catch((err) => {
           console.error(err);
