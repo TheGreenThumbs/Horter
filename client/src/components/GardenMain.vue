@@ -79,7 +79,7 @@
     </div>
     <div class="card-footer">
       <div class="footer-buttons card-footer-item">
-        <div class="footer-buttons-top-row">
+        <div class="footer-buttons-top-row" v-if="gardenOwned">
           <b-button
             type="is-success"
             class="card-footer-item"
@@ -137,6 +137,7 @@ export default {
         { position_x: 5, position_y: 4, radius: 2, id: 2 },
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
+      ownerId: -1,
       selected: -1,
       displayName: true,
       msg: "Garden Main Page",
@@ -147,6 +148,7 @@ export default {
       sliderValue: -1,
     };
   },
+  props: ["user"],
   computed: {
     selectedPlant: function () {
       let plantInGarden = this.plantList.filter(
@@ -155,6 +157,9 @@ export default {
       this.sliderValue = plantInGarden.radius;
       let plant = plantInGarden.plant;
       return plant;
+    },
+    gardenOwned() {
+      return this.user.id === this.ownerId;
     },
   },
   methods: {
@@ -198,6 +203,7 @@ export default {
       })
         .then(({ data }) => {
           this.$log.info(data);
+          this.ownerId = data.userId;
           this.plantList = data.plants;
           this.gardenId = data.id;
           this.gardenSize.height = data.length;
