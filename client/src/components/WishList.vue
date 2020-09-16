@@ -173,7 +173,7 @@ export default {
           this.$buefy.toast.open({
             type: "is-success",
             duration: 1000,
-            message: `Added PLANT to GARDEN`,
+            message: `Added ${res.data.plantName}`,
           });
           // this.keyword = "";
           // this.$router.push({
