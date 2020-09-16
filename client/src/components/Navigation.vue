@@ -1,7 +1,7 @@
 <!-- Renders navigation bar with hamburger and ellipsis menu buttons -->
 
 <template>
-  <section>
+  <section id="logo-bar">
     <sidebar
       :user="user"
       class="left-sidebar"
@@ -37,17 +37,21 @@ export default {
 </script>
 
 <style lang="sass">
+#logo-bar
+  position: fixed
+  z-index: 39
+  top: 0
+  left: 0
+  width: 100%
+  background-color: $lightGreen
 .right-sidebar
   position: fixed
   top: 0
   right: 0
-  z-index: 39
 .left-sidebar
-  position: fixed
+  position: relative
   top: 0
   left: 0
-  z-index: 39
-
 .nav-button
   border: none
 
