@@ -29,12 +29,7 @@
                   <strong>{{ plant.common_name }}</strong>
                 </div>
                 <div class="panel-block">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  <br />
-                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc
-                  varius lectus, nec rutrum justo nibh eu lectus. <br />
-                  Ut vulputate semper dui. Fusce erat odio, sollicitudin vel
-                  erat vel, interdum mattis neque.
+                  <plantDetails :plant="plant"></plantDetails>
                 </div>
               </b-collapse>
             </div>
@@ -51,6 +46,7 @@
 
 <script>
 import PlantThumbnail from "./PlantThumbnail.vue";
+import PlantDetails from "./PlantDetails.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
 import axios from "axios";
 
@@ -58,6 +54,7 @@ export default {
   name: "Plant",
   components: {
     wishListSkeleton: WishListSkeleton,
+    plantDetails: PlantDetails,
     thumbnail: PlantThumbnail,
   },
   data() {
