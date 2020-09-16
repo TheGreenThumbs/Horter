@@ -95,6 +95,13 @@ export default {
   },
   props: ["plant", "user"],
   methods: {
+    emptyResultsToast() {
+      this.$buefy.toast.open({
+        duration: 5000,
+        message: `No plants found in your wishlist.`,
+        type: "is-warning",
+      });
+    },
     searchIconClick() {
       this.loaded = false;
       axios
@@ -187,20 +194,24 @@ export default {
       params: { userId: this.user.id },
     })
       .then(({ data }) => {
-        this.results = data
-          .filter((plant) => {
-            if (!this.wishClicked.includes(plant.plant.id_trefle)) {
-              this.wishClicked.push(plant.plant.id_trefle);
-              return plant;
-            }
-          })
-          .map((uniquePlant) => {
-            return {
-              id: uniquePlant.plant.id_trefle,
-              common_name: uniquePlant.plant.common_name,
-              slug: uniquePlant.plant.slug,
-            };
-          });
+        if (data.length === 0) {
+          this.emptyResultsToast();
+        } else {
+          this.results = data
+            .filter((plant) => {
+              if (!this.wishClicked.includes(plant.plant.id_trefle)) {
+                this.wishClicked.push(plant.plant.id_trefle);
+                return plant;
+              }
+            })
+            .map((uniquePlant) => {
+              return {
+                id: uniquePlant.plant.id_trefle,
+                common_name: uniquePlant.plant.common_name,
+                slug: uniquePlant.plant.slug,
+              };
+            });
+        }
       })
       .catch((err) => {
         console.error(err);
