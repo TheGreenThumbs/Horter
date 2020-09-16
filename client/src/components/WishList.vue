@@ -43,6 +43,7 @@
               <div class="level-left">
                 <b-button
                   size="is-small"
+                  type="is-info"
                   icon-left="plus-circle"
                   @click="wishButtonClick(plant.id, plant.slug)"
                   :active="wishClicked.includes(plant.id)"
@@ -54,6 +55,7 @@
                 </b-button>
                 <b-button
                   v-if="gardenId > -1"
+                  type="is-success"
                   size="is-small"
                   icon-left="plus-circle"
                   @click="gardenButtonClick(plant.id, plant.slug)"
