@@ -100,6 +100,9 @@ export default {
   width: 100%
   display: flex
   justify-content: space-between
+  border-bottom: 1px solid #e3e3e3
+.plant-row:last-child
+  border-bottom: none
 .plant-progressbar
   width: 100%
   padding-left: 10px
