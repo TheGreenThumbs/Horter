@@ -14,8 +14,9 @@
       :openLeft="openLeft"
       :openRight="openRight"
       v-on:close-navbars="closeBars"
-      v-if="user.id"
+      v-if="user.id && mobile"
     ></navigation>
+    <desktop-navigation v-if="!mobile" :user="user"></desktop-navigation>
     <router-view
       class="content-container"
       v-if="user.id"
@@ -28,12 +29,14 @@
 
 <script>
 import Navigation from "./Navigation.vue";
+import DesktopNavigation from "./DesktopNavigation.vue";
 import ChatbotModal from "./ChatbotModal.vue";
 import UserProfile from "./Profile/user-profile.vue";
 import FriendProfile from "./Profile/friend-profile.vue";
 import Login from "./Login.vue";
 import router from "../router";
 import axios from "axios";
+import { isMobile } from "mobile-device-detect";
 
 export default {
   name: "App",
@@ -44,12 +47,14 @@ export default {
     user: UserProfile,
     login: Login,
     friend: FriendProfile,
+    "desktop-navigation": DesktopNavigation,
   },
   data() {
     return {
       user: {},
       openLeft: false,
       openRight: false,
+      mobile: isMobile,
     };
   },
   methods: {
