@@ -25,17 +25,19 @@
               @click="goToUser(searched.id)"
             >
               <b-image
+                class="searched"
                 :src="searched.s3_id"
-                padding="15%"
                 ratio="4x4"
                 rounded
               />
-              <p>{{ searched.username }}</p>
+              <div padding="5%" margin-top="0.5cm">
+                <p class="username">{{ searched.username }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="eight wide column">
+      <div class="eight wide column" padding="15%">
         <div>
           <img
             src="https://www.clipartmax.com/png/middle/427-4273239_friends-icon-friends-icon-transparent-background.png"
@@ -43,16 +45,21 @@
           />Friends List
         </div>
         <div class="ui segment">
-          <!-- <button @click="seeFriends()">Show Friends</button> -->
           <div v-if="friends" class="friend-list">
             <div
-              class="friends"
               @click="goToUser(friend.id)"
               :index="i"
               v-for="(friend, i) in friends"
               :key="i"
             >
-              <b-image :src="friend.s3_id" padding="15%" ratio="2x2" rounded />
+              <b-image
+                class="friend"
+                :src="friend.s3_id"
+                ratio="2x2"
+                rounded
+                fluid
+                contain
+              />
               <p>{{ friend.username }}</p>
             </div>
           </div>
@@ -89,7 +96,6 @@ export default {
     })
       .then((friends) => {
         const { data } = friends;
-        console.log("data", data);
         this.friends = data;
       })
       .catch((error) => {
@@ -113,7 +119,6 @@ export default {
         });
     },
     goToUser(user) {
-      console.log("USER CLICKED");
       this.$router
         .push({
           path: "/UserProfile",
@@ -140,5 +145,23 @@ input[type="text"] {
   flex-flow: row wrap;
   justify-content: space-between;
   padding-top: 10%;
+}
+
+.searched {
+  height: 100px;
+  position: static;
+  left: 0;
+  width: 120px;
+  margin: 0;
+  padding: 0 0px 0 10px;
+  text-align: right;
+}
+
+.friendimg {
+  padding-top: 25px;
+}
+
+.username {
+  padding-top: 15px;
 }
 </style>
