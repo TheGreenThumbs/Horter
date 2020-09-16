@@ -29,7 +29,10 @@
                   <strong>{{ plant.common_name }}</strong>
                 </div>
                 <div class="panel-block">
-                  <plantDetails :plant="plant"></plantDetails>
+                  <plantDetails
+                    :plant="plant"
+                    :displayName="displayName"
+                  ></plantDetails>
                 </div>
               </b-collapse>
             </div>
@@ -61,6 +64,7 @@ export default {
     return {
       loaded: false,
       results: [],
+      displayName: false,
     };
   },
   props: ["user"],
