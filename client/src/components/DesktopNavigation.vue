@@ -3,6 +3,7 @@
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
         Horter
+        <img id="brand-image" :src="brandImageUrl" />
       </b-navbar-item>
     </template>
     <template slot="start">
@@ -32,7 +33,16 @@
 export default {
   name: "DesktopNavigation",
   props: ["user"],
+  data() {
+    return {
+      brandImageUrl: require("../assets/horter.png"),
+    };
+  },
 };
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+#brand-image
+  height: 40px
+  margin: 10px
+</style>
