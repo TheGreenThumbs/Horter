@@ -71,28 +71,36 @@
       </div>
     </div>
     <div class="card-footer">
-      <button
-        class="card-footer-item"
-        @click="$router.push({ name: 'wish', params: { gardenId } })"
-      >
-        Add Plant
-      </button>
-      <router-link
-        :to="{ name: 'nearbystores', params: { location: location } }"
-      >
-        <b-button class="card-footer-item" type="is-success is-light"
-          >Nearby Stores</b-button
-        >
-      </router-link>
-      <editmodal
-        :id="gardenId"
-        :name="name"
-        :lat="location.lat"
-        :lng="location.lng"
-        :width="gardenSize.width"
-        :height="gardenSize.height"
-        :updateMain="updateMain"
-      ></editmodal>
+      <div class="footer-buttons card-footer-item">
+        <div class="footer-buttons-top-row">
+          <b-button
+            type="is-success"
+            class="card-footer-item"
+            @click="$router.push({ name: 'wish', params: { gardenId } })"
+          >
+            Add Plant
+          </b-button>
+
+          <editmodal
+            :id="gardenId"
+            :name="name"
+            :lat="location.lat"
+            :lng="location.lng"
+            :width="gardenSize.width"
+            :height="gardenSize.height"
+            :updateMain="updateMain"
+          ></editmodal>
+        </div>
+        <div>
+          <router-link
+            :to="{ name: 'nearbystores', params: { location: location } }"
+          >
+            <b-button class="card-footer-item" type="is-warning"
+              >Shop For Plants at Nearby Stores</b-button
+            >
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -261,4 +269,12 @@ export default {
   display: flex
   flex-direction: column
   align-items: center
+.footer-buttons
+  display: flex
+  flex-direction: column
+.footer-buttons-top-row
+  display: flex
+  margin: 10px auto
+  button
+    margin: 0 10px
 </style>
