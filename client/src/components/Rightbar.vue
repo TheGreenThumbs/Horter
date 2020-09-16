@@ -24,6 +24,26 @@
               label="Test Garden"
               @click="goToGarden(1)"
             ></b-menu-item>
+            <b-menu-item label="Delete Garden" @click="toggleGardens">
+              <b-menu-item
+                v-for="garden in gardens"
+                :key="garden.id"
+                :label="garden.name"
+                @click="deleteGarden(garden.id)"
+              ></b-menu-item>
+            </b-menu-item>
+            <!-- <div
+            v-if="deleting === true"
+            >
+              <div
+              v-for="garden in gardens"
+              :key="garden.id"
+              :label="garden.name"
+              @click="goToGarden(garden.id)"
+              >
+                {{garden.name}}
+              </div>
+            </div> -->
           </b-menu-list>
           <router-link to="/addgarden">
             <b-button type="is-success is-light">Add a Garden</b-button>
@@ -54,6 +74,7 @@ export default {
       fullwidth: false,
       right: true,
       gardens: [],
+      deleting: false,
     };
   },
   mounted() {
@@ -97,6 +118,19 @@ export default {
         .catch(() => {
           this.$log.info("same route");
         });
+    },
+    toggleGardens() {
+      this.deleting = !this.deleting;
+      console.log("deleting");
+    },
+    deleteGarden(id) {
+      axios({
+        method: "DELETE",
+        url: "garden/deletegarden",
+        data: { id: id },
+      })
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
     },
   },
 };
