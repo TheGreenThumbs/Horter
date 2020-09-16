@@ -46,9 +46,9 @@
                   @click="wishButtonClick(plant.id, plant.slug)"
                   :active="wishClicked.includes(plant.id)"
                 >
-                  <span v-if="!wishClicked.includes(plant.id)"
-                    >Add to Wishlist</span
-                  >
+                  <span v-if="!wishClicked.includes(plant.id)">
+                    Add to Wishlist
+                  </span>
                   <span v-else>Included in Wishlist</span>
                 </b-button>
                 <b-button
@@ -104,7 +104,11 @@ export default {
           },
         })
         .then((res) => {
-          this.results = res.data;
+          this.results = res.data.map((plant) => {
+            plant.photo_url = plant.image_url;
+            delete plant.image_url;
+            return plant;
+          });
         })
         .catch((err) => {
           console.error(err);
