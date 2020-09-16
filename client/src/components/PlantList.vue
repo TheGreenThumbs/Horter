@@ -10,14 +10,7 @@
       <div v-if="loaded">
         <article class="media" v-for="plant in results" :key="plant.id">
           <figure class="media-left">
-            <p class="image is-64x64">
-              <b-image
-                :src="plant.photo_url"
-                alt="Plant"
-                ratio="4by4"
-                :rounded="rounded"
-              ></b-image>
-            </p>
+            <thumbnail :plant="plant"></thumbnail>
           </figure>
           <div class="media-content">
             <div class="content">
@@ -36,12 +29,7 @@
                   <strong>{{ plant.common_name }}</strong>
                 </div>
                 <div class="panel-block">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  <br />
-                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc
-                  varius lectus, nec rutrum justo nibh eu lectus. <br />
-                  Ut vulputate semper dui. Fusce erat odio, sollicitudin vel
-                  erat vel, interdum mattis neque.
+                  <plantDetails :plant="plant"></plantDetails>
                 </div>
               </b-collapse>
             </div>
@@ -57,19 +45,22 @@
 </template>
 
 <script>
+import PlantThumbnail from "./PlantThumbnail.vue";
+import PlantDetails from "./PlantDetails.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
 import axios from "axios";
 
 export default {
-  name: "Wish",
+  name: "Plant",
   components: {
     wishListSkeleton: WishListSkeleton,
+    plantDetails: PlantDetails,
+    thumbnail: PlantThumbnail,
   },
   data() {
     return {
       loaded: false,
       results: [],
-      rounded: true,
     };
   },
   props: ["user"],
