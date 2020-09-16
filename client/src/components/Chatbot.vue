@@ -45,7 +45,6 @@ export default {
         },
       })
         .then((data) => {
-          console.log("charbot response", data.data);
           if (data.data.garden !== undefined) {
             this.gardenName = data.data.garden;
           }
@@ -133,16 +132,25 @@ export default {
             }
           } else {
             let string = "";
-            gardens.data.map((g) => {
-              string += `${g.name}, `;
-            });
-            this.messages.push([
-              "ChatBot",
-              `Was there a particular garden you were searching plants for? I have: ${string.slice(
-                0,
-                -2
-              )}`,
-            ]);
+            if (gardens.data.length > 0) {
+              gardens.data.map((g) => {
+                string += `${g.name}, `;
+              });
+              this.messages.push([
+                "ChatBot",
+                `Was there a particular garden you were searching plants for? I have: ${string.slice(
+                  0,
+                  -2
+                )}`,
+              ]);
+            } else {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "wish",
+              });
+            }
           }
         })
         .catch((err) => {

@@ -179,7 +179,7 @@ export default {
     this.loaded = false;
     if (this.plant !== undefined) {
       this.keyword = this.plant;
-      this.searchIconClick();
+      this.searchIconClick()();
     }
     axios({
       method: "GET",
