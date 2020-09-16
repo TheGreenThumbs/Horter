@@ -2,13 +2,13 @@
 
 <template>
   <div class="thumbnail">
-    <div v-if="plant.image_url">
-      <a class="image is-64x64" @click="imageClick(plant.image_url)">
+    <div v-if="plant.photo_url">
+      <a class="image is-64x64" @click="imageClick(plant.photo_url)">
         <b-image
-          :src="plant.image_url"
+          :src="plant.photo_url"
           ratio="4by4"
           :rounded="rounded"
-          :value="plant.image_url"
+          :value="plant.photo_url"
           v-model="modalImageUrl"
         ></b-image>
       </a>
