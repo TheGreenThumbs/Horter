@@ -8,6 +8,8 @@
       :swipeOpen="openLeft"
       v-on:close-sidebars="closeSidebars"
     ></sidebar>
+    <span id="logo-text"> Horter </span>
+    <img id="logo-image" :src="logoImage" />
     <rightbar
       class="right-sidebar"
       :user="user"
@@ -24,6 +26,11 @@ import Rightbar from "./Rightbar.vue";
 export default {
   name: "navigation",
   props: ["user", "openLeft", "openRight"],
+  data() {
+    return {
+      logoImage: require("../assets/horterFavicon.png"),
+    };
+  },
   components: {
     sidebar: Sidebar,
     rightbar: Rightbar,
@@ -39,6 +46,7 @@ export default {
 <style lang="sass">
 #logo-bar
   position: fixed
+  display: inline
   z-index: 39
   top: 0
   left: 0
@@ -47,6 +55,7 @@ export default {
 
 .right-sidebar
   position: fixed
+  display: inline
   top: 0
   right: 0
   button
@@ -54,6 +63,7 @@ export default {
 
 .left-sidebar
   position: relative
+  display: inline
   top: 0
   left: 0
   button
@@ -64,4 +74,13 @@ export default {
 
 .p-1
   padding: 1em
+
+#logo-text
+  margin-left: 20%
+  font-size: 1.6em
+  display: inline
+#logo-image
+  height: 30px
+  position: relative
+  top: 5px
 </style>
