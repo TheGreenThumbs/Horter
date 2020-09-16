@@ -68,12 +68,7 @@ export default {
           if (this.gardenName) {
             const fuse = new Fuse(gardens.data, { keys: ["name"] });
             const result = fuse.search(this.gardenName);
-            console.log("FUSE", result[0]);
             let gardenId = result[0].item.id;
-            console.log("id", gardenId);
-            // let gardenId = gardens.data
-            //   .filter((g) => g.name === this.gardenName)
-            //   .map((g) => g.id);
             setTimeout(() => {
               this.$emit("close");
             }, 1000);
