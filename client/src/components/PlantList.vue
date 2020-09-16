@@ -68,7 +68,15 @@ export default {
     };
   },
   props: ["user"],
-  methods: {},
+  methods: {
+    emptyResultsToast() {
+      this.$buefy.toast.open({
+        duration: 5000,
+        message: `No plants found in your garden(s).`,
+        type: "is-warning",
+      });
+    },
+  },
   mounted() {
     this.loaded = false;
     axios({
@@ -78,10 +86,14 @@ export default {
     })
       .then(({ data }) => {
         this.$log.info(data);
-        this.results = data.map((plant) => {
-          plant.isOpen = false;
-          return plant;
-        });
+        if (data.length === 0) {
+          this.emptyResultsToast();
+        } else {
+          this.results = data.map((plant) => {
+            plant.isOpen = false;
+            return plant;
+          });
+        }
       })
       .catch((err) => {
         console.error(err);
