@@ -95,10 +95,18 @@ export default {
   },
   props: ["plant", "user"],
   methods: {
-    emptyResultsToast() {
+    emptyResultsToast(isSearch) {
+      let text;
+      if (!isSearch) {
+        // Message for empty results on mount
+        text = `No plants found in your wishlist.`;
+      } else {
+        // Message for empty results on search
+        text = `No plants found during search.`;
+      }
       this.$buefy.toast.open({
         duration: 5000,
-        message: `No plants found in your wishlist.`,
+        message: text,
         type: "is-warning",
       });
     },
@@ -111,11 +119,15 @@ export default {
           },
         })
         .then((res) => {
-          this.results = res.data.map((plant) => {
-            plant.photo_url = plant.image_url;
-            delete plant.image_url;
-            return plant;
-          });
+          if (res.data.length === 0) {
+            this.emptyResultsToast(true);
+          } else {
+            this.results = res.data.map((plant) => {
+              plant.photo_url = plant.image_url;
+              delete plant.image_url;
+              return plant;
+            });
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -195,7 +207,7 @@ export default {
     })
       .then(({ data }) => {
         if (data.length === 0) {
-          this.emptyResultsToast();
+          this.emptyResultsToast(false);
         } else {
           this.results = data
             .filter((plant) => {
