@@ -2,7 +2,9 @@
 
 <template>
   <div class="plant-details">
-    <strong>{{ plant.common_name }}</strong>
+    <div v-if="displayName">
+      <strong>{{ plant.common_name }}</strong>
+    </div>
     <div v-if="plant.duration" class="columns is-mobile is-8">
       <div class="column is-one-third">Duration</div>
       <div class="column">
@@ -91,7 +93,7 @@ export default {
   data() {
     return {};
   },
-  props: ["plant"],
+  props: ["plant", "displayName"],
   methods: {},
 };
 </script>

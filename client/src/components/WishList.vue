@@ -43,6 +43,7 @@
               <div class="level-left">
                 <b-button
                   size="is-small"
+                  type="is-info"
                   icon-left="plus-circle"
                   @click="wishButtonClick(plant.id, plant.slug)"
                   :active="wishClicked.includes(plant.id)"
@@ -54,6 +55,7 @@
                 </b-button>
                 <b-button
                   v-if="gardenId > -1"
+                  type="is-success"
                   size="is-small"
                   icon-left="plus-circle"
                   @click="gardenButtonClick(plant.id, plant.slug)"
@@ -101,6 +103,21 @@ export default {
   props: ["plant", "user"],
 
   methods: {
+    emptyResultsToast(isSearch) {
+      let text;
+      if (!isSearch) {
+        // Message for empty results on mount
+        text = `No plants found in your wishlist.`;
+      } else {
+        // Message for empty results on search
+        text = `No plants found during search.`;
+      }
+      this.$buefy.toast.open({
+        duration: 5000,
+        message: text,
+        type: "is-warning",
+      });
+    },
     searchIconClick() {
       this.loaded = false;
       axios
@@ -110,11 +127,15 @@ export default {
           },
         })
         .then((res) => {
-          this.results = res.data.map((plant) => {
-            plant.photo_url = plant.image_url;
-            delete plant.image_url;
-            return plant;
-          });
+          if (res.data.length === 0) {
+            this.emptyResultsToast(true);
+          } else {
+            this.results = res.data.map((plant) => {
+              plant.photo_url = plant.image_url;
+              delete plant.image_url;
+              return plant;
+            });
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -194,20 +215,24 @@ export default {
       params: { userId: this.user.id },
     })
       .then(({ data }) => {
-        this.results = data
-          .filter((plant) => {
-            if (!this.wishClicked.includes(plant.plant.id_trefle)) {
-              this.wishClicked.push(plant.plant.id_trefle);
-              return plant;
-            }
-          })
-          .map((uniquePlant) => {
-            return {
-              id: uniquePlant.plant.id_trefle,
-              common_name: uniquePlant.plant.common_name,
-              slug: uniquePlant.plant.slug,
-            };
-          });
+        if (data.length === 0) {
+          this.emptyResultsToast(false);
+        } else {
+          this.results = data
+            .filter((plant) => {
+              if (!this.wishClicked.includes(plant.plant.id_trefle)) {
+                this.wishClicked.push(plant.plant.id_trefle);
+                return plant;
+              }
+            })
+            .map((uniquePlant) => {
+              return {
+                id: uniquePlant.plant.id_trefle,
+                common_name: uniquePlant.plant.common_name,
+                slug: uniquePlant.plant.slug,
+              };
+            });
+        }
       })
       .catch((err) => {
         console.error(err);

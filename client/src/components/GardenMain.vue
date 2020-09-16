@@ -38,7 +38,10 @@
             </p>
           </figure>
           <div class="media-content">
-            <plantDetails :plant="selectedPlant"></plantDetails>
+            <plantDetails
+              :plant="selectedPlant"
+              :displayName="displayName"
+            ></plantDetails>
           </div>
         </article>
         <div class="sliders">
@@ -64,7 +67,11 @@
           </b-field>
         </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+          <b-button
+            type="is-warning"
+            icon-left="minus-circle"
+            @click="removePlantButtonClick()"
+          >
             Remove Plant from Garden
           </b-button>
         </div>
@@ -76,6 +83,7 @@
           <b-button
             type="is-success"
             class="card-footer-item"
+            icon-left="plus-circle"
             @click="$router.push({ name: 'wish', params: { gardenId } })"
           >
             Add Plant
@@ -130,6 +138,7 @@ export default {
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
       selected: -1,
+      displayName: true,
       msg: "Garden Main Page",
       screenWidth: 0,
       rounded: true,
