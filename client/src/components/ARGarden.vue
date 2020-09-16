@@ -60,12 +60,18 @@ export default {
     },
     gardenScale: (num) => num * 0.1,
     plantPosition: function (plant) {
-      const truePlantX = this.gardenScale(plant.position_x + plant.radius / 2);
+      const truePlantX = this.gardenScale(
+        Math.min(plant.position_x, this.gardenSize.width - plant.radius) +
+          plant.radius / 2
+      );
       const x = (
         truePlantX -
         this.gardenScale(this.gardenSize.width) / 2
       ).toFixed(2);
-      const truePlantY = this.gardenScale(plant.position_y + plant.radius / 2);
+      const truePlantY = this.gardenScale(
+        Math.min(plant.position_y, this.gardenSize.height - plant.radius) +
+          plant.radius / 2
+      );
       const y = (
         truePlantY -
         this.gardenScale(this.gardenSize.height) / 2

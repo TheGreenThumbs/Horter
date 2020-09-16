@@ -9,8 +9,16 @@
       :parentLimitation="true"
       :w="plantScale(plant.radius) || 1"
       :h="plantScale(plant.radius) || 1"
-      :x="gScaleMultiplier(plant.position_x) || 1"
-      :y="gScaleMultiplier(plant.position_y) || 1"
+      :x="
+        gScaleMultiplier(
+          Math.min(plant.position_x, gardenSize.width - plant.radius)
+        ) || 1
+      "
+      :y="
+        gScaleMultiplier(
+          Math.min(plant.position_y, gardenSize.height - plant.radius)
+        ) || 1
+      "
       :stickSize="0"
       :style="plantBorderRadius(plant)"
       @clicked="selectPlant(plant.id)"
