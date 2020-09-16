@@ -100,57 +100,64 @@ export default {
         this.$log.error("Error Changing Status ", err);
       }
     },
-  },
-  async mounted() {
-    if (this.$route.query.id) {
+    async loadUser(queryId) {
+      if (queryId) {
+        try {
+          const response = await axios({
+            method: "get",
+            url: "/user/getuser",
+            params: {
+              id: queryId,
+            },
+          });
+          const friendResponse = await axios({
+            method: "get",
+            url: "/friend/status",
+            params: {
+              userId: this.user.id,
+              friendId: queryId,
+            },
+          });
+          this.profile = response.data;
+          this.friend = friendResponse.data;
+        } catch (err) {
+          this.$log.error(err);
+          this.$buefy.toast.open({
+            duration: 1000,
+            message: "User Profile Not Found",
+            type: "is-danger",
+          });
+          return;
+        }
+      } else {
+        this.profile = this.user;
+      }
       try {
         const response = await axios({
           method: "get",
-          url: "/user/getuser",
+          url: "/garden/user",
           params: {
-            id: this.$route.query.id,
+            id: this.profile.id,
           },
         });
-        const friendResponse = await axios({
-          method: "get",
-          url: "/friend/status",
-          params: {
-            userId: this.user.id,
-            friendId: this.$route.query.id,
-          },
-        });
-        this.profile = response.data;
-        this.friend = friendResponse.data;
+        this.gardens = response.data;
       } catch (err) {
         this.$log.error(err);
         this.$buefy.toast.open({
           duration: 1000,
-          message: "User Profile Not Found",
+          message: "Gardens Not Found",
           type: "is-danger",
         });
         return;
       }
-    } else {
-      this.profile = this.user;
-    }
-    try {
-      const response = await axios({
-        method: "get",
-        url: "/garden/user",
-        params: {
-          id: this.profile.id,
-        },
-      });
-      this.gardens = response.data;
-    } catch (err) {
-      this.$log.error(err);
-      this.$buefy.toast.open({
-        duration: 1000,
-        message: "Gardens Not Found",
-        type: "is-danger",
-      });
-      return;
-    }
+    },
+  },
+  mounted() {
+    this.loadUser(this.$route.query.id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.loadUser(to.query.id);
+    next();
   },
 };
 </script>

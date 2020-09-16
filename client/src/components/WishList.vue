@@ -10,6 +10,7 @@
       <b-field>
         <b-input
           v-model="keyword"
+          @input="searchIconClick"
           type="search"
           placeholder="Search..."
           icon="magnify"
@@ -76,6 +77,7 @@
 import PlantThumbnail from "./PlantThumbnail.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
 import axios from "axios";
+import debounce from "lodash";
 
 export default {
   name: "Wish",
@@ -93,7 +95,11 @@ export default {
       reloader: 0,
     };
   },
+  created() {
+    this.searchIconClick = _.debounce(this.searchIconClick, 1000);
+  },
   props: ["plant", "user"],
+
   methods: {
     emptyResultsToast(isSearch) {
       let text;
@@ -196,6 +202,7 @@ export default {
   },
   mounted() {
     this.loaded = false;
+
     if (this.plant !== undefined) {
       this.keyword = this.plant;
       this.searchIconClick();

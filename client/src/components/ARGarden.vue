@@ -1,7 +1,7 @@
 <template>
   <a-scene
     embedded
-    class="ar-garden"
+    id="ar-garden"
     v-touch:tap="spinTouch"
     v-touch:swipe.top="slideUp"
     v-touch:swipe.bottom="slideDown"
@@ -97,6 +97,13 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
+    const controlsMessage =
+      "Click edges to rotate or swipe foward and back to move";
+    this.$buefy.toast.open({
+      type: "is-primary",
+      message: controlsMessage,
+      duration: 5000,
+    });
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     axios({
@@ -140,7 +147,8 @@ export default {
 </script>
 
 <style lang="sass">
-.ar-garden
-  height: 80vh
+#ar-garden
+  height: 100vh
+  margin: 0
   width: 100vw
 </style>
