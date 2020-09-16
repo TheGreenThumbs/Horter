@@ -97,3 +97,8 @@ export default {
   methods: {},
 };
 </script>
+
+<style lang="sass">
+.plant-details
+  width: 100%
+</style>

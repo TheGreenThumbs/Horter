@@ -8,21 +8,21 @@
       type="is-success"
       >AR View</b-button
     >
-    <div class="columns">
-      <div class="column is-3">
-        <div class="lat">Latitude: {{ location.lat }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="lng">Longitude: {{ location.lng }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="width">Width: {{ gardenSize.width }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="height">Height: {{ gardenSize.height }}</div>
-      </div>
-    </div>
     <div class="card-content" id="garden-info" ref="gardenInfo">
+      <div class="columns">
+        <div class="column is-3">
+          <div class="lat">Latitude: {{ location.lat }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="lng">Longitude: {{ location.lng }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="width">Width: {{ gardenSize.width }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="height">Height: {{ gardenSize.height }}</div>
+        </div>
+      </div>
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
@@ -30,7 +30,7 @@
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
       ></garden-layout>
-      <div v-if="selected > 0">
+      <div v-if="selected > 0" id="plant-info">
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
@@ -274,6 +274,8 @@ export default {
 </script>
 
 <style lang="sass">
+#plant-info
+  width: 100%
 #garden-info
   display: flex
   flex-direction: column

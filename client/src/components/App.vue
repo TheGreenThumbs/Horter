@@ -101,7 +101,6 @@ html, body
 .content-container
   max-width: 800px
   margin: 30px auto
-  height: 100%
   padding: 20px
 .wrapper
   height: 100%
