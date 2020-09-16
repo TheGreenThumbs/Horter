@@ -97,6 +97,13 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
+    const controlsMessage =
+      "Click edges to rotate or swipe foward and back to move";
+    this.$buefy.toast.open({
+      type: "is-primary",
+      message: controlsMessage,
+      duration: 5000,
+    });
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     axios({
