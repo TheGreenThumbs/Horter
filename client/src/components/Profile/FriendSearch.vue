@@ -22,6 +22,14 @@
             <div class="friendimg" v-if="searched.username" @click="goToUser()">
               <b-image
                 class="searched"
+                v-if="!searched.s3_id"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                ratio="4x4"
+                rounded
+              />
+              <b-image
+                class="searched"
+                v-if="searched.s3_id"
                 :src="searched.s3_id"
                 ratio="4x4"
                 rounded
