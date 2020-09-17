@@ -1,24 +1,23 @@
 <template>
   <div>
-    <div class="pad-15-hor pad-15-ver header">
-      <div>
-        <img
-          src="https://listimg.pinclipart.com/picdir/s/15-153148_search-magnifying-glass-icon-black-search-icon-png.png"
-          width="25px"
-        />Search Friends
-      </div>
-    </div>
     <div class="ui stackable grid container">
       <div class="four wide column">
         <div class="pad-15-hor pad-15-ver search-parent">
           <div class="search-bar">
-            <input
-              name="friend"
-              v-model="friend"
-              v-on:change="searchFriend(friend)"
-              placeholder="Search by username"
-              lazy
-            />
+            <div class="status-form">
+              <b-field label="Search a Friend">
+                <b-input
+                  name="friend"
+                  type="search"
+                  v-model="friend"
+                  placeholder="Search by username"
+                  @icon-click="searchFriend(friend)"
+                  icon="magnify"
+                  icon-clickable
+                  lazy
+                />
+              </b-field>
+            </div>
             <div class="friendimg" v-if="searched.username" @click="goToUser()">
               <b-image
                 class="searched"
