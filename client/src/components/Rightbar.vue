@@ -21,10 +21,6 @@
               :label="garden.name"
               @click="goToGarden(garden.id)"
             ></b-menu-item>
-            <b-menu-item
-              label="Test Garden"
-              @click="goToGarden(1)"
-            ></b-menu-item>
             <router-link to="/addgarden">
               <b-button type="is-success is-light">Add a Garden</b-button>
             </router-link>
