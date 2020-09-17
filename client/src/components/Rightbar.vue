@@ -136,6 +136,11 @@ export default {
                 id: 1,
               },
             });
+            this.$buefy.toast.open({
+              message: "Garden Deleted",
+              type: "is-success",
+              duration: 1000,
+            });
           })
           .catch((err) => console.log(err));
       }
