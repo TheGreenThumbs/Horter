@@ -10,6 +10,7 @@
       :overlay="overlay"
       :right="right"
       v-model="open"
+      :gardens="gardens"
     >
       <div class="p-1">
         <b-menu>
@@ -24,10 +25,25 @@
               label="Test Garden"
               @click="goToGarden(1)"
             ></b-menu-item>
+            <router-link to="/addgarden">
+              <b-button type="is-success is-light">Add a Garden</b-button>
+            </router-link>
+            <b-menu-item
+              label="Delete a Garden"
+              type="is-danger"
+              @click="toggleGardens"
+            >
+              <b-button
+                type="is-danger d-button"
+                v-for="garden in gardens"
+                :key="garden.id"
+                :label="garden.name"
+                @click="deleteGarden(garden.id)"
+                class="d-button"
+              >
+              </b-button>
+            </b-menu-item>
           </b-menu-list>
-          <router-link to="/addgarden">
-            <b-button type="is-success is-light">Add a Garden</b-button>
-          </router-link>
         </b-menu>
       </div>
     </b-sidebar>
@@ -42,6 +58,8 @@
 
 <script>
 import axios from "axios";
+import router from "../router";
+import { DialogProgrammatic as Dialog } from "buefy";
 
 export default {
   name: "rightbar",
@@ -53,6 +71,7 @@ export default {
       fullheight: true,
       fullwidth: false,
       right: true,
+      deleting: false,
     };
   },
   watch: {
@@ -65,6 +84,7 @@ export default {
       }
     },
   },
+
   methods: {
     goToGarden(id) {
       this.$router
@@ -76,6 +96,37 @@ export default {
           this.$log.info("same route");
         });
     },
+    toggleGardens() {
+      this.deleting = !this.deleting;
+    },
+    deleteGarden(id) {
+      if (confirm("Are you sure you want to delete?")) {
+        axios({
+          method: "DELETE",
+          url: "garden/deletegarden",
+          data: { id: id },
+        })
+          .then((data) => {
+            let newGardens = [...this.gardens];
+            newGardens = newGardens.filter((g) => g.id !== id);
+            console.log(newGardens);
+            this.$emit("edit:gardens", newGardens);
+            router.push({
+              name: "profile",
+            });
+            this.$buefy.toast.open({
+              message: "Garden Deleted",
+              type: "is-success",
+              duration: 1000,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    },
   },
 };
 </script>
+<style lang="sass">
+.d-button
+  margin: 3px
+</style>
