@@ -16,7 +16,7 @@
             <div class="content">
               <b-collapse
                 aria-id="contentIdForA11y2"
-                class="panel"
+                class="panel is-success"
                 animation="slide"
                 v-model="plant.isOpen"
               >
