@@ -29,6 +29,7 @@
         :plants="plantList"
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
+        :gardenOwned="gardenOwned"
       ></garden-layout>
       <div v-if="selected > 0" id="plant-info">
         <article class="media">

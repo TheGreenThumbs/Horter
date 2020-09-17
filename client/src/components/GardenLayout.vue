@@ -1,6 +1,7 @@
 <template>
   <div class="gardenLayout" :style="gardenStyles">
     <VueDragResize
+      :preventActiveBehavior="!gardenOwned"
       v-for="plant in plants"
       :key="plant.id"
       :ref="plant.id"
@@ -78,6 +79,9 @@ export default {
     },
     width: {
       type: Number,
+      required: true,
+    },
+    gardenOwned: {
       required: true,
     },
   },
