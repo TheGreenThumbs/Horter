@@ -47,47 +47,11 @@ import axios from "axios";
 
 export default {
   name: "DesktopNavigation",
-  props: ["user"],
+  props: ["user", "gardens"],
   data() {
     return {
       brandImageUrl: require("../assets/horter.png"),
-      gardens: [],
     };
-  },
-  methods: {
-    getGardens() {
-      axios({
-        method: "get",
-        url: "/garden/user",
-        params: {
-          id: this.user.id,
-        },
-      })
-        .then(({ data }) => {
-          this.$log.info(data);
-          this.gardens = data;
-        })
-        .catch((err) => {
-          this.$log.error(err);
-          this.$buefy.toast.open({
-            message: "Error getting gardens",
-            type: "is-danger",
-            duration: 1000,
-          });
-        });
-    },
-  },
-  mounted() {
-    if (this.user.id) {
-      this.getGardens();
-    }
-  },
-  watch: {
-    user() {
-      if (this.user.id) {
-        this.getGardens();
-      }
-    },
   },
 };
 </script>
