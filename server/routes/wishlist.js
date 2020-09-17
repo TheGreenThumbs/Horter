@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const authChecker = require("../helpers");
 const logger = require("../../winston");
 const {
   wishListHelpers,
@@ -8,7 +8,7 @@ const {
 const searchSelf = require("../helpers/trefle-api");
 
 const wishListRouter = Router();
-
+wishListRouter.use(authChecker);
 // Get a user's wishlist by userId
 wishListRouter.get("/", (req, res) => {
   const { userId } = req.query;

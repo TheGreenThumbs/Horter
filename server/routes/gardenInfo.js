@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const logger = require("../../winston");
 const upload = require("./photos");
+const authChecker = require("../helpers");
 const {
   findGardenById,
   updateGardenInfo,
@@ -18,6 +19,7 @@ const {
 } = require("../../database/helpers/plantInGarden");
 
 const gardenInfo = Router();
+gardenInfo.use(authChecker);
 /**
  * This route accepts a garden id from the client and sends the info for that garden from the DB
  * @param {object} req.query the garden id value is stored at the 'id' key in req.query
