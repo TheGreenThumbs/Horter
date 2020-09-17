@@ -16,6 +16,7 @@
       v-on:close-navbars="closeBars"
       v-if="user.id && mobile"
       :gardens="gardens"
+      v-on:update:gardens="updateGardens"
     ></navigation>
     <desktop-navigation
       v-if="!mobile"
@@ -74,6 +75,10 @@ export default {
     closeBars() {
       this.openRight = false;
       this.openLeft = false;
+    },
+    updateGardens(info) {
+      console.log(info);
+      this.gardens = info;
     },
   },
   created() {
