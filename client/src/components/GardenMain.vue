@@ -29,6 +29,7 @@
         :plants="plantList"
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
+        :gardenOwned="gardenOwned"
       ></garden-layout>
       <div v-if="selected > 0" id="plant-info">
         <article class="media">
@@ -44,7 +45,7 @@
             ></plantDetails>
           </div>
         </article>
-        <div class="sliders">
+        <div v-if="gardenOwned" class="sliders">
           <b-field label="Plant scale">
             <b-slider
               size="is-small"
@@ -66,7 +67,7 @@
             </b-slider>
           </b-field>
         </div>
-        <div class="buttons">
+        <div v-if="gardenOwned" class="buttons">
           <b-button
             class="plant-button"
             type="is-warning"
