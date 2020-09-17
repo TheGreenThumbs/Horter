@@ -10,6 +10,7 @@
       <b-field>
         <b-input
           v-model="keyword"
+          @input="searchIconClick"
           type="search"
           placeholder="Search..."
           icon="magnify"
@@ -28,51 +29,33 @@
           :key="plant.id"
         >
           <figure class="media-left">
-            <div v-if="plant.image_url">
-              <a class="image is-64x64" @click="imageClick(plant.image_url)">
-                <b-image
-                  :src="plant.image_url"
-                  :rounded="rounded"
-                  :value="plant.image_url"
-                  v-model="modalImageUrl"
-                ></b-image>
-              </a>
-            </div>
-            <div v-else>
-              <p class="image is-64x64">
-                <b-skeleton
-                  circle
-                  width="64px"
-                  height="64px"
-                  :animated="false"
-                ></b-skeleton>
-              </p>
-            </div>
+            <thumbnail :plant="plant"></thumbnail>
           </figure>
           <div class="media-content">
             <div class="content">
               <p>
-                {{ plant.common_name }}
-              </p>
-              <p>
+                <strong>{{ plant.common_name }}</strong>
+                <br />
                 {{ plant.family_common_name }}
               </p>
             </div>
-            <nav class="level is-mobile">
+            <nav :class="mobileStyle()">
               <div class="level-left">
                 <b-button
                   size="is-small"
+                  type="is-info"
                   icon-left="plus-circle"
                   @click="wishButtonClick(plant.id, plant.slug)"
                   :active="wishClicked.includes(plant.id)"
                 >
-                  <span v-if="!wishClicked.includes(plant.id)"
-                    >Add to Wishlist</span
-                  >
+                  <span v-if="!wishClicked.includes(plant.id)">
+                    Add to Wishlist
+                  </span>
                   <span v-else>Included in Wishlist</span>
                 </b-button>
                 <b-button
                   v-if="gardenId > -1"
+                  type="is-success"
                   size="is-small"
                   icon-left="plus-circle"
                   @click="gardenButtonClick(plant.id, plant.slug)"
@@ -82,40 +65,28 @@
               </div>
             </nav>
           </div>
-          <b-modal
-            v-model="isImageModalActive"
-            @close="isImageModalActive = false"
-          >
-            <p>
-              <img :src="modalImageUrl" />
-            </p>
-          </b-modal>
         </article>
       </div>
       <div v-else>
         <wishListSkeleton></wishListSkeleton>
       </div>
       <!-- Search results ends -->
-
-      <!-- <suspense>
-        <template #default> -->
-      <!-- </template>
-        <template #fallback>
-          <wishListSkeleton></wishListSkeleton>
-        </template>
-      </suspense> -->
     </div>
   </div>
 </template>
 
 <script>
+import PlantThumbnail from "./PlantThumbnail.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
+import { isMobile } from "mobile-device-detect";
 import axios from "axios";
+import debounce from "lodash";
 
 export default {
   name: "Wish",
   components: {
     wishListSkeleton: WishListSkeleton,
+    thumbnail: PlantThumbnail,
   },
   data() {
     return {
@@ -124,14 +95,36 @@ export default {
       results: [],
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
-      rounded: true,
-      isImageModalActive: false,
-      modalImageUrl: "",
       reloader: 0,
+      mobile: isMobile,
     };
   },
+  created() {
+    this.searchIconClick = _.debounce(this.searchIconClick, 1000);
+  },
   props: ["plant", "user"],
+
   methods: {
+    mobileStyle() {
+      let style = "level ";
+      style += this.mobile ? "is-mobile" : "";
+      return style;
+    },
+    emptyResultsToast(isSearch) {
+      let text;
+      if (!isSearch) {
+        // Message for empty results on mount
+        text = `No plants found in your wishlist.`;
+      } else {
+        // Message for empty results on search
+        text = `No plants found during search.`;
+      }
+      this.$buefy.toast.open({
+        duration: 5000,
+        message: text,
+        type: "is-warning",
+      });
+    },
     searchIconClick() {
       this.loaded = false;
       axios
@@ -141,7 +134,15 @@ export default {
           },
         })
         .then((res) => {
-          this.results = res.data;
+          if (res.data.length === 0) {
+            this.emptyResultsToast(true);
+          } else {
+            this.results = res.data.map((plant) => {
+              plant.photo_url = plant.image_url;
+              delete plant.image_url;
+              return plant;
+            });
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -151,10 +152,6 @@ export default {
     },
     clearIconClick() {
       this.search = "";
-    },
-    imageClick(imageUrl) {
-      this.isImageModalActive = true;
-      this.modalImageUrl = imageUrl;
     },
     wishButtonClick(treflePlantId, treflePlantSlug) {
       const wishIndex = this.wishClicked.indexOf(treflePlantId);
@@ -201,11 +198,16 @@ export default {
         })
         .then((res) => {
           this.$log.info(res);
-          this.keyword = "";
-          this.$router.push({
-            path: "/garden",
-            query: { id: this.gardenId },
+          this.$buefy.toast.open({
+            type: "is-success",
+            duration: 1000,
+            message: `Added ${res.data.plantName}`,
           });
+          // this.keyword = "";
+          // this.$router.push({
+          //   path: "/garden",
+          //   query: { id: this.gardenId },
+          // });
         })
         .catch((err) => {
           console.error(err);
@@ -214,6 +216,7 @@ export default {
   },
   mounted() {
     this.loaded = false;
+
     if (this.plant !== undefined) {
       this.keyword = this.plant;
       this.searchIconClick();
@@ -224,27 +227,30 @@ export default {
       params: { userId: this.user.id },
     })
       .then(({ data }) => {
-        this.results = data
-          .filter((plant) => {
-            if (!this.wishClicked.includes(plant.plant.id_trefle)) {
-              this.wishClicked.push(plant.plant.id_trefle);
-              return plant;
-            }
-          })
-          .map((uniquePlant) => {
-            return {
-              id: uniquePlant.plant.id_trefle,
-              common_name: uniquePlant.plant.common_name,
-              slug: uniquePlant.plant.slug,
-            };
-          });
+        if (data.length === 0) {
+          this.emptyResultsToast(false);
+        } else {
+          this.results = data
+            .filter((plant) => {
+              if (!this.wishClicked.includes(plant.plant.id_trefle)) {
+                this.wishClicked.push(plant.plant.id_trefle);
+                return plant;
+              }
+            })
+            .map((uniquePlant) => {
+              return {
+                id: uniquePlant.plant.id_trefle,
+                common_name: uniquePlant.plant.common_name,
+                slug: uniquePlant.plant.slug,
+              };
+            });
+        }
       })
       .catch((err) => {
         console.error(err);
       });
     this.loaded = true;
   },
-
   beforeRouteUpdate(to, from, next) {
     this.keyword = to.query.name;
     this.gardenId = to.query.gardenId;
@@ -254,8 +260,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.wishlist-media-left {
-  width: 64px;
-}
+<style lang="sass">
+.level.is-mobile .level-left
+  align-items: start
+  flex-direction: column
 </style>

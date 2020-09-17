@@ -8,21 +8,21 @@
       type="is-success"
       >AR View</b-button
     >
-    <div class="columns">
-      <div class="column is-3">
-        <div class="lat">Latitude: {{ location.lat }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="lng">Longitude: {{ location.lng }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="width">Width: {{ gardenSize.width }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="height">Height: {{ gardenSize.height }}</div>
-      </div>
-    </div>
     <div class="card-content" id="garden-info" ref="gardenInfo">
+      <div class="columns">
+        <div class="column is-3">
+          <div class="lat">Latitude: {{ location.lat }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="lng">Longitude: {{ location.lng }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="width">Width: {{ gardenSize.width }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="height">Height: {{ gardenSize.height }}</div>
+        </div>
+      </div>
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
@@ -30,7 +30,7 @@
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
       ></garden-layout>
-      <div v-if="selected > 0">
+      <div v-if="selected > 0" id="plant-info">
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
@@ -38,105 +38,10 @@
             </p>
           </figure>
           <div class="media-content">
-            <div class="content">
-              <strong>{{ selectedPlant.common_name }}</strong>
-              <div v-if="selectedPlant.duration" class="columns is-mobile is-8">
-                <div class="column is-one-third">Duration</div>
-                <div class="column">
-                  {{ selectedPlant.duration }}
-                </div>
-              </div>
-              <div class="columns is-mobile is-8">
-                <div class="column is-one-third">Edible</div>
-                <div class="column">
-                  {{ selectedPlant.edible ? "Yes" : "No" }}
-                </div>
-              </div>
-              <div class="columns is-mobile is-8">
-                <div class="column is-one-third">Vegetable</div>
-                <div class="column">
-                  {{ selectedPlant.vegetable ? "Yes" : "No" }}
-                </div>
-              </div>
-              <div v-if="selectedPlant.ph_min" class="columns is-mobile is-8">
-                <div class="column is-one-quarter">PH</div>
-                <div class="column">
-                  {{ selectedPlant.ph_min }} - {{ selectedPlant.ph_max }}
-                </div>
-              </div>
-              <div v-if="selectedPlant.light" class="columns is-mobile is-8">
-                <div class="column is-one-quarter">Light</div>
-                <div class="column">
-                  <b-progress
-                    :value="selectedPlant.light * 10"
-                    type="is-warning"
-                  ></b-progress>
-                </div>
-              </div>
-              <div class="columns is-mobile is-8">
-                <div class="column is-one-quarter">Rainfall</div>
-                <div class="column">
-                  {{ Math.floor(selectedPlant.precipitation_min / 25.4) }}" -
-                  {{ Math.floor(selectedPlant.precipitation_max / 25.4) }}"
-                </div>
-              </div>
-              <div v-if="selectedPlant.temp_min" class="columns is-mobile is-8">
-                <div class="column">Temperature Minimum</div>
-                <div class="column">{{ selectedPlant.temp_min }}°F</div>
-              </div>
-              <div v-if="selectedPlant.temp_max" class="columns is-mobile is-8">
-                <div class="column is-one-quarter">Temp Max</div>
-                <div class="column">{{ selectedPlant.temp_max }}°F</div>
-              </div>
-              <div
-                v-if="selectedPlant.soil_nutriments"
-                class="columns is-mobile is-8"
-              >
-                <div class="column is-one-quarter">Nutriments</div>
-                <div class="column">
-                  <b-progress
-                    :value="selectedPlant.soil_nutriments * 10"
-                    type="is-success"
-                  ></b-progress>
-                </div>
-              </div>
-              <div
-                v-if="selectedPlant.soil_salinity"
-                class="columns is-mobile is-8"
-              >
-                <div class="column is-one-quarter">Salinity</div>
-                <div class="column">
-                  <b-progress
-                    :value="selectedPlant.soil_salinity * 10"
-                    type="is-success"
-                  ></b-progress>
-                </div>
-              </div>
-              <div
-                v-if="selectedPlant.soil_humidity"
-                class="columns is-mobile is-8"
-              >
-                <div class="column is-one-quarter">Humidity</div>
-                <div class="column">
-                  <b-progress
-                    :value="selectedPlant.soil_humidity * 10"
-                    type="is-success"
-                  ></b-progress>
-                </div>
-              </div>
-              <div
-                v-if="selectedPlant.soil_texture"
-                class="columns is-mobile is-8"
-              >
-                <div class="column is-one-quarter">Texture</div>
-                <div class="column">
-                  <b-progress
-                    :value="selectedPlant.soil_texture * 10"
-                    type="is-success"
-                  ></b-progress>
-                </div>
-              </div>
-            </div>
+            <plantDetails
+              :plant="selectedPlant"
+              :displayName="displayName"
+            ></plantDetails>
           </div>
         </article>
         <div class="sliders">
@@ -162,39 +67,55 @@
           </b-field>
         </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+          <b-button
+            type="is-warning"
+            icon-left="minus-circle"
+            @click="removePlantButtonClick()"
+          >
             Remove Plant from Garden
           </b-button>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <button
-        class="card-footer-item"
-        @click="$router.push({ name: 'wish', params: { gardenId } })"
-      >
-        Add Plant
-      </button>
-      <router-link
-        :to="{ name: 'nearbystores', params: { location: location } }"
-      >
-        <b-button type="is-success is-light">Nearby Stores</b-button>
-      </router-link>
-      <editmodal
-        :id="gardenId"
-        :name="name"
-        :lat="location.lat"
-        :lng="location.lng"
-        :width="gardenSize.width"
-        :height="gardenSize.height"
-        :updateMain="updateMain"
-      ></editmodal>
+      <div class="footer-buttons card-footer-item">
+        <div class="footer-buttons-top-row" v-if="gardenOwned">
+          <b-button
+            type="is-success"
+            class="card-footer-item"
+            icon-left="plus-circle"
+            @click="$router.push({ name: 'wish', params: { gardenId } })"
+          >
+            Add Plant
+          </b-button>
+
+          <editmodal
+            :id="gardenId"
+            :name="name"
+            :lat="location.lat"
+            :lng="location.lng"
+            :width="gardenSize.width"
+            :height="gardenSize.height"
+            :updateMain="updateMain"
+          ></editmodal>
+        </div>
+        <div>
+          <router-link
+            :to="{ name: 'nearbystores', params: { location: location } }"
+          >
+            <b-button class="card-footer-item" type="is-warning"
+              >Shop For Plants at Nearby Stores</b-button
+            >
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import GardenLayout from "./GardenLayout.vue";
+import PlantDetails from "./PlantDetails.vue";
 import EditModal from "./EditModal.vue";
 import axios from "axios";
 
@@ -202,6 +123,7 @@ export default {
   name: "GardenMain",
   components: {
     "garden-layout": GardenLayout,
+    plantDetails: PlantDetails,
     editmodal: EditModal,
   },
   data() {
@@ -215,7 +137,9 @@ export default {
         { position_x: 5, position_y: 4, radius: 2, id: 2 },
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
+      ownerId: -1,
       selected: -1,
+      displayName: true,
       msg: "Garden Main Page",
       screenWidth: 0,
       rounded: true,
@@ -224,6 +148,7 @@ export default {
       sliderValue: -1,
     };
   },
+  props: ["user"],
   computed: {
     selectedPlant: function () {
       let plantInGarden = this.plantList.filter(
@@ -232,6 +157,9 @@ export default {
       this.sliderValue = plantInGarden.radius;
       let plant = plantInGarden.plant;
       return plant;
+    },
+    gardenOwned() {
+      return this.user.id === this.ownerId;
     },
   },
   methods: {
@@ -275,6 +203,7 @@ export default {
       })
         .then(({ data }) => {
           this.$log.info(data);
+          this.ownerId = data.userId;
           this.plantList = data.plants;
           this.gardenId = data.id;
           this.gardenSize.height = data.length;
@@ -351,8 +280,18 @@ export default {
 </script>
 
 <style lang="sass">
+#plant-info
+  width: 100%
 #garden-info
   display: flex
   flex-direction: column
   align-items: center
+.footer-buttons
+  display: flex
+  flex-direction: column
+.footer-buttons-top-row
+  display: flex
+  margin: 10px auto
+  button
+    margin: 0 10px
 </style>

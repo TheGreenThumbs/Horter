@@ -68,12 +68,14 @@ gardenInfo.post("/addplant", (req, res) => {
     position_y: 1,
     radius: 2,
   };
+  let plantName;
   plantHelpers
     .findPlantByTrefleId(plantId)
-    .then((id) => {
+    .then(({ id, name }) => {
+      plantName = name;
       addPlantToGarden(gardenId, newPlantInfo, id)
         .then((item) => {
-          res.status(201).send(item);
+          res.status(201).send({ item, plantName });
         })
         .catch((err) => {
           logger.error(err);
@@ -83,13 +85,14 @@ gardenInfo.post("/addplant", (req, res) => {
     .catch(() => {
       searchSelf(slug)
         .then((plant) => {
+          plantName = plant.common_name;
           return plantHelpers.createPlantWithSelfData(plant);
         })
         .then((plant) => {
           return addPlantToGarden(gardenId, newPlantInfo, plant.id);
         })
         .then((item) => {
-          res.status(201).send(item);
+          res.status(201).send({ item, plantName });
         })
         .catch((err) => {
           logger.error(err);

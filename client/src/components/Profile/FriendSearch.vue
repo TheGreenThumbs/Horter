@@ -19,11 +19,7 @@
               placeholder="Search by username"
               lazy
             />
-            <div
-              class="friendimg"
-              v-if="searched.username"
-              @click="goToUser(searched.id)"
-            >
+            <div class="friendimg" v-if="searched.username" @click="goToUser()">
               <b-image
                 class="searched"
                 :src="searched.s3_id"
@@ -47,20 +43,20 @@
         <div class="ui segment">
           <div v-if="friends" class="friend-list">
             <div
-              @click="goToUser(friend.id)"
+              @click="goToFriend(clickedFriend.id)"
               :index="i"
-              v-for="(friend, i) in friends"
+              v-for="(clickedFriend, i) in friends"
               :key="i"
             >
               <b-image
                 class="friend"
-                :src="friend.s3_id"
+                :src="clickedFriend.s3_id"
                 ratio="2x2"
                 rounded
                 fluid
                 contain
               />
-              <p>{{ friend.username }}</p>
+              <p>{{ clickedFriend.username }}</p>
             </div>
           </div>
         </div>
@@ -82,6 +78,7 @@ export default {
     return {
       searched: {},
       friend: "",
+      clickedFriend: {},
       friends: [],
     };
   },
@@ -118,11 +115,21 @@ export default {
           console.error(error);
         });
     },
-    goToUser(user) {
+    goToUser() {
       this.$router
         .push({
           path: "/UserProfile",
-          query: { id: user },
+          query: { id: this.searched.id },
+        })
+        .catch(() => {
+          this.$log.info("same route");
+        });
+    },
+    goToFriend(id) {
+      this.$router
+        .push({
+          path: "/UserProfile",
+          query: { id: id },
         })
         .catch(() => {
           this.$log.info("same route");
