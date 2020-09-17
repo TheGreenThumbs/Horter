@@ -8,7 +8,11 @@
       <div class="eight wide column">
         <div class="ui segment">
           <h3 class="ui medium dividing header">
-            {{ `${profile.username}: ${profile.status}` }}
+            {{
+              `${profile.username}: ${
+                profile.status || "Currently doing nothing"
+              }`
+            }}
           </h3>
           <div class="status-form" v-if="user.id === profile.id">
             <b-field label="Update your Status">
