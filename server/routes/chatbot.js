@@ -1,11 +1,13 @@
 const { Router } = require("express");
 const { runSample } = require("../helpers/chatbot-api");
 const logger = require("../../winston");
+const authChecker = require("../helpers");
 require("dotenv").config();
 
 const { PROJECT_ID } = process.env;
 
 const chatbot = Router();
+chatbot.use(authChecker);
 
 chatbot.get("/", (req, res) => {
   const { message } = req.query;

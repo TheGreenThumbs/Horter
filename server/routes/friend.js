@@ -1,14 +1,16 @@
 const { Router } = require("express");
 
 const logger = require("../../winston");
-
-const friend = Router();
+const authChecker = require("../helpers");
 const {
   addFriend,
   removeFriend,
   getFriends,
   getFriendStatus,
 } = require("../../database/helpers/friend");
+
+const friend = Router();
+friend.use(authChecker);
 
 friend.get("/", (req, res) => {
   const { userId } = req.query;
