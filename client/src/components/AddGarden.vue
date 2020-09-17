@@ -23,7 +23,7 @@
       :center="mapStart"
       :zoom="14"
       map-type-id="terrain"
-      style="width: 80vw; height: 300px"
+      style="width: 100%; height: 300px"
       @click="mapClick"
       :options="{
         streetViewControl: false,
@@ -41,7 +41,7 @@ import axios from "axios";
 import AddPhoto from "./AddPhoto.vue";
 export default {
   name: "AddGarden",
-  props: ["user"],
+  props: ["user", "gardens"],
   components: {
     "add-photo": AddPhoto,
   },
@@ -124,6 +124,9 @@ export default {
         },
       })
         .then(({ data }) => {
+          const newGardens = [...this.gardens];
+          newGardens.push(data);
+          this.$emit("update:gardens", newGardens);
           this.$buefy.toast.open({
             message: "Successfully made Garden",
             type: "is-success",

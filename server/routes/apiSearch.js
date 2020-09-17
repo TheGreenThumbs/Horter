@@ -3,10 +3,14 @@ const axios = require("axios");
 require("dotenv").config();
 
 const { Router } = require("express");
+const authChecker = require("../helpers");
 
 const apiSearch = Router();
 const { TREFLE_TOKEN } = process.env;
 axios.defaults.headers.common.Authorization = TREFLE_TOKEN;
+
+apiSearch.use(authChecker);
+
 /*
  GET/region accepts a region to search plants for by. returns list
 */

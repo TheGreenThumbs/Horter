@@ -39,7 +39,7 @@
                 {{ plant.family_common_name }}
               </p>
             </div>
-            <nav class="level is-mobile">
+            <nav :class="mobileStyle()">
               <div class="level-left">
                 <b-button
                   size="is-small"
@@ -78,6 +78,7 @@
 <script>
 import PlantThumbnail from "./PlantThumbnail.vue";
 import WishListSkeleton from "./WishListSkeleton.vue";
+import { isMobile } from "mobile-device-detect";
 import axios from "axios";
 import debounce from "lodash";
 
@@ -95,6 +96,7 @@ export default {
       wishClicked: [],
       gardenId: this.$route.params.gardenId || -1,
       reloader: 0,
+      mobile: isMobile,
     };
   },
   created() {
@@ -103,6 +105,11 @@ export default {
   props: ["plant", "user"],
 
   methods: {
+    mobileStyle() {
+      let style = "level ";
+      style += this.mobile ? "is-mobile" : "";
+      return style;
+    },
     emptyResultsToast(isSearch) {
       let text;
       if (!isSearch) {
@@ -253,3 +260,9 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+.level.is-mobile .level-left
+  align-items: start
+  flex-direction: column
+</style>
