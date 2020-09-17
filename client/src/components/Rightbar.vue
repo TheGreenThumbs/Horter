@@ -10,6 +10,7 @@
       :overlay="overlay"
       :right="right"
       v-model="open"
+      :gardens="gardens"
     >
       <div class="p-1">
         <b-menu>
@@ -33,11 +34,12 @@
               @click="toggleGardens"
             >
               <b-button
-                type="is-danger"
+                type="is-danger d-button"
                 v-for="garden in gardens"
                 :key="garden.id"
                 :label="garden.name"
                 @click="deleteGarden(garden.id)"
+                class="d-button"
               >
               </b-button>
             </b-menu-item>
@@ -105,8 +107,10 @@ export default {
           data: { id: id },
         })
           .then((data) => {
-            let newGardens = this.gardens.filter((g) => g.id !== id);
-            this.$emit("update:gardens", newGardens);
+            let newGardens = [...this.gardens];
+            newGardens = newGardens.filter((g) => g.id !== id);
+            console.log(newGardens);
+            this.$emit("edit:gardens", newGardens);
             router.push({
               name: "profile",
             });
@@ -122,3 +126,7 @@ export default {
   },
 };
 </script>
+<style lang="sass">
+.d-button
+  margin: 3px
+</style>
