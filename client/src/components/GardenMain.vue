@@ -103,8 +103,11 @@
           <router-link
             :to="{ name: 'nearbystores', params: { location: location } }"
           >
-            <b-button class="card-footer-item" type="is-warning"
-              >Shop For Plants at Nearby Stores</b-button
+            <b-button
+              class="card-footer-item"
+              icon-left="google-maps"
+              type="is-warning"
+              >Local Garden Centers</b-button
             >
           </router-link>
         </div>
