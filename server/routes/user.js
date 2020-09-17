@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const logger = require("../../winston");
-const authChecker = require("../helpers");
 const {
   createUser,
   findUserByUsername,
@@ -10,7 +9,6 @@ const {
 } = require("../../database/helpers/user-profile");
 
 const userInfo = Router();
-userInfo.use(authChecker);
 /**
  * This route accepts a user's username from the client and sends the info for that user from the DB
  * @param {object} req.query the username value is stored at the 'username' key in req.query

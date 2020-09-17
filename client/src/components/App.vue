@@ -94,17 +94,23 @@ export default {
       .then(({ data }) => {
         this.$log.info(data);
         this.user = data;
-        return axios({
-          method: "get",
-          url: "/garden/user",
-          params: {
-            id: data.id,
-          },
-        });
+        if (data.id) {
+          return axios({
+            method: "get",
+            url: "/garden/user",
+            params: {
+              id: data.id,
+            },
+          });
+        } else {
+          return { data: null };
+        }
       })
       .then(({ data }) => {
-        this.$log.info(data);
-        this.gardens = data;
+        if (data) {
+          this.$log.info(data);
+          this.gardens = data;
+        }
       })
       .catch((err) => {
         $log.error(err);
