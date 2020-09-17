@@ -52,11 +52,16 @@ export default {
       gardens: [],
       newStatus: "",
       profile: {},
-      friend: false,
+      friend: null,
+      friendLoaded: false,
     };
   },
   watch: {
     friend: async function () {
+      if (!this.friendLoaded) {
+        this.friendLoaded = true;
+        return;
+      }
       const action = !this.friend ? "remove" : "add";
       const method = !this.friend ? "delete" : "post";
       try {

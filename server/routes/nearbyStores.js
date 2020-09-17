@@ -2,8 +2,10 @@ const { Router } = require("express");
 const axios = require("axios");
 require("dotenv").config();
 const logger = require("../../winston");
+const authChecker = require("../helpers");
 
 const stores = Router();
+stores.use(authChecker);
 
 // const results = require("../../testData/placesApiResults.json");
 
