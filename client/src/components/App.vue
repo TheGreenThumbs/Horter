@@ -15,8 +15,13 @@
       :openRight="openRight"
       v-on:close-navbars="closeBars"
       v-if="user.id && mobile"
+      :gardens="gardens"
     ></navigation>
-    <desktop-navigation v-if="!mobile" :user="user"></desktop-navigation>
+    <desktop-navigation
+      v-if="!mobile"
+      :user="user"
+      :gardens="gardens"
+    ></desktop-navigation>
     <router-view
       class="content-container"
       v-if="user.id"
@@ -52,6 +57,7 @@ export default {
   data() {
     return {
       user: {},
+      gardens: [],
       openLeft: false,
       openRight: false,
       mobile: isMobile,
@@ -82,6 +88,17 @@ export default {
       .then(({ data }) => {
         this.$log.info(data);
         this.user = data;
+        return axios({
+          method: "get",
+          url: "/garden/user",
+          params: {
+            id: data.id,
+          },
+        });
+      })
+      .then(({ data }) => {
+        this.$log.info(data);
+        this.gardens = data;
       })
       .catch((err) => {
         $log.error(err);

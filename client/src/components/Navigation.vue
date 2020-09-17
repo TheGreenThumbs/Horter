@@ -15,6 +15,7 @@
       :user="user"
       :swipeOpen="openRight"
       v-on:close-sidebars="closeSidebars"
+      :gardens="gardens"
     ></rightbar>
   </section>
 </template>
@@ -25,7 +26,7 @@ import Rightbar from "./Rightbar.vue";
 
 export default {
   name: "navigation",
-  props: ["user", "openLeft", "openRight"],
+  props: ["user", "openLeft", "openRight", "gardens"],
   data() {
     return {
       logoImage: require("../assets/horterFavicon.png"),
