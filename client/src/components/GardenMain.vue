@@ -100,9 +100,13 @@
             :updateMain="updateMain"
           ></editmodal>
           <div>
-            <b-button type="is-danger" @click="deleteGarden(gardenId)"
-              >Delete This Garden</b-button
+            <b-button
+              type="is-danger"
+              icon-left="minus-circle"
+              @click="deleteGarden(gardenId)"
             >
+              Delete This Garden
+            </b-button>
           </div>
         </div>
         <div>
@@ -325,7 +329,8 @@ export default {
   flex-direction: column
 .footer-buttons-top-row
   display: flex
-  margin: 10px auto
+  flex-flow: column wrap
+  margin: 10px auto 10px
   button
     margin: 0 10px
 .plant-button
