@@ -69,7 +69,6 @@ export default {
       fullheight: true,
       fullwidth: false,
       right: true,
-      gardens: [],
       deleting: false,
     };
   },
@@ -83,6 +82,7 @@ export default {
       }
     },
   },
+
   methods: {
     goToGarden(id) {
       this.$router
@@ -105,15 +105,10 @@ export default {
           data: { id: id },
         })
           .then((data) => {
-            this.gardens = this.gardens.filter((g) => g.id !== id);
+            let newGardens = this.gardens.filter((g) => g.id !== id);
+            this.$emit("update:gardens", newGardens);
             router.push({
-              name: "garden",
-              params: {
-                id: 1,
-              },
-              query: {
-                id: 1,
-              },
+              name: "profile",
             });
             this.$buefy.toast.open({
               message: "Garden Deleted",

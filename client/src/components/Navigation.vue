@@ -15,7 +15,7 @@
       :user="user"
       :swipeOpen="openRight"
       v-on:close-sidebars="closeSidebars"
-      :gardens="gardens"
+      v-bind:gardens.sync="gardens"
     ></rightbar>
   </section>
 </template>

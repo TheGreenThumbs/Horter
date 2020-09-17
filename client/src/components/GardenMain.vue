@@ -154,7 +154,7 @@ export default {
       sliderValue: -1,
     };
   },
-  props: ["user"],
+  props: ["user", "gardens"],
   computed: {
     selectedPlant: function () {
       let plantInGarden = this.plantList.filter(
@@ -235,19 +235,16 @@ export default {
           data: { id: gardenId },
         })
           .then((data) => {
+            let newGardens = [...this.gardens];
+            newGardens = newGardens.filter((g) => g.id !== gardenId);
+            this.$emit("update:gardens", newGardens);
             this.$buefy.toast.open({
               message: "Garden Deleted",
               type: "is-success",
               duration: 1000,
             });
             router.push({
-              name: "garden",
-              params: {
-                id: 1,
-              },
-              query: {
-                id: 1,
-              },
+              name: "profile",
             });
           })
           .catch((err) => console.log(err));
