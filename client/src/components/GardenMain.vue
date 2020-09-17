@@ -99,15 +99,13 @@
             :height="gardenSize.height"
             :updateMain="updateMain"
           ></editmodal>
-          <div>
-            <b-button
-              type="is-danger"
-              icon-left="minus-circle"
-              @click="deleteGarden(gardenId)"
-            >
-              Delete This Garden
-            </b-button>
-          </div>
+          <b-button
+            type="is-danger"
+            icon-left="minus-circle"
+            @click="deleteGarden(gardenId)"
+          >
+            Delete This Garden
+          </b-button>
         </div>
         <div>
           <router-link
@@ -330,9 +328,9 @@ export default {
 .footer-buttons-top-row
   display: flex
   flex-flow: column wrap
-  margin: 10px auto 10px
+  margin: 10px auto
   button
-    margin: 0 10px
+    margin: 5px
 .plant-button
   margin: 0 auto
 </style>
