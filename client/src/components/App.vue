@@ -26,6 +26,7 @@
       class="content-container"
       v-if="user.id"
       :user="user"
+      v-bind:gardens.sync="gardens"
     ></router-view>
     <login v-else></login>
     <chatbotmodal v-if="user.id" class="chatbot" :user="user"></chatbotmodal>
