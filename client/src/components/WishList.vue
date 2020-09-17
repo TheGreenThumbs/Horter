@@ -235,6 +235,7 @@ export default {
                 id: uniquePlant.plant.id_trefle,
                 common_name: uniquePlant.plant.common_name,
                 slug: uniquePlant.plant.slug,
+                photo_url: uniquePlant.plant.photo_url,
               };
             });
         }
