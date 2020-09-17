@@ -1,5 +1,9 @@
 <template>
-  <b-button type="is-info" class="card-footer-item" @click="cardModal()"
+  <b-button
+    type="is-info"
+    icon-left="pencil"
+    class="card-footer-item"
+    @click="cardModal()"
     >Edit Garden</b-button
   >
 </template>

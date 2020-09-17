@@ -8,21 +8,21 @@
       type="is-success"
       >AR View</b-button
     >
-    <div class="columns">
-      <div class="column is-3">
-        <div class="lat">Latitude: {{ location.lat }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="lng">Longitude: {{ location.lng }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="width">Width: {{ gardenSize.width }}</div>
-      </div>
-      <div class="column is-3">
-        <div class="height">Height: {{ gardenSize.height }}</div>
-      </div>
-    </div>
     <div class="card-content" id="garden-info" ref="gardenInfo">
+      <div class="columns">
+        <div class="column is-3">
+          <div class="lat">Latitude: {{ location.lat }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="lng">Longitude: {{ location.lng }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="width">Width: {{ gardenSize.width }}</div>
+        </div>
+        <div class="column is-3">
+          <div class="height">Height: {{ gardenSize.height }}</div>
+        </div>
+      </div>
       <garden-layout
         :selected.sync="selected"
         :gardenSize="gardenSize"
@@ -30,7 +30,7 @@
         v-on:plant-moved="plantMoved"
         :width="screenWidth"
       ></garden-layout>
-      <div v-if="selected > 0">
+      <div v-if="selected > 0" id="plant-info">
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
@@ -38,7 +38,10 @@
             </p>
           </figure>
           <div class="media-content">
-            <plantDetails :plant="selectedPlant"></plantDetails>
+            <plantDetails
+              :plant="selectedPlant"
+              :displayName="displayName"
+            ></plantDetails>
           </div>
         </article>
         <div class="sliders">
@@ -64,7 +67,11 @@
           </b-field>
         </div>
         <div class="buttons">
-          <b-button icon-left="minus-circle" @click="removePlantButtonClick()">
+          <b-button
+            type="is-warning"
+            icon-left="minus-circle"
+            @click="removePlantButtonClick()"
+          >
             Remove Plant from Garden
           </b-button>
         </div>
@@ -72,10 +79,11 @@
     </div>
     <div class="card-footer">
       <div class="footer-buttons card-footer-item">
-        <div class="footer-buttons-top-row">
+        <div class="footer-buttons-top-row" v-if="gardenOwned">
           <b-button
             type="is-success"
             class="card-footer-item"
+            icon-left="plus-circle"
             @click="$router.push({ name: 'wish', params: { gardenId } })"
           >
             Add Plant
@@ -135,7 +143,9 @@ export default {
         { position_x: 5, position_y: 4, radius: 2, id: 2 },
         { position_x: 1, position_y: 5, radius: 4, id: 3 },
       ],
+      ownerId: -1,
       selected: -1,
+      displayName: true,
       msg: "Garden Main Page",
       screenWidth: 0,
       rounded: true,
@@ -144,6 +154,7 @@ export default {
       sliderValue: -1,
     };
   },
+  props: ["user"],
   computed: {
     selectedPlant: function () {
       let plantInGarden = this.plantList.filter(
@@ -152,6 +163,9 @@ export default {
       this.sliderValue = plantInGarden.radius;
       let plant = plantInGarden.plant;
       return plant;
+    },
+    gardenOwned() {
+      return this.user.id === this.ownerId;
     },
   },
   methods: {
@@ -195,6 +209,7 @@ export default {
       })
         .then(({ data }) => {
           this.$log.info(data);
+          this.ownerId = data.userId;
           this.plantList = data.plants;
           this.gardenId = data.id;
           this.gardenSize.height = data.length;
@@ -294,6 +309,8 @@ export default {
 </script>
 
 <style lang="sass">
+#plant-info
+  width: 100%
 #garden-info
   display: flex
   flex-direction: column

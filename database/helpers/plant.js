@@ -65,7 +65,7 @@ const findPlantByTrefleId = (trefleId) =>
   new Promise((resolve, reject) => {
     Plant.findOne({ where: { id_trefle: trefleId }, rejectOnEmpty: true })
       .then((plant) => {
-        resolve(plant.id);
+        resolve({ id: plant.id, name: plant.common_name });
       })
       .catch((err) => {
         reject(err);
