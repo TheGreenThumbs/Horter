@@ -235,7 +235,11 @@ export default {
           data: { id: gardenId },
         })
           .then((data) => {
-            console.log("deleted!");
+            this.$buefy.toast.open({
+              message: "Garden Deleted",
+              type: "is-success",
+              duration: 1000,
+            });
             router.push({
               name: "garden",
               params: {
