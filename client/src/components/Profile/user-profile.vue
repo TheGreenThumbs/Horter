@@ -2,13 +2,30 @@
   <div>
     <div class="ui stackable grid container" v-if="profile">
       <div class="four wide column">
-        <b-image :src="profile.s3_id" ratio="1x1" rounded />
+        <b-image
+          class="userphoto"
+          v-if="!profile.s3_id"
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          ratio="1x1"
+          rounded
+        />
+        <b-image
+          class="userphoto"
+          v-if="profile.s3_id"
+          :src="profile.s3_id"
+          ratio="1x1"
+          rounded
+        />
         <h3>{{ `Welcome to your garden, @${profile.username}.` }}</h3>
       </div>
       <div class="eight wide column">
         <div class="ui segment">
           <h3 class="ui medium dividing header">
-            {{ `${profile.username}: ${profile.status}` }}
+            {{
+              `${profile.username}: ${
+                profile.status || "Currently doing nothing"
+              }`
+            }}
           </h3>
           <div class="status-form" v-if="user.id === profile.id">
             <b-field label="Update your Status">
@@ -166,3 +183,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.userphoto {
+  height: 300px;
+  position: static;
+  left: 0;
+  width: 300px;
+  margin: 0;
+  padding: 0 0px 0 10px;
+  text-align: right;
+}
+</style>

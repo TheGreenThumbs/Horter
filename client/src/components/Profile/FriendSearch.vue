@@ -19,23 +19,29 @@
               placeholder="Search by username"
               lazy
             />
-            <div
-              class="friendimg"
-              v-if="searched.username"
-              @click="goToUser(searched.id)"
-            >
+            <div class="friendimg" v-if="searched.username" @click="goToUser()">
               <b-image
-                :src="searched.s3_id"
-                padding="15%"
+                class="searched"
+                v-if="!searched.s3_id"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                 ratio="4x4"
                 rounded
               />
-              <p>{{ searched.username }}</p>
+              <b-image
+                class="searched"
+                v-if="searched.s3_id"
+                :src="searched.s3_id"
+                ratio="4x4"
+                rounded
+              />
+              <div padding="5%" margin-top="0.5cm">
+                <p class="username">{{ searched.username }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="eight wide column">
+      <div class="eight wide column" padding="15%">
         <div>
           <img
             src="https://www.clipartmax.com/png/middle/427-4273239_friends-icon-friends-icon-transparent-background.png"
@@ -43,17 +49,22 @@
           />Friends List
         </div>
         <div class="ui segment">
-          <!-- <button @click="seeFriends()">Show Friends</button> -->
           <div v-if="friends" class="friend-list">
             <div
-              class="friends"
-              @click="goToUser(friend.id)"
+              @click="goToFriend(clickedFriend.id)"
               :index="i"
-              v-for="(friend, i) in friends"
+              v-for="(clickedFriend, i) in friends"
               :key="i"
             >
-              <b-image :src="friend.s3_id" padding="15%" ratio="2x2" rounded />
-              <p>{{ friend.username }}</p>
+              <b-image
+                class="friend"
+                :src="clickedFriend.s3_id"
+                ratio="2x2"
+                rounded
+                fluid
+                contain
+              />
+              <p>{{ clickedFriend.username }}</p>
             </div>
           </div>
         </div>
@@ -75,6 +86,7 @@ export default {
     return {
       searched: {},
       friend: "",
+      clickedFriend: {},
       friends: [],
     };
   },
@@ -89,7 +101,6 @@ export default {
     })
       .then((friends) => {
         const { data } = friends;
-        console.log("data", data);
         this.friends = data;
       })
       .catch((error) => {
@@ -112,12 +123,21 @@ export default {
           console.error(error);
         });
     },
-    goToUser(user) {
-      console.log("USER CLICKED");
+    goToUser() {
       this.$router
         .push({
           path: "/UserProfile",
-          query: { id: user },
+          query: { id: this.searched.id },
+        })
+        .catch(() => {
+          this.$log.info("same route");
+        });
+    },
+    goToFriend(id) {
+      this.$router
+        .push({
+          path: "/UserProfile",
+          query: { id: id },
         })
         .catch(() => {
           this.$log.info("same route");
@@ -140,5 +160,23 @@ input[type="text"] {
   flex-flow: row wrap;
   justify-content: space-between;
   padding-top: 10%;
+}
+
+.searched {
+  height: 100px;
+  position: static;
+  left: 0;
+  width: 120px;
+  margin: 0;
+  padding: 0 0px 0 10px;
+  text-align: right;
+}
+
+.friendimg {
+  padding-top: 25px;
+}
+
+.username {
+  padding-top: 15px;
 }
 </style>
