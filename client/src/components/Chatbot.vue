@@ -84,8 +84,8 @@ export default {
                   gardenId,
                 },
               })
-              .then((data) => this.$log(data))
-              .catch((err) => this.$log(err));
+              .then((data) => this.$log.info(data))
+              .catch((err) => this.$log.error(err));
           } else if (this.page) {
             if (this.page.includes("create") || this.page.includes("add")) {
               setTimeout(() => {
@@ -107,6 +107,13 @@ export default {
               }, 1000);
               router.push({
                 name: "wish",
+              });
+            } else if (this.page.includes("plant")) {
+              setTimeout(() => {
+                this.$emit("close");
+              }, 1000);
+              router.push({
+                name: "plant",
               });
             } else if (this.page.includes("friends")) {
               setTimeout(() => {

@@ -3,7 +3,7 @@
     <form @submit.prevent="handleSubmit">
       <label>My Message</label>
       <input v-model="message" />
-      <button>Send</button>
+      <b-button @click="handleSubmit" class="submit is-info">Send</b-button>
     </form>
   </div>
 </template>
