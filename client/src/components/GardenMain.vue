@@ -90,6 +90,11 @@
             :height="gardenSize.height"
             :updateMain="updateMain"
           ></editmodal>
+          <div>
+            <b-button type="is-danger" @click="deleteGarden(gardenId)"
+              >Delete This Garden</b-button
+            >
+          </div>
         </div>
         <div>
           <router-link
@@ -110,6 +115,7 @@ import GardenLayout from "./GardenLayout.vue";
 import PlantDetails from "./PlantDetails.vue";
 import EditModal from "./EditModal.vue";
 import axios from "axios";
+import router from "../router";
 
 export default {
   name: "GardenMain",
@@ -206,6 +212,28 @@ export default {
           this.$log.error(err);
         });
     },
+    deleteGarden(gardenId) {
+      if (confirm("Are you sure you want to delete?")) {
+        axios({
+          method: "DELETE",
+          url: "garden/deletegarden",
+          data: { id: gardenId },
+        })
+          .then((data) => {
+            console.log("deleted!");
+            router.push({
+              name: "garden",
+              params: {
+                id: 1,
+              },
+              query: {
+                id: 1,
+              },
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    },
     sliderChange(radius) {
       axios({
         method: "PUT",
@@ -258,6 +286,7 @@ export default {
     });
   },
   beforeRouteUpdate(to, from, next) {
+    console.log(to.query.id);
     this.loadGardens(to.query.id);
     next();
   },
