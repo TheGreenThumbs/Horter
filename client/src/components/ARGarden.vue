@@ -5,7 +5,6 @@
     v-touch:tap="spinTouch"
     v-touch:swipe.top="slideUp"
     v-touch:swipe.bottom="slideDown"
-    vr-mode-ui="enabled: false"
   >
     <a-camera>
       <a-box
