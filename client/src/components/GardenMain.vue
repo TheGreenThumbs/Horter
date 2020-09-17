@@ -11,10 +11,10 @@
     <div class="card-content" id="garden-info" ref="gardenInfo">
       <div class="columns">
         <div class="column is-3">
-          <div class="lat">Latitude: {{ location.lat }}</div>
+          <div class="lat">Latitude: {{ location.lat.toFixed(6) }}</div>
         </div>
         <div class="column is-3">
-          <div class="lng">Longitude: {{ location.lng }}</div>
+          <div class="lng">Longitude: {{ location.lng.toFixed(6) }}</div>
         </div>
         <div class="column is-3">
           <div class="width">Width: {{ gardenSize.width }}</div>
@@ -68,6 +68,7 @@
         </div>
         <div class="buttons">
           <b-button
+            class="plant-button"
             type="is-warning"
             icon-left="minus-circle"
             @click="removePlantButtonClick()"
@@ -103,8 +104,11 @@
           <router-link
             :to="{ name: 'nearbystores', params: { location: location } }"
           >
-            <b-button class="card-footer-item" type="is-warning"
-              >Shop For Plants at Nearby Stores</b-button
+            <b-button
+              class="card-footer-item"
+              icon-left="google-maps"
+              type="is-warning"
+              >Locate Nearby Garden Centers</b-button
             >
           </router-link>
         </div>
@@ -294,4 +298,6 @@ export default {
   margin: 10px auto
   button
     margin: 0 10px
+.plant-button
+  margin: 0 auto
 </style>
