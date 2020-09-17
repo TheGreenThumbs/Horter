@@ -100,7 +100,7 @@ export default {
     };
   },
   created() {
-    this.searchIconClick = _.debounce(this.searchIconClick, 1000);
+    this.searchIconClick = _.debounce(this.searchIconClick, 3000);
   },
   props: ["plant", "user"],
 
