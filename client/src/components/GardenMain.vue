@@ -68,6 +68,7 @@
         </div>
         <div class="buttons">
           <b-button
+            class="plant-button"
             type="is-warning"
             icon-left="minus-circle"
             @click="removePlantButtonClick()"
@@ -291,4 +292,6 @@ export default {
   margin: 10px auto
   button
     margin: 0 10px
+.plant-button
+  margin: 0 auto
 </style>
