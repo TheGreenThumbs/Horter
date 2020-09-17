@@ -42,11 +42,6 @@
               @click="$router.push('wish')"
             ></b-menu-item>
             <b-menu-item
-              icon="information-outline"
-              label="New Plant"
-              disabled
-            ></b-menu-item>
-            <b-menu-item
               icon="account-supervisor"
               label="Search Friends"
               @click="$router.push('FriendSearch')"
