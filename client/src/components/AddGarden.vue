@@ -23,7 +23,7 @@
       :center="mapStart"
       :zoom="14"
       map-type-id="terrain"
-      style="width: 80vw; height: 300px"
+      style="width: 100%; height: 300px"
       @click="mapClick"
       :options="{
         streetViewControl: false,
