@@ -24,30 +24,24 @@
               label="Test Garden"
               @click="goToGarden(1)"
             ></b-menu-item>
-            <b-menu-item label="Delete Garden" @click="toggleGardens">
-              <b-menu-item
+            <router-link to="/addgarden">
+              <b-button type="is-success is-light">Add a Garden</b-button>
+            </router-link>
+            <b-menu-item
+              label="Delete a Garden"
+              type="is-danger"
+              @click="toggleGardens"
+            >
+              <b-button
+                type="is-danger"
                 v-for="garden in gardens"
                 :key="garden.id"
                 :label="garden.name"
                 @click="deleteGarden(garden.id)"
-              ></b-menu-item>
-            </b-menu-item>
-            <!-- <div
-            v-if="deleting === true"
-            >
-              <div
-              v-for="garden in gardens"
-              :key="garden.id"
-              :label="garden.name"
-              @click="goToGarden(garden.id)"
               >
-                {{garden.name}}
-              </div>
-            </div> -->
+              </b-button>
+            </b-menu-item>
           </b-menu-list>
-          <router-link to="/addgarden">
-            <b-button type="is-success is-light">Add a Garden</b-button>
-          </router-link>
         </b-menu>
       </div>
     </b-sidebar>
@@ -62,6 +56,8 @@
 
 <script>
 import axios from "axios";
+import router from "../router";
+import { DialogProgrammatic as Dialog } from "buefy";
 
 export default {
   name: "rightbar",
@@ -121,16 +117,28 @@ export default {
     },
     toggleGardens() {
       this.deleting = !this.deleting;
-      console.log("deleting");
     },
     deleteGarden(id) {
-      axios({
-        method: "DELETE",
-        url: "garden/deletegarden",
-        data: { id: id },
-      })
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
+      if (confirm("Are you sure you want to delete?")) {
+        axios({
+          method: "DELETE",
+          url: "garden/deletegarden",
+          data: { id: id },
+        })
+          .then((data) => {
+            this.gardens = this.gardens.filter((g) => g.id !== id);
+            router.push({
+              name: "garden",
+              params: {
+                id: 1,
+              },
+              query: {
+                id: 1,
+              },
+            });
+          })
+          .catch((err) => console.log(err));
+      }
     },
   },
 };
