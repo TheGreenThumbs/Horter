@@ -87,7 +87,7 @@ gardenInfo.post("/addplant", (req, res) => {
     .catch(() => {
       searchSelf(slug)
         .then((plant) => {
-          plantName = plant.common_name;
+          plantName = plant.data.common_name;
           return plantHelpers.createPlantWithSelfData(plant);
         })
         .then((plant) => {
