@@ -15,7 +15,8 @@
       :user="user"
       :swipeOpen="openRight"
       v-on:close-sidebars="closeSidebars"
-      v-bind:gardens.sync="gardens"
+      :gardens="gardens"
+      v-on:edit:gardens="updateGardens"
     ></rightbar>
   </section>
 </template>
@@ -39,6 +40,10 @@ export default {
   methods: {
     closeSidebars: function () {
       this.$emit("close-navbars");
+    },
+    updateGardens: function (info) {
+      console.log(info);
+      this.$emit("update:gardens", info);
     },
   },
 };
