@@ -107,7 +107,7 @@
               class="card-footer-item"
               icon-left="google-maps"
               type="is-warning"
-              >Local Garden Centers</b-button
+              >Locate Nearby Garden Centers</b-button
             >
           </router-link>
         </div>
