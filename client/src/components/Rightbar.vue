@@ -61,7 +61,7 @@ import { DialogProgrammatic as Dialog } from "buefy";
 
 export default {
   name: "rightbar",
-  props: ["user", "swipeOpen"],
+  props: ["user", "swipeOpen", "gardens"],
   data() {
     return {
       open: false,
@@ -72,27 +72,6 @@ export default {
       gardens: [],
       deleting: false,
     };
-  },
-  mounted() {
-    axios({
-      method: "get",
-      url: "/garden/user",
-      params: {
-        id: this.user.id,
-      },
-    })
-      .then(({ data }) => {
-        this.$log.info(data);
-        this.gardens = data;
-      })
-      .catch((err) => {
-        this.$log.error(err);
-        this.$buefy.toast.open({
-          message: "Error getting gardens",
-          type: "is-danger",
-          duration: 1000,
-        });
-      });
   },
   watch: {
     swipeOpen: function () {
