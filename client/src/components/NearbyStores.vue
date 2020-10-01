@@ -5,7 +5,7 @@
       :center="center"
       :zoom="12"
       map-type-id="terrain"
-      style="width: 90vw; height: 500px; margin: 0 auto"
+      style="width: 100%; height: 500px; margin: 0 auto"
       @dragend="resetCenter()"
       :options="{
         streetViewControl: false,

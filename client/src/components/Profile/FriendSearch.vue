@@ -55,14 +55,14 @@
               v-for="(clickedFriend, i) in friends"
               :key="i"
             >
-              <b-image
+              <!-- <b-image
                 class="friend"
                 :src="clickedFriend.s3_id"
                 ratio="2x2"
                 rounded
                 fluid
                 contain
-              />
+              /> -->
               <p>{{ clickedFriend.username }}</p>
             </div>
           </div>
