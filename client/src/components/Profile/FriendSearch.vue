@@ -34,7 +34,7 @@
                 rounded
               />
               <div padding="5%" margin-top="0.5cm">
-                <p class="username">{{ searched.username }}</p>
+                <a class="username">{{ searched.username }}</a>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
                 fluid
                 contain
               /> -->
-              <p>{{ clickedFriend.username }}</p>
+              <a>{{ clickedFriend.username }}</a>
             </div>
           </div>
         </div>
@@ -146,36 +146,37 @@ export default {
 };
 </script>
 
-<style scoped>
-input[type="text"] {
-  background-color: white;
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  padding-left: 80px;
-}
+<style scoped lang="sass">
 
-.header {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  padding-top: 10%;
-}
 
-.searched {
-  height: 100px;
-  position: static;
-  left: 0;
-  width: 120px;
-  margin: 0;
-  padding: 0 0px 0 10px;
-  text-align: right;
-}
+input[type="text"]
+  background-color: white
+  background-position: 10px 10px
+  background-repeat: no-repeat
+  padding-left: 80px
 
-.friendimg {
-  padding-top: 25px;
-}
+.header
+  display: flex
+  flex-flow: row wrap
+  justify-content: space-between
+  padding-top: 10%
 
-.username {
-  padding-top: 15px;
-}
+.searched
+  height: 100px
+  position: static
+  left: 0
+  width: 120px
+  margin: 0
+  padding: 0 0px 0 10px
+  text-align: right
+
+.friendimg
+  padding-top: 25px
+
+a
+  color: #4a4a4a
+
+.username
+  padding-top: 15px
+  display: block
 </style>
