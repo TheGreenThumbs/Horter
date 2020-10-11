@@ -10,7 +10,6 @@ module.exports = {
     path: join(__dirname, "/client/build"),
     filename: "app.min.js",
   },
-  devtool: "source-map",
   module: {
     rules: [
       { test: /\.js$/, use: "babel-loader" },
